@@ -7,7 +7,7 @@
     "dev": "vite --host 0.0.0.0 --port 5174",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0 --port 4174",
-    "format": "echo \"format: oxfmt not installed in this handoff; skip\""
+    "format": "echo \"oxfmt: instalar com stack Make (pnpm + lockfile)\""
   },
   "dependencies": {
     "react": "18.3.1",

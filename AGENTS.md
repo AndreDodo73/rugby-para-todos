@@ -1,10 +1,3 @@
-# Fragmento colado do Figma Make (ainda incompleto)
-
-Fonte: texto colado pelo usuário no chat em 17 de novembro de 2026.
-Isto NÃO é o projeto completo. Falta o zip/pasta com o código.
-
----
-
 # figma-make-app
 
 React + Vite + Tailwind CSS project running inside Figma Make.
