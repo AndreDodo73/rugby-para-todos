@@ -193,7 +193,9 @@ const copy = {
   },
 };
 
-const sponsors = [
+// Make hash lists. Only files present in public/assets are rendered
+// (missing logos 404 as HTML via Vite SPA fallback and break the strip).
+const sponsorsAll = [
   "51872.png",
   "d2fa6.png",
   "680ac.png",
@@ -204,7 +206,7 @@ const sponsors = [
   "c264d.png",
   "2406a.png",
 ];
-const supporters = [
+const supportersAll = [
   "05b7e.png",
   "a8b5c.png",
   "91eb8.png",
@@ -213,6 +215,14 @@ const supporters = [
   "9108e.png",
   "d51f0.png",
 ];
+const presentLogos = new Set([
+  "463ef.png",
+  "2575f.png",
+  "c264d.png",
+  "05b7e.png",
+]);
+const sponsors = sponsorsAll.filter((logo) => presentLogos.has(logo));
+const supporters = supportersAll.filter((logo) => presentLogos.has(logo));
 const storyImages = ["efd1c.png", "054c1.png", "6d6d5.png", "36764.png"];
 const projectImages = ["38e25.png", "8b5c7.png", "dcc66.png", "46562.png"];
 

@@ -1,4 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const HERO_VIDEO = "/media/hero-rugby.mp4";
+const HERO_POSTER = "/media/hero-rugby-poster.jpg";
 
 const heroCopy = {
   pt: {
@@ -30,6 +33,7 @@ export function Hero({
 }) {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoReady, setVideoReady] = useState(false);
   const text = heroCopy[language];
 
   useEffect(() => {
@@ -50,7 +54,7 @@ export function Hero({
     };
     const update = () => {
       frame = 0;
-      if (!Number.isFinite(video.duration)) return;
+      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
       const progress = Math.min(1, Math.max(0, window.scrollY / section.clientHeight));
       const lastFrame = Math.max(0, video.duration - 1 / 24);
       desiredTime = reducedMotion.matches ? 0 : Math.round(progress * lastFrame * 24) / 24;
@@ -59,9 +63,17 @@ export function Hero({
     const scheduleUpdate = () => {
       if (!frame) frame = requestAnimationFrame(update);
     };
+    const onMeta = () => {
+      if (Number.isFinite(video.duration) && video.duration > 0) {
+        setVideoReady(true);
+        scheduleUpdate();
+      }
+    };
+    const onFail = () => setVideoReady(false);
 
     video.pause();
-    video.addEventListener("loadedmetadata", scheduleUpdate);
+    video.addEventListener("loadedmetadata", onMeta);
+    video.addEventListener("error", onFail);
     video.addEventListener("seeked", seek);
     window.addEventListener("scroll", scheduleUpdate, { passive: true });
     window.addEventListener("resize", scheduleUpdate);
@@ -70,7 +82,8 @@ export function Hero({
 
     return () => {
       cancelAnimationFrame(frame);
-      video.removeEventListener("loadedmetadata", scheduleUpdate);
+      video.removeEventListener("loadedmetadata", onMeta);
+      video.removeEventListener("error", onFail);
       video.removeEventListener("seeked", seek);
       window.removeEventListener("scroll", scheduleUpdate);
       window.removeEventListener("resize", scheduleUpdate);
@@ -80,16 +93,25 @@ export function Hero({
 
   return (
     <section className="hero" ref={sectionRef} id="conteudo" aria-labelledby="hero-title">
+      {/* Still matches Make frame 0 until hero-rugby.mp4 is exported. */}
+      <img
+        className="hero-media"
+        src={HERO_POSTER}
+        alt=""
+        aria-hidden="true"
+        style={videoReady ? { opacity: 0 } : undefined}
+      />
       <video
         ref={videoRef}
         className="hero-media"
-        src="/media/hero-rugby.mp4"
-        poster="/media/hero-rugby-poster.jpg"
+        src={HERO_VIDEO}
+        poster={HERO_POSTER}
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         disablePictureInPicture
         aria-hidden="true"
+        style={videoReady ? undefined : { opacity: 0, pointerEvents: "none" }}
       />
       <div className="hero-gradient hero-gradient-left" aria-hidden="true" />
       <div className="hero-gradient hero-gradient-right" aria-hidden="true" />
