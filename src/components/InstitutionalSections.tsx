@@ -13,7 +13,7 @@ function Outbound({
 }) {
   return (
     <a href={href} className={className} target="_blank" rel="noopener noreferrer">
-      {children}
+      <span className="link-label">{children}</span>
       <span className="arrow" aria-hidden="true">
         ↗
       </span>
@@ -172,28 +172,33 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
   const [frequency, setFrequency] = useState<"once" | "monthly">("once");
   const [amount, setAmount] = useState<keyof typeof official.donations>("100");
   const t = institutional[language];
+  const isMonthly = frequency === "monthly";
   return (
     <section className="support-options restored-section" id="formas-de-apoiar">
       <div className="support-options-grid">
-        <div className="reveal">
+        <div className="support-copy reveal">
           <p className="eyebrow">{t.supportEyebrow}</p>
           <h2>{t.supportTitle}</h2>
           <p>{t.supportBody}</p>
         </div>
         <div className="donation-panel reveal">
           <div className="donation-frequency" role="group" aria-label={t.supportEyebrow}>
-            <button onClick={() => setFrequency("once")} aria-pressed={frequency === "once"}>
+            <button type="button" onClick={() => setFrequency("once")} aria-pressed={!isMonthly}>
               {t.once}
             </button>
-            <button onClick={() => setFrequency("monthly")} aria-pressed={frequency === "monthly"}>
+            <button type="button" onClick={() => setFrequency("monthly")} aria-pressed={isMonthly}>
               {t.monthly}
             </button>
           </div>
-          {frequency === "once" ? (
+          <p className="donation-channel">{isMonthly ? t.channelMonthly : t.channelOnce}</p>
+          {isMonthly ? (
+            <p className="monthly-description">{t.monthlyBody}</p>
+          ) : (
             <div className="donation-amounts" role="group" aria-label={t.give}>
               {(["50", "100", "200", "other"] as const).map((value) => (
                 <button
                   key={value}
+                  type="button"
                   onClick={() => setAmount(value)}
                   aria-pressed={amount === value}
                 >
@@ -201,26 +206,24 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
                 </button>
               ))}
             </div>
-          ) : (
-            <p className="monthly-description">{t.monthlyBody}</p>
           )}
           <Outbound
             className="pill donation-submit"
-            href={frequency === "monthly" ? official.monthly : official.donations[amount]}
+            href={isMonthly ? official.monthly : official.donations[amount]}
           >
-            {frequency === "monthly" ? t.giveMonthly : t.give}
+            {isMonthly ? t.giveMonthly : t.give}
           </Outbound>
           <p className="external-note">{t.externalPayment}</p>
         </div>
       </div>
       <div className="support-other reveal">
-        <div>
+        <div className="support-path">
           <p className="eyebrow">Loja RPT</p>
           <h3>{t.shopTitle}</h3>
           <p>{t.shopBody}</p>
           <Outbound href={official.shop}>{t.shopCta}</Outbound>
         </div>
-        <div>
+        <div className="support-path">
           <p className="eyebrow">Instituto RPT</p>
           <h3>{t.work}</h3>
           <p>{t.workBody}</p>
@@ -228,7 +231,7 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
             className="text-link"
             href="mailto:rugbyparatodos@rugbyparatodos.org.br?subject=Trabalhe%20conosco"
           >
-            {t.contactService}
+            <span className="link-label">{t.contactService}</span>
             <span className="arrow" aria-hidden="true">
               ↗
             </span>

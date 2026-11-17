@@ -507,7 +507,7 @@ export default function App() {
               className="text-link"
               onClick={() => setActiveStory((activeStory + 1) % storyImages.length)}
             >
-              {t.storyCta}
+              <span className="link-label">{t.storyCta}</span>
               <Arrow />
             </button>
           </article>

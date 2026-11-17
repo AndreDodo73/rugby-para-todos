@@ -102,6 +102,8 @@ export const institutional = {
     once: "Doar uma vez",
     monthly: "Doar mensalmente",
     other: "Outro valor",
+    channelOnce: "Canal oficial · PayPal",
+    channelMonthly: "Canal oficial · Catarse",
     give: "Continuar para doação",
     giveMonthly: "Apoiar pelo Catarse",
     externalPayment:
@@ -195,6 +197,8 @@ export const institutional = {
     once: "Give once",
     monthly: "Give monthly",
     other: "Other amount",
+    channelOnce: "Official channel · PayPal",
+    channelMonthly: "Official channel · Catarse",
     give: "Continue to donation",
     giveMonthly: "Support on Catarse",
     externalPayment:
@@ -287,6 +291,8 @@ export const institutional = {
     once: "Don ponctuel",
     monthly: "Don mensuel",
     other: "Autre montant",
+    channelOnce: "Canal officiel · PayPal",
+    channelMonthly: "Canal officiel · Catarse",
     give: "Continuer vers le don",
     giveMonthly: "Soutenir sur Catarse",
     externalPayment:
