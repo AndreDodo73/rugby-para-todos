@@ -203,6 +203,9 @@
 .service-card {
   background: var(--charcoal);
   color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .service-image {
   aspect-ratio: 370 / 232;
@@ -229,6 +232,9 @@
   transform: scale(1.045);
 }
 .service-copy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 32px 28px;
 }
 .service-copy h3 {
@@ -268,7 +274,8 @@
 .service-copy .text-link {
   color: var(--yellow);
   border-bottom-color: #777;
-  margin-top: 26px;
+  margin-top: auto;
+  padding-top: 26px;
   gap: 12px;
   line-height: 1.5;
 }
@@ -360,13 +367,12 @@
   max-width: 1224px;
   margin: auto;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 440px);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 460px);
   gap: clamp(40px, 6vw, 88px);
-  align-items: start;
+  align-items: center;
 }
 .support-copy {
   max-width: 520px;
-  padding-top: 8px;
 }
 .support-options h2 {
   margin-bottom: 24px;
@@ -415,18 +421,11 @@
   background: var(--ink);
   color: var(--yellow);
 }
-.donation-channel {
-  margin: 18px 0 0;
-  font: 700 11px/1.4 "Montserrat:Bold";
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #624000;
-}
 .donation-amounts {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
-  margin: 16px 0 22px;
+  margin: 20px 0 22px;
 }
 .donation-amounts button {
   border: 1px solid rgb(21 22 21 / 28%);
@@ -458,9 +457,21 @@
   padding-bottom: 0;
   color: inherit;
 }
+.donation-submit .ext-icon,
 .donation-submit .arrow {
   padding-bottom: 0;
   color: inherit;
+}
+.ext-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  flex-shrink: 0;
+}
+.document-link .ext-icon {
+  width: 22px;
+  height: 22px;
+  margin-left: auto;
 }
 .donation-submit:hover {
   background: #000;
@@ -706,6 +717,9 @@
   }
   .donation-amounts {
     grid-template-columns: 1fr 1fr;
+  }
+  .support-options-grid {
+    align-items: start;
   }
   .support-other {
     margin-top: 50px;

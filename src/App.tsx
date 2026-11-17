@@ -216,10 +216,20 @@ const supportersAll = [
   "d51f0.png",
 ];
 const presentLogos = new Set([
-  "463ef.png",
-  "2575f.png",
-  "c264d.png",
   "05b7e.png",
+  "2406a.png",
+  "2575f.png",
+  "463ef.png",
+  "51872.png",
+  "64b7d.png",
+  "680ac.png",
+  "893eb.png",
+  "9108e.png",
+  "91eb8.png",
+  "a8b5c.png",
+  "c264d.png",
+  "d2fa6.png",
+  "d51f0.png",
 ]);
 const sponsors = sponsorsAll.filter((logo) => presentLogos.has(logo));
 const supporters = supportersAll.filter((logo) => presentLogos.has(logo));
@@ -227,11 +237,7 @@ const storyImages = ["efd1c.png", "054c1.png", "6d6d5.png", "36764.png"];
 const projectImages = ["38e25.png", "8b5c7.png", "dcc66.png", "46562.png"];
 
 function Arrow() {
-  return (
-    <span aria-hidden="true" className="arrow">
-      ↗
-    </span>
-  );
+  return <img className="ext-icon" src={`${A}/ext-link.svg`} alt="" aria-hidden="true" />;
 }
 
 export default function App() {
@@ -595,18 +601,16 @@ export default function App() {
       <MethodologySection language={language} />
       <ServicesSection language={language} />
 
-      {supporters.length > 1 ? (
-        <section className="supporters">
-          <p className="eyebrow">Apoiadores institucionais</p>
-          <div className="supporter-grid reveal">
-            {supporters.map((logo) => (
-              <div key={logo}>
-                <img src={`${A}/${logo}`} alt="" />
-              </div>
-            ))}
-          </div>
-        </section>
-      ) : null}
+      <section className="supporters">
+        <p className="eyebrow">Apoiadores institucionais</p>
+        <div className="supporter-grid reveal">
+          {supporters.map((logo) => (
+            <div key={logo}>
+              <img src={`${A}/${logo}`} alt="" />
+            </div>
+          ))}
+        </div>
+      </section>
 
       <GovernanceSection language={language} />
 

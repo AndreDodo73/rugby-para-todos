@@ -2,6 +2,10 @@ import { useState, type ReactNode } from "react";
 import { documents, institutional, official, type SiteLanguage } from "../content/institutional";
 import "./InstitutionalSections.css";
 
+function ExtIcon() {
+  return <img className="ext-icon" src="/assets/ext-link.svg" alt="" aria-hidden="true" />;
+}
+
 function Outbound({
   href,
   children,
@@ -14,9 +18,7 @@ function Outbound({
   return (
     <a href={href} className={className} target="_blank" rel="noopener noreferrer">
       <span className="link-label">{children}</span>
-      <span className="arrow" aria-hidden="true">
-        ↗
-      </span>
+      <ExtIcon />
     </a>
   );
 }
@@ -108,10 +110,8 @@ export function ServicesSection({ language }: { language: SiteLanguage }) {
                 className="text-link"
                 href={`mailto:rugbyparatodos@rugbyparatodos.org.br?subject=${encodeURIComponent(`${t.serviceTitle} ${title}`)}`}
               >
-                {t.contactService}
-                <span className="arrow" aria-hidden="true">
-                  ↗
-                </span>
+                <span className="link-label">{t.contactService}</span>
+                <ExtIcon />
               </a>
             </div>
           </article>
@@ -190,7 +190,6 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
               {t.monthly}
             </button>
           </div>
-          <p className="donation-channel">{isMonthly ? t.channelMonthly : t.channelOnce}</p>
           {isMonthly ? (
             <p className="monthly-description">{t.monthlyBody}</p>
           ) : (
@@ -232,9 +231,7 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
             href="mailto:rugbyparatodos@rugbyparatodos.org.br?subject=Trabalhe%20conosco"
           >
             <span className="link-label">{t.contactService}</span>
-            <span className="arrow" aria-hidden="true">
-              ↗
-            </span>
+            <ExtIcon />
           </a>
         </div>
       </div>

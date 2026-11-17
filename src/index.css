@@ -644,8 +644,20 @@ footer button {
   padding-bottom: 8px;
   border-bottom: 1px solid currentColor;
 }
+.text-link .ext-icon,
 .text-link .arrow {
   padding-bottom: 8px;
+  flex-shrink: 0;
+}
+.ext-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  object-fit: contain;
+}
+.pill .ext-icon {
+  width: 18px;
+  height: 18px;
 }
 .story-tabs {
   grid-column: 1 / -1;
