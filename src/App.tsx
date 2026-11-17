@@ -595,16 +595,18 @@ export default function App() {
       <MethodologySection language={language} />
       <ServicesSection language={language} />
 
-      <section className="supporters">
-        <p className="eyebrow">Apoiadores institucionais</p>
-        <div className="supporter-grid reveal">
-          {supporters.map((logo) => (
-            <div key={logo}>
-              <img src={`${A}/${logo}`} alt="" />
-            </div>
-          ))}
-        </div>
-      </section>
+      {supporters.length > 1 ? (
+        <section className="supporters">
+          <p className="eyebrow">Apoiadores institucionais</p>
+          <div className="supporter-grid reveal">
+            {supporters.map((logo) => (
+              <div key={logo}>
+                <img src={`${A}/${logo}`} alt="" />
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <GovernanceSection language={language} />
 
