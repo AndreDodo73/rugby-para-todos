@@ -14,14 +14,14 @@ export const official = {
   social: [
     { name: "Instagram", href: "https://www.instagram.com/rugbyparatodos/", icon: "c381b.svg" },
     {
-      name: "LinkedIn",
-      href: "https://www.linkedin.com/company/institutorugbyparatodos/",
-      icon: "d0cd2.svg",
-    },
-    {
       name: "YouTube",
       href: "https://www.youtube.com/channel/UCAe9PXJkXKLWcQ3cRD8jG_w",
       icon: "9d4f7.svg",
+    },
+    {
+      name: "LinkedIn",
+      href: "https://www.linkedin.com/company/institutorugbyparatodos/",
+      icon: "d0cd2.svg",
     },
     { name: "Facebook", href: "https://www.facebook.com/rugbyparatodos", icon: "976d6.svg" },
   ],

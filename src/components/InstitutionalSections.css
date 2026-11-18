@@ -679,7 +679,8 @@
   height: 52px;
   display: block;
   flex-shrink: 0;
-  object-fit: contain;
+  border-radius: 50%;
+  object-fit: cover;
   transition: transform 0.3s var(--ease-out);
 }
 .social-channel:hover img {
