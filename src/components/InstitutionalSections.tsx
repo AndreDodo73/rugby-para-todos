@@ -250,6 +250,7 @@ export function ShopSection({ language }: { language: SiteLanguage }) {
           className="stories-nav stories-nav-next"
           onClick={() => scrollRail(1)}
           aria-label={t.shopNext}
+          title={t.shopNext}
         >
           ›
         </button>
