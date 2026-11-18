@@ -736,19 +736,19 @@ footer button {
   background: var(--ink);
   text-align: left;
 }
-.project-card img {
+.project-card > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.55s ease;
 }
-.project-card:hover img {
+.project-card:hover > img {
   transform: scale(1.06);
 }
-.project-card:focus-visible img {
+.project-card:focus-visible > img {
   transform: scale(1.06);
 }
-.project-card.active img {
+.project-card.active > img {
   transform: scale(1.06);
 }
 .project-card::after {

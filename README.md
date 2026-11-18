@@ -1,20 +1,51 @@
 # Instituto Rugby Para Todos
 
-Prévia do site novo. A stack é Vite, React, TypeScript e Tailwind.
+Site institucional novo do [Instituto Rugby Para Todos](https://www.rugbyparatodos.org.br/).
+
+**Este repositório é independente do FORGEE / Projetoworkshop.**  
+Caminho canônico: `/agent/repos/rugby-para-todos`
+
+## Stack
+
+Vite · React · TypeScript · Tailwind CSS v4 · pnpm
 
 ```bash
-pnpm install
+cd /agent/repos/rugby-para-todos
+pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Abre em http://localhost:5174. A raiz redireciona para `/pt`. Inglês e francês ficam em `/en` e `/fr`.
+Abre em http://localhost:5174 — raiz redireciona para `/pt` (`/en`, `/fr`).
 
-Os textos institucionais foram lidos em [rugbyparatodos.org.br](https://www.rugbyparatodos.org.br/) em 16 de novembro de 2026. O que a página não publica aparece como pendente. Inglês e francês são tradução para revisão editorial.
+## Estrutura
 
-## Integrações que este repositório não fecha
+```
+src/
+  App.tsx                 # página principal
+  components/             # Hero, seções institucionais, animação
+  content/                # textos e links oficiais (institutional.ts)
+  styles/                 # fonts.css, theme.css
+public/
+  assets/                 # imagens e SVGs (hashes do Make)
+  media/                  # hero-rugby.mp4 + poster
+  fonts/                  # Hind + Montserrat (OFL)
+docs/                     # notas e referências de handoff
+guidelines/               # Guidelines.md (continuidade Cursor)
+```
 
-- Doação: os botões do site atual apontam para Catarse, PayPal e Abrace uma Causa. Este site só liga esses endereços. Não há confirmação de pagamento.
-- Loja: o endereço publicado é o Mercado Shops. Não há catálogo, preço nem checkout aqui.
-- Contato: o formulário abre o e-mail do aparelho. Não há servidor de envio.
-- Newsletter: o formulário do site atual fica em um iframe próprio e não foi reimplementado.
-- CMS: projetos, histórias, produtos, documentos, notícias e canais de apoio estão em `src/content/site.ts`, separados dos componentes.
+## Documentos de handoff (Make)
+
+- `AGENTS.md` · `CLAUDE.md` · `design-system.md` · `ATTRIBUTIONS.md`
+- `guidelines/Guidelines.md`
+- `MISSING-ASSETS.md` — o que ainda depende de export do Make
+
+## O que este site não fecha
+
+- Pagamentos: só abre PayPal / Catarse oficiais (sem confirmação local)
+- Loja: link Mercado Shops (sem checkout)
+- Newsletter: abre formulário oficial externo
+- Sem inventar números, depoimentos ou logos sem origem
+
+## Preview
+
+Com o `pnpm dev` no ar, um tunnel Cloudflare temporário pode expor a porta 5174.

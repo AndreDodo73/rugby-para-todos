@@ -237,7 +237,12 @@ const storyImages = ["efd1c.png", "054c1.png", "6d6d5.png", "36764.png"];
 const projectImages = ["38e25.png", "8b5c7.png", "dcc66.png", "46562.png"];
 
 function Arrow() {
-  return <img className="ext-icon" src={`${A}/ext-link.svg`} alt="" aria-hidden="true" />;
+  // Internal UI chevron — Keep Make external-link SVG only on Outbound links.
+  return (
+    <span aria-hidden="true" className="arrow">
+      ↗
+    </span>
+  );
 }
 
 export default function App() {

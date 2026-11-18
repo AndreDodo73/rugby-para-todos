@@ -339,10 +339,14 @@
 .document-index {
   font: 700 11px "Montserrat:Bold";
   color: #a45b00;
+  min-width: 1.75rem;
+  margin-right: 4px;
+  flex-shrink: 0;
 }
-.document-link > span:nth-child(2) {
+.document-title {
   font: 600 15px/1.4 "Montserrat:SemiBold";
   flex: 1;
+  min-width: 0;
 }
 .document-link small {
   display: block;

@@ -15,10 +15,12 @@ function Outbound({
   children: ReactNode;
   className?: string;
 }) {
+  const plainLabel = typeof children === "string" || typeof children === "number";
+  const hideIcon = className.includes("social-channel");
   return (
     <a href={href} className={className} target="_blank" rel="noopener noreferrer">
-      <span className="link-label">{children}</span>
-      <ExtIcon />
+      {plainLabel ? <span className="link-label">{children}</span> : children}
+      {hideIcon ? null : <ExtIcon />}
     </a>
   );
 }
@@ -141,9 +143,7 @@ export function GovernanceSection({ language }: { language: SiteLanguage }) {
             <p>{t.ombudsmanBody}</p>
             <a href="mailto:ouvidoria@rugbyparatodos.org.br">
               ouvidoria@rugbyparatodos.org.br
-              <span className="arrow" aria-hidden="true">
-                ↗
-              </span>
+              <ExtIcon />
             </a>
           </div>
         </div>
@@ -154,8 +154,8 @@ export function GovernanceSection({ language }: { language: SiteLanguage }) {
               className="document-link"
               href={`${official.home}auxiliares/modulos/conteudo/pdf/${document.file}`}
             >
-              <span className="document-index">0{i + 1}</span>
-              <span>
+              <span className="document-index">{`0${i + 1}`}</span>
+              <span className="document-title">
                 {t.documentLabels[i]}
                 <small>PDF · {document.year} · PT-BR</small>
               </span>
