@@ -196,24 +196,21 @@ const copy = {
 // Make hash lists. Only files present in public/assets are rendered
 // (missing logos 404 as HTML via Vite SPA fallback and break the strip).
 const sponsorsAll = [
-  "51872.png",
-  "d2fa6.png",
-  "680ac.png",
-  "463ef.png",
-  "2d58f.png",
-  "2575f.png",
-  "20ccc.png",
-  "c264d.png",
-  "2406a.png",
+  "51872.png", // Cultura / institucional
+  "d2fa6.png", // Ministério / governo
+  "680ac.png", // Lei de Incentivo
+  "463ef.png", // Montana
+  "2575f.png", // CSN (único)
+  "c264d.png", // Outback variante patrocínio
+  "2406a.png", // Yaman / outro
 ];
 const supportersAll = [
-  "05b7e.png",
-  "a8b5c.png",
-  "91eb8.png",
-  "64b7d.png",
-  "893eb.png",
-  "9108e.png",
-  "d51f0.png",
+  "05b7e.png", // Einstein
+  "a8b5c.png", // Rede Esporte
+  "64b7d.png", // CSN (único)
+  "893eb.png", // Vita
+  "9108e.png", // Outback
+  "d51f0.png", // Facchini
 ];
 const presentLogos = new Set([
   "05b7e.png",
@@ -225,27 +222,26 @@ const presentLogos = new Set([
   "680ac.png",
   "893eb.png",
   "9108e.png",
-  "91eb8.png",
   "a8b5c.png",
   "c264d.png",
   "d2fa6.png",
   "d51f0.png",
 ]);
 const sponsors = sponsorsAll.filter((logo) => presentLogos.has(logo));
-const supporters = supportersAll.filter((logo) => presentLogos.has(logo));
+const supporters = [...new Set(supportersAll.filter((logo) => presentLogos.has(logo)))];
 const storyImages = ["efd1c.png", "054c1.png", "6d6d5.png", "36764.png"];
 const projectImages = ["38e25.png", "8b5c7.png", "dcc66.png", "46562.png"];
 
 function Arrow() {
-  // Internal navigation arrow — institutional orange mark (not the outbound icon).
+  // Make/Figma line arrow (↗) — color via currentColor (laranja ou branco).
   return (
     <span aria-hidden="true" className="arrow">
       <svg viewBox="0 0 24 24" width="18" height="18" focusable="false">
         <path
-          d="M8.5 15.5 15.2 8.8M10.2 8.5h5.3v5.3"
+          d="M7 17 17 7M9 7h8v8"
           fill="none"
           stroke="currentColor"
-          strokeWidth="1.8"
+          strokeWidth="1.7"
           strokeLinecap="round"
           strokeLinejoin="round"
         />

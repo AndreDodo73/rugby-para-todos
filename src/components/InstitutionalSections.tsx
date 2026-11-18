@@ -3,7 +3,22 @@ import { documents, institutional, official, type SiteLanguage } from "../conten
 import "./InstitutionalSections.css";
 
 function ExtIcon() {
-  return <img className="ext-icon" src="/assets/ext-link.svg" alt="" aria-hidden="true" />;
+  // Make/Figma: quadrado laranja institucional + seta branca ↗
+  return (
+    <span className="ext-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="18" height="18" focusable="false">
+        <rect width="24" height="24" rx="2" fill="currentColor" />
+        <path
+          d="M8 16 16 8M10 8h6v6"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="1.7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </span>
+  );
 }
 
 function Outbound({
