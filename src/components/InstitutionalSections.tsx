@@ -29,7 +29,7 @@ export function VideoStories({ language }: { language: SiteLanguage }) {
   const t = institutional[language];
   return (
     <section className="video-stories" aria-labelledby="video-stories-title">
-      <img src="/assets/f3cae.png" alt="" loading="lazy" />
+      <img src="/assets/rpt-em-movimento.jpg" alt="" loading="lazy" />
       <div className="video-stories-copy reveal">
         <p className="eyebrow light">{t.contentEyebrow}</p>
         <h2 id="video-stories-title">{t.videoTitle}</h2>
@@ -46,7 +46,7 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
   return (
     <section className="methodology restored-section" id="metodologia">
       <div className="methodology-awards reveal">
-        <img src="/assets/df2ec.png" alt={t.awards} loading="lazy" />
+        <img src="/assets/premios.jpg" alt={t.awards} loading="lazy" />
         <p className="eyebrow">{t.awards}</p>
         <h3>{t.awardsSubtitle}</h3>
         <ol className="award-list">

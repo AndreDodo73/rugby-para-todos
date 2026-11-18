@@ -364,7 +364,7 @@ export default function App() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label="Rugby Para Todos — início"
         >
-          <img src={`${A}/ff39b.png`} alt="Instituto Rugby Para Todos" />
+          <img src={`${A}/logo-horizontal.png`} alt="Instituto Rugby Para Todos" />
         </button>
         <nav className={menuOpen ? "nav open" : "nav"} aria-label="Navegação principal">
           {t.nav.map((label, i) => (
@@ -390,9 +390,9 @@ export default function App() {
               className={extra.links.some((link) => link.id === activeSection) ? "active" : ""}
             >
               {extra.more}
-              <span aria-hidden="true">+</span>
+              <span className="nav-more-chevron" aria-hidden="true" />
             </summary>
-            <div className="nav-extra">
+            <div className="nav-extra" role="group" aria-label={extra.more}>
               {extra.links.map((link) => (
                 <button
                   key={link.id}
