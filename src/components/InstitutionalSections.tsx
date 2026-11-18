@@ -170,6 +170,12 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
             alt="Leila Silva com o Troféu Brasil Rugby"
             loading="lazy"
           />
+          <img
+            className="awards-shot awards-shot-field"
+            src="/assets/stories/lara.png"
+            alt="Jogadoras em partida do Rugby Para Todos"
+            loading="lazy"
+          />
         </div>
         <div className="awards-copy">
           <p className="eyebrow">{t.awards}</p>

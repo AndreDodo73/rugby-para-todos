@@ -252,29 +252,34 @@
 }
 .awards-band {
   display: grid;
-  grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
-  gap: clamp(28px, 4.5vw, 48px);
-  align-items: start;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(28px, 4vw, 48px);
+  align-items: stretch;
   max-width: 1224px;
 }
 .awards-gallery {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
   gap: 12px;
+  height: 100%;
+  min-height: 0;
   margin: 0;
 }
 .awards-gallery img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  height: auto;
+  height: 100%;
+  min-height: 0;
   object-fit: cover;
   display: block;
 }
 .awards-shot-lima {
-  object-position: center 22%;
+  object-position: center 28%;
 }
 .awards-shot-leila {
-  object-position: center 18%;
+  object-position: center 20%;
+}
+.awards-shot-field {
+  object-position: center 40%;
 }
 .awards-copy h3 {
   margin: 0 0 28px;
@@ -1071,8 +1076,17 @@
     border-top: 3px solid var(--orange);
   }
   .awards-gallery {
-    grid-template-rows: none;
+    height: auto;
+    grid-template-rows: auto auto;
     grid-template-columns: 1fr 1fr;
+  }
+  .awards-gallery img {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+  .awards-gallery img:last-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 9;
   }
   .method-values {
     grid-template-columns: repeat(2, minmax(0, 1fr));
