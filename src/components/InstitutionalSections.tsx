@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   awardsList,
   documents,
@@ -47,9 +47,74 @@ function Outbound({
 
 export function VideoStories({ language }: { language: SiteLanguage }) {
   const t = institutional[language];
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
+
+  const playVideo = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const playPromise = video.play();
+    if (playPromise) {
+      playPromise
+        .then(() => setPlaying(true))
+        .catch(() => setPlaying(false));
+    }
+  };
+
+  const stopVideo = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.pause();
+    video.currentTime = 0;
+    setPlaying(false);
+  };
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || !window.matchMedia("(hover: none)").matches) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.45) {
+          playVideo();
+        } else {
+          stopVideo();
+        }
+      },
+      { threshold: [0, 0.45, 0.8] },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="video-stories" aria-labelledby="video-stories-title">
-      <img src="/assets/rpt-em-movimento.jpg" alt="" loading="lazy" />
+    <section
+      ref={sectionRef}
+      className={`video-stories${playing ? " is-playing" : ""}`}
+      aria-labelledby="video-stories-title"
+      onMouseEnter={playVideo}
+      onMouseLeave={stopVideo}
+      onFocusCapture={playVideo}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+          stopVideo();
+        }
+      }}
+    >
+      <video
+        ref={videoRef}
+        className="video-stories-media"
+        src="/assets/boy-running-rugby.mp4"
+        poster="/assets/boy-running-rugby-poster.jpg"
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+      />
       <div className="video-stories-copy reveal">
         <p className="eyebrow light">{t.contentEyebrow}</p>
         <h2 id="video-stories-title">{t.videoTitle}</h2>
