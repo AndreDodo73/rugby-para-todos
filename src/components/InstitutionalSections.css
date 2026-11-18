@@ -675,12 +675,15 @@
   border-bottom: 0;
 }
 .social-channel img {
-  width: 60px;
-  height: 60px;
+  width: 52px;
+  height: 52px;
+  display: block;
+  flex-shrink: 0;
+  object-fit: contain;
   transition: transform 0.3s var(--ease-out);
 }
 .social-channel:hover img {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
 }
 .social-channel .arrow {
   display: none;

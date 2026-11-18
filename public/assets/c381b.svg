@@ -1,1 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Instagram"><path fill="#f39200" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m9.65 1.5a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10m0 1.8A3.2 3.2 0 1 1 12 16.2 3.2 3.2 0 0 1 12 8.8z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Instagram">
+  <!-- Make: rounded square orange + white camera -->
+  <rect width="48" height="48" rx="12" fill="#f39200"/>
+  <rect x="12" y="12" width="24" height="24" rx="7" fill="none" stroke="#fff" stroke-width="2.4"/>
+  <circle cx="24" cy="24" r="6.2" fill="none" stroke="#fff" stroke-width="2.4"/>
+  <circle cx="32.5" cy="15.5" r="2" fill="#fff"/>
+</svg>

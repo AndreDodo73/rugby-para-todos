@@ -1128,12 +1128,16 @@ footer {
 }
 .social-links a {
   display: block;
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  overflow: hidden;
 }
 .social-links img {
   width: 100%;
   height: 100%;
+  display: block;
+  object-fit: contain;
 }
 .back-top {
   width: 54px;
