@@ -221,7 +221,6 @@ export function ShopSection({ language }: { language: SiteLanguage }) {
         </div>
         <p>{t.shopSectionBody}</p>
       </div>
-      <p className="shop-mock-note reveal">{t.shopMockNote}</p>
       <div className="shop-rail-wrap">
         <button type="button" className="stories-nav" onClick={() => scrollRail(-1)} aria-label={t.shopPrev}>
           ‹
@@ -237,6 +236,7 @@ export function ShopSection({ language }: { language: SiteLanguage }) {
                 <div className="shop-card-copy">
                   <h3>{name}</h3>
                   <p>{product.blurb[language]}</p>
+                  <p className="shop-card-shipping">{t.shopShipping}</p>
                   <Outbound className="shop-card-cta" href={shopWhatsAppHref(name, language)}>
                     {t.shopCardCta}
                   </Outbound>
