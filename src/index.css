@@ -671,31 +671,9 @@ footer button {
   padding-bottom: 8px;
   border-bottom: 1px solid currentColor;
 }
-.text-link .ext-icon,
 .text-link .arrow {
   padding-bottom: 8px;
   flex-shrink: 0;
-}
-.ext-icon {
-  width: 18px;
-  height: 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  color: var(--orange);
-  line-height: 0;
-}
-.ext-icon svg,
-.ext-icon img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-.pill .ext-icon {
-  width: 18px;
-  height: 18px;
 }
 .pill.light-pill .arrow,
 .dark-pill .arrow {

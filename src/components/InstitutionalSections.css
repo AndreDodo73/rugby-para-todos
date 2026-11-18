@@ -311,6 +311,9 @@
   gap: 12px;
   line-height: 1.5;
 }
+.service-copy .text-link .arrow {
+  color: var(--orange);
+}
 .service-card:nth-child(2) {
   transition-delay: 100ms;
 }
@@ -349,6 +352,11 @@
   font: 600 14px/1.5 "Montserrat:SemiBold";
   margin-top: 20px;
   overflow-wrap: anywhere;
+  color: inherit;
+}
+.ombudsman > a .arrow {
+  color: var(--orange);
+  flex-shrink: 0;
 }
 .document-link {
   display: flex;
@@ -523,30 +531,20 @@
   padding-bottom: 0;
   color: inherit;
 }
-.donation-submit .ext-icon,
 .donation-submit .arrow {
   padding-bottom: 0;
   color: inherit;
 }
-.ext-icon {
-  width: 18px;
-  height: 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+.document-link .arrow {
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
   color: var(--orange);
-  line-height: 0;
+  flex-shrink: 0;
 }
-.ext-icon svg {
-  display: block;
+.document-link .arrow svg {
   width: 100%;
   height: 100%;
-}
-.document-link .ext-icon {
-  width: 22px;
-  height: 22px;
-  margin-left: auto;
 }
 .donation-submit:hover {
   background: #000;
@@ -639,9 +637,6 @@
   color: var(--orange);
   flex-shrink: 0;
   transition: transform 0.3s var(--ease-out);
-}
-.news-link .ext-icon {
-  flex-shrink: 0;
 }
 .news-link:hover .arrow {
   transform: translate(3px, -3px);
