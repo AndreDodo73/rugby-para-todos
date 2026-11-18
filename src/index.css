@@ -401,8 +401,10 @@ footer button {
 }
 .section-intro h2 {
   font-size: clamp(38px, 4.1vw, 64px);
-  line-height: 1;
+  line-height: 1.12;
   max-width: 740px;
+  overflow: visible;
+  padding-bottom: 0.06em;
 }
 .section-intro > p {
   font-size: 18px;
@@ -574,93 +576,161 @@ footer button {
 .stories {
   background: var(--ink);
   color: white;
-  padding: 120px 0 90px;
+  padding: 120px 0 72px;
 }
 .section-intro.on-dark > p {
   color: #aaa;
 }
-.stories-intro {
-  text-align: center;
-  display: grid;
-  gap: 18px;
-  max-width: 820px;
-  margin: 0 auto 48px;
+.story-stage {
+  max-width: 1224px;
+  margin: auto;
   padding: 0 24px;
-}
-.stories-intro > div,
-.stories-intro > p {
-  max-width: none;
-}
-.stories-carousel {
-  position: relative;
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 8px;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 12px;
-}
-.stories-rail {
-  display: flex;
-  gap: 14px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  padding: 8px 4px 18px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--orange) transparent;
-}
-.stories-rail:focus-visible {
-  outline: 2px solid var(--orange);
-  outline-offset: 4px;
-}
-.story-portrait {
+  grid-template-columns: 1.25fr 0.75fr;
   position: relative;
-  flex: 0 0 clamp(200px, 22vw, 270px);
-  aspect-ratio: 270 / 390;
-  overflow: hidden;
-  scroll-snap-align: start;
-  background: #222;
+  align-items: end;
 }
-.story-portrait img {
+.story-photo {
+  height: 640px;
+  position: relative;
+  overflow: hidden;
+}
+.story-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.55), transparent 48%);
+}
+.story-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: saturate(0.85);
-  transition: transform 0.55s var(--ease-out), filter 0.4s;
+  object-position: center top;
+  animation: storyIn 0.7s var(--ease-out) both;
 }
-.story-portrait:hover img {
-  transform: scale(1.04);
-  filter: saturate(1);
+@keyframes storyIn {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
-.story-portrait span {
+.story-count {
   position: absolute;
-  left: 12px;
-  bottom: 14px;
+  z-index: 2;
+  left: 28px;
+  bottom: 24px;
+  font: 600 11px "Montserrat:SemiBold";
+  letter-spacing: 0.14em;
+}
+.story-card {
+  background: var(--yellow);
+  color: var(--ink);
+  padding: 48px 42px 42px;
+  min-height: 420px;
+  margin-left: -34px;
+  position: relative;
+  z-index: 3;
+}
+.story-card blockquote {
+  font: 700 clamp(26px, 2.2vw, 36px)/1.22 "Montserrat:Bold";
+  letter-spacing: -0.03em;
+  margin: 28px 0;
+  animation: storyTextIn 0.55s var(--ease-out) both;
+}
+.story-card > p:not(.eyebrow) {
+  font-size: 18px;
+  line-height: 1.55;
+}
+.story-tabs-wrap {
+  max-width: 1224px;
+  margin: 18px auto 0;
+  padding: 0 12px 0 24px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 6px;
+}
+.story-tabs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 4px 4px 10px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--orange) transparent;
+}
+.story-tabs button {
+  flex: 0 0 168px;
+  height: 108px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  scroll-snap-align: start;
+  border: 1px solid #444;
+  background: #222;
+  opacity: 0.55;
+  transition:
+    opacity 0.25s,
+    border-color 0.25s;
+}
+.story-tabs button.active,
+.story-tabs button:hover {
+  opacity: 1;
+  border-color: var(--orange);
+}
+.story-tabs img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(0.55);
+}
+.story-tabs button.active img,
+.story-tabs button:hover img {
+  filter: grayscale(0);
+}
+.story-tabs button::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease-out);
+}
+.story-tabs button.active::after {
+  transform: scaleX(1);
+}
+.story-tabs span {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
   z-index: 1;
-  padding: 8px 12px;
-  background: #111;
-  color: #fff;
-  font: 700 13px/1.2 "Montserrat:Bold";
+  color: white;
+  font: 700 12px/1.2 "Montserrat:Bold";
+  text-align: left;
+  text-shadow: 0 1px 6px rgb(0 0 0 / 80%);
 }
 .stories-nav {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border: 0;
   background: transparent;
   color: #bbb;
-  font-size: 42px;
+  font-size: 36px;
   line-height: 1;
   padding: 0;
   cursor: pointer;
-  transition: color 0.2s;
 }
 .stories-nav:hover,
-.stories-nav:focus-visible {
-  color: #fff;
-}
+.stories-nav:focus-visible,
 .stories-nav-next {
   color: #fff;
 }
@@ -707,12 +777,32 @@ footer button {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
-.project-grid-captacao {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+.project-rail-wrap {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 clamp(12px, 2vw, 24px);
-  gap: 10px;
+  padding: 0 8px;
+}
+.project-rail {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 4px 4px 16px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--orange) #eee;
+}
+.project-nav {
+  color: var(--ink);
+}
+.project-rail .project-card {
+  flex: 0 0 min(320px, 78vw);
+  height: 480px;
+  scroll-snap-align: start;
 }
 .project-card {
   height: 610px;
@@ -726,8 +816,40 @@ footer button {
   text-decoration: none;
   display: block;
 }
-.project-grid-captacao .project-card {
-  height: clamp(420px, 62vw, 560px);
+.project-content-rail {
+  inset: auto 20px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.project-content-rail h3 {
+  margin: 0;
+  line-height: 1.15;
+  font-size: clamp(26px, 2vw, 34px);
+}
+.project-content-rail .project-brand,
+.project-content-rail p {
+  max-height: none;
+  opacity: 1;
+  margin: 0;
+  overflow: visible;
+  font-size: 15px;
+  line-height: 1.45;
+  max-width: 26ch;
+}
+.project-content-rail .project-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font: 700 11px/1.3 "Montserrat:Bold";
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.project-meta .is-running {
+  color: #fff;
+  border-color: rgb(255 255 255 / 45%);
 }
 .project-card > img {
   width: 100%;
@@ -806,7 +928,8 @@ footer button {
 }
 .project-content h3 {
   font-size: clamp(26px, 2.2vw, 38px);
-  line-height: 1.05;
+  line-height: 1.15;
+  padding-bottom: 0.04em;
   transition: transform 0.55s var(--ease-out);
 }
 .project-content p {
@@ -932,13 +1055,11 @@ footer button {
 @keyframes headingEnter {
   from {
     opacity: 0;
-    transform: translateY(32px);
-    clip-path: inset(0 0 35%);
+    transform: translateY(18px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-    clip-path: inset(0);
   }
 }
 .motion-ready .project-card.reveal:nth-child(2) {
@@ -1273,23 +1394,26 @@ footer {
   .metric strong {
     font-size: clamp(56px, 10vw, 88px);
   }
-  .stories-carousel {
+  .story-stage {
     grid-template-columns: 1fr;
-    gap: 0;
+  }
+  .story-photo {
+    height: 62vh;
+  }
+  .story-card {
+    margin: -48px 24px 0;
+    min-height: 0;
   }
   .stories-nav {
     display: none;
   }
-  .story-portrait {
-    flex-basis: 220px;
+  .story-tabs-wrap,
+  .project-rail-wrap {
+    grid-template-columns: 1fr;
+    padding-inline: 16px;
   }
-  .project-grid,
-  .project-grid-captacao {
-    grid-template-columns: 1fr 1fr;
-  }
-  .project-card,
-  .project-grid-captacao .project-card {
-    height: 520px;
+  .project-rail .project-card {
+    height: 460px;
   }
   .community {
     grid-template-columns: 1fr;
@@ -1397,28 +1521,28 @@ footer {
     letter-spacing: 0.06em;
   }
   .stories {
-    padding: 85px 0;
+    padding: 85px 0 48px;
   }
-  .stories-intro {
-    margin-bottom: 28px;
-    text-align: left;
+  .story-photo {
+    height: 460px;
   }
-  .stories-rail {
-    padding-inline: 16px;
+  .story-card {
+    margin: -36px 16px 0;
+    padding: 32px 24px;
   }
-  .story-portrait {
-    flex-basis: 78vw;
+  .story-card blockquote {
+    font-size: 26px;
+  }
+  .story-tabs button {
+    flex-basis: 148px;
+    height: 92px;
   }
   .projects {
-    padding: 85px 0 0;
+    padding: 85px 0 24px;
   }
-  .project-grid,
-  .project-grid-captacao {
-    grid-template-columns: 1fr;
-  }
-  .project-card,
-  .project-grid-captacao .project-card {
-    height: 520px;
+  .project-rail .project-card {
+    flex-basis: 84vw;
+    height: 460px;
   }
   .project-content p {
     max-height: 100px;
@@ -1495,7 +1619,7 @@ footer {
   .motion-ready .reveal-image img {
     clip-path: none !important;
   }
-  .story-portrait img,
+  .story-photo img,
   .motion-ready .reveal *,
   .community-collage img {
     animation: none !important;

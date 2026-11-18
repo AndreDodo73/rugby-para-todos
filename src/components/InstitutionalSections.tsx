@@ -65,27 +65,6 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
   const t = institutional[language];
   return (
     <section className="methodology restored-section" id="metodologia">
-      <div className="methodology-awards reveal">
-        <img src="/assets/premios.jpg" alt={t.awards} loading="lazy" />
-        <p className="eyebrow">{t.awards}</p>
-        <h3>{t.awardsSubtitle}</h3>
-        <ol className="award-list">
-          {awardsList.map((award) => (
-            <li key={award.title}>
-              <span>{award.year}</span>
-              <div>
-                <p>
-                  <strong>{award.title}</strong>
-                </p>
-                <p className="award-credit">{award.credit}</p>
-                <Outbound className="award-link" href={award.href}>
-                  {t.seeLink}
-                </Outbound>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
       <div className="methodology-copy reveal">
         <p className="eyebrow">{t.methodEyebrow}</p>
         <h2>{t.methodTitle}</h2>
@@ -99,6 +78,29 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
           ))}
         </div>
         <p>{t.methodTeam}</p>
+      </div>
+      <div className="awards-panel reveal">
+        <div className="awards-intro">
+          <img src="/assets/premios.jpg" alt="" loading="lazy" />
+          <div>
+            <p className="eyebrow">{t.awards}</p>
+            <h3>{t.awardsSubtitle}</h3>
+          </div>
+        </div>
+        <ol className="award-grid">
+          {awardsList.map((award) => (
+            <li key={award.title}>
+              <span>{award.year}</span>
+              <p>
+                <strong>{award.title}</strong>
+              </p>
+              <p className="award-credit">{award.credit}</p>
+              <Outbound className="award-link" href={award.href}>
+                {t.seeLink}
+              </Outbound>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

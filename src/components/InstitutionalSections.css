@@ -18,7 +18,8 @@
 }
 .restored-section h2 {
   font-size: clamp(38px, 4.1vw, 64px);
-  line-height: 1;
+  line-height: 1.12;
+  padding-bottom: 0.04em;
 }
 .restored-section h3 {
   font-size: clamp(23px, 2.1vw, 30px);
@@ -151,49 +152,63 @@
 }
 
 .methodology {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 7vw;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
   background: var(--paper);
 }
-.methodology-awards > img {
-  width: 100%;
-  aspect-ratio: 469 / 304;
-  object-fit: cover;
-  margin-bottom: 32px;
+.methodology-copy {
+  max-width: 820px;
 }
-.methodology-awards .eyebrow {
-  margin-bottom: 10px;
-}
-.award-list {
-  list-style: none;
-  padding: 0;
-  margin-top: 24px;
-}
-.award-list li {
+.awards-panel {
   display: grid;
-  grid-template-columns: 86px 1fr;
-  gap: 18px;
-  padding: 18px 0;
-  border-bottom: 1px solid #ccc;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
 }
-.award-list li > span {
-  font: 700 12px/1.6 "Montserrat:Bold";
+.awards-intro img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  margin-bottom: 16px;
+}
+.awards-intro h3 {
+  margin: 0;
+  text-transform: none;
+}
+.award-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.award-grid li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 100%;
+  padding: 18px 18px 16px;
+  background: white;
+  border-top: 3px solid var(--orange);
+}
+.award-grid li > span {
+  font: 700 12px/1.4 "Montserrat:Bold";
   color: #a45b00;
 }
-.award-list p {
-  font-size: 16px;
+.award-grid p {
   margin: 0;
 }
-.award-list strong {
-  font: 700 15px/1.35 "Montserrat:Bold";
+.award-grid strong {
+  font: 700 14px/1.35 "Montserrat:Bold";
   text-transform: uppercase;
-  letter-spacing: 0.01em;
 }
 .award-credit {
-  margin-top: 6px !important;
   color: #555;
   font-size: 14px !important;
+  line-height: 1.45;
 }
 .award-link {
   margin-top: 10px;
@@ -449,10 +464,11 @@
   overflow: hidden;
 }
 .donation-panel-unified {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  padding: clamp(34px, 4.5vw, 56px);
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+  padding: clamp(28px, 3.5vw, 48px);
 }
 .donation-panel-unified::before {
   content: "";
@@ -462,10 +478,10 @@
   background: linear-gradient(90deg, var(--orange), var(--yellow));
 }
 .donation-intro {
-  max-width: 40rem;
-  padding-bottom: 28px;
-  margin-bottom: 28px;
-  border-bottom: 1px solid rgb(21 22 21 / 10%);
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 0;
 }
 .donation-intro .eyebrow {
   margin-bottom: 14px;
@@ -478,15 +494,18 @@
 }
 .donation-lead {
   margin: 0;
-  font: 500 clamp(17px, 1.4vw, 21px)/1.55 "Montserrat:Medium";
+  font: 500 clamp(17px, 1.4vw, 20px)/1.55 "Montserrat:Medium";
   color: #444;
-  max-width: 42ch;
+  max-width: 36ch;
 }
 .donation-controls {
   display: flex;
   flex-direction: column;
-  max-width: 520px;
+  max-width: none;
   min-width: 0;
+  padding: 22px;
+  background: #f7f4ef;
+  border-radius: 16px;
 }
 .donation-frequency {
   display: grid;
@@ -906,13 +925,14 @@
   .service-copy {
     width: 100%;
   }
-  .methodology,
-  .governance-grid {
+  .governance-grid,
+  .awards-panel,
+  .donation-panel-unified {
     grid-template-columns: 1fr;
-    gap: 55px;
+    gap: 28px;
   }
-  .methodology-awards > img {
-    max-height: 400px;
+  .award-grid {
+    grid-template-columns: 1fr;
   }
   .content-editorial {
     grid-template-columns: 1fr;

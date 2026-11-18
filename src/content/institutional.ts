@@ -138,6 +138,29 @@ export const storyPeople = [
   { name: "Gilmar", image: "stories/gilmar.jpg" },
 ];
 
+export const runningProjects = [
+  {
+    title: "RPT Paraisópolis",
+    description: "Formação esportiva e cidadã no coração da comunidade.",
+    image: "38e25.png",
+  },
+  {
+    title: "Rugby Escolar",
+    description: "Valores do rugby dentro das escolas públicas.",
+    image: "8b5c7.png",
+  },
+  {
+    title: "RPT Cidades",
+    description: "Uma metodologia social pronta para alcançar novos territórios.",
+    image: "dcc66.png",
+  },
+  {
+    title: "Intercâmbio Social",
+    description: "Experiências culturais e esportivas que atravessam fronteiras.",
+    image: "46562.png",
+  },
+];
+
 export const documents = [
   { file: "Estatuto-Social-Consolidado-Rpt-Age-02-03-2024-20240926212423.pdf", year: "2024" },
   { file: "Ata-De-Eleicao-Diretoria-Age-02-03-2024-20240926212535.pdf", year: "2024" },

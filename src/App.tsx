@@ -13,6 +13,7 @@ import {
   fundraisingProjects,
   institutional,
   official,
+  runningProjects,
   storyPeople,
 } from "./content/institutional";
 
@@ -46,8 +47,15 @@ const copy = {
       ["86", "famílias acompanhadas"],
     ],
     storiesEyebrow: "Vidas em movimento",
-    storiesTitle: "Aqui a #inspiração é o coração das nossas histórias.",
-    storiesBody: "Conheça a garra destes leões e se inspire!",
+    storiesTitle: "O resultado tem nome, rosto e futuro.",
+    storiesBody:
+      "Por trás de cada número existe uma trajetória que começou na comunidade e ganhou o mundo.",
+    storyLabel: "História",
+    storyCta: "Próxima história",
+    storyQuote:
+      "“O rugby me ensinou que o lugar onde a gente começa não define até onde pode chegar.”",
+    storyCopy:
+      "Talento formado no Instituto RPT. Uma geração que inspira a próxima.",
     storyPrev: "Histórias anteriores",
     storyNext: "Próximas histórias",
     projectsEyebrow: "Onde atuamos",
@@ -55,7 +63,8 @@ const copy = {
     projectsBody:
       "Os projetos do Instituto RPT contribuem para o desenvolvimento social de crianças e adolescentes em comunidades vulneráveis pelo Brasil. Escolha um projeto e torne-se parceiro pessoa física ou jurídica.",
     projectBrand: "Rugby Para Todos",
-    projectStatus: "Em captação",
+    statusFundraising: "Em captação",
+    statusRunning: "Em execução",
     projectCta: "Ver apresentação",
     sealsLabel: "Reconhecimentos",
     communityEyebrow: "Desde 2004",
@@ -96,8 +105,13 @@ const copy = {
       ["86", "families supported"],
     ],
     storiesEyebrow: "Lives in motion",
-    storiesTitle: "Here, #inspiration is at the heart of our stories.",
-    storiesBody: "Meet the grit of these lions and get inspired!",
+    storiesTitle: "Impact has a name, a face and a future.",
+    storiesBody:
+      "Behind each number is a journey that began in the community and reached the world.",
+    storyLabel: "Story",
+    storyCta: "Next story",
+    storyQuote: "“Rugby taught me that where we start does not define how far we can go.”",
+    storyCopy: "Talent developed at Instituto RPT. A generation inspiring the next.",
     storyPrev: "Previous stories",
     storyNext: "Next stories",
     projectsEyebrow: "Where we work",
@@ -105,7 +119,8 @@ const copy = {
     projectsBody:
       "Instituto RPT projects support the social development of children and adolescents in vulnerable communities across Brazil. Choose a project and become a partner as an individual or organization.",
     projectBrand: "Rugby Para Todos",
-    projectStatus: "Fundraising",
+    statusFundraising: "Fundraising",
+    statusRunning: "In delivery",
     projectCta: "View presentation",
     sealsLabel: "Recognition",
     communityEyebrow: "Since 2004",
@@ -146,8 +161,14 @@ const copy = {
       ["86", "familles accompagnées"],
     ],
     storiesEyebrow: "Des vies en mouvement",
-    storiesTitle: "Ici, l’#inspiration est au cœur de nos histoires.",
-    storiesBody: "Découvrez la détermination de ces lions et laissez-vous inspirer !",
+    storiesTitle: "L’impact a un nom, un visage et un avenir.",
+    storiesBody:
+      "Derrière chaque chiffre se trouve un parcours né dans la communauté et ouvert sur le monde.",
+    storyLabel: "Histoire",
+    storyCta: "Histoire suivante",
+    storyQuote:
+      "« Le rugby m’a appris que notre point de départ ne définit pas jusqu’où nous pouvons aller. »",
+    storyCopy: "Un talent formé à l’Instituto RPT. Une génération qui inspire la suivante.",
     storyPrev: "Histoires précédentes",
     storyNext: "Histoires suivantes",
     projectsEyebrow: "Nos actions",
@@ -155,7 +176,8 @@ const copy = {
     projectsBody:
       "Les projets de l’Instituto RPT contribuent au développement social d’enfants et d’adolescents dans des communautés vulnérables au Brésil. Choisissez un projet et devenez partenaire, en tant que personne physique ou morale.",
     projectBrand: "Rugby Para Todos",
-    projectStatus: "En collecte",
+    statusFundraising: "En collecte",
+    statusRunning: "En exécution",
     projectCta: "Voir la présentation",
     sealsLabel: "Reconnaissances",
     communityEyebrow: "Depuis 2004",
@@ -244,19 +266,23 @@ function Arrow() {
 
 export default function App() {
   const [language, setLanguage] = useState<Language>("pt");
+  const [activeStory, setActiveStory] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [sponsorsPaused, setSponsorsPaused] = useState(false);
   const [activeSection, setActiveSection] = useState("impacto");
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const storiesRailRef = useRef<HTMLDivElement>(null);
+  const storyTabsRef = useRef<HTMLDivElement>(null);
+  const projectsRailRef = useRef<HTMLDivElement>(null);
   const t = copy[language];
   const extra = institutional[language];
+  const person = storyPeople[activeStory];
+  const storyCount = String(activeStory + 1).padStart(2, "0");
+  const storyTotal = String(storyPeople.length).padStart(2, "0");
 
-  const scrollStories = (direction: -1 | 1) => {
-    const rail = storiesRailRef.current;
+  const scrollRail = (rail: HTMLDivElement | null, direction: -1 | 1) => {
     if (!rail) return;
-    const amount = Math.max(260, Math.round(rail.clientWidth * 0.72));
+    const amount = Math.max(280, Math.round(rail.clientWidth * 0.72));
     rail.scrollBy({
       left: direction * amount,
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -497,34 +523,64 @@ export default function App() {
       </section>
 
       <section className="stories" id="historias">
-        <div className="section-intro on-dark reveal stories-intro">
+        <div className="section-intro on-dark reveal">
           <div>
             <p className="eyebrow light">{t.storiesEyebrow}</p>
             <h2>{t.storiesTitle}</h2>
           </div>
           <p>{t.storiesBody}</p>
         </div>
-        <div className="stories-carousel reveal">
+        <div className="story-stage reveal" aria-live="polite">
+          <div className="story-photo">
+            <img
+              key={person.name}
+              src={`${A}/${person.image}`}
+              alt={person.name}
+            />
+            <span className="story-count">
+              {storyCount} / {storyTotal}
+            </span>
+          </div>
+          <article className="story-card">
+            <p className="eyebrow">{person.name}</p>
+            <blockquote key={`${language}-${person.name}`}>{t.storyQuote}</blockquote>
+            <p>{t.storyCopy}</p>
+            <button
+              className="text-link"
+              onClick={() => setActiveStory((activeStory + 1) % storyPeople.length)}
+            >
+              <span className="link-label">{t.storyCta}</span>
+              <Arrow />
+            </button>
+          </article>
+        </div>
+        <div className="story-tabs-wrap">
           <button
             type="button"
-            className="stories-nav stories-nav-prev"
-            onClick={() => scrollStories(-1)}
+            className="stories-nav"
+            onClick={() => scrollRail(storyTabsRef.current, -1)}
             aria-label={t.storyPrev}
           >
             ‹
           </button>
-          <div className="stories-rail" ref={storiesRailRef} tabIndex={0}>
-            {storyPeople.map((person) => (
-              <article className="story-portrait" key={person.name}>
-                <img src={`${A}/${person.image}`} alt="" loading="lazy" />
-                <span>{person.name}</span>
-              </article>
+          <div className="story-tabs" ref={storyTabsRef}>
+            {storyPeople.map((item, i) => (
+              <button
+                key={item.name}
+                className={activeStory === i ? "active" : ""}
+                onClick={() => setActiveStory(i)}
+                aria-label={item.name}
+                aria-pressed={activeStory === i}
+              >
+                <img src={`${A}/${item.image}`} alt="" />
+                <span>{item.name}</span>
+              </button>
             ))}
           </div>
           <button
             type="button"
             className="stories-nav stories-nav-next"
-            onClick={() => scrollStories(1)}
+            onClick={() => scrollRail(storyTabsRef.current, 1)}
             aria-label={t.storyNext}
           >
             ›
@@ -542,29 +598,63 @@ export default function App() {
           </div>
           <p>{t.projectsBody}</p>
         </div>
-        <div className="project-grid project-grid-captacao">
-          {fundraisingProjects.map((project) => (
-            <a
-              className="project-card reveal"
-              key={project.place}
-              href={`${official.home}auxiliares/modulos/conteudo/pdf/${project.pdf}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img src={`${A}/${project.image}`} alt="" loading="lazy" />
-              <div className="project-overlay" />
-              <div className="project-content project-content-captacao">
-                <p className="project-brand">{t.projectBrand}</p>
-                <h3>{project.place}</h3>
-                <p className="project-year">{project.year}</p>
-                <span className="project-status">{t.projectStatus}</span>
-                <span className="project-cta">
-                  {t.projectCta}
-                  <Arrow />
-                </span>
-              </div>
-            </a>
-          ))}
+        <div className="project-rail-wrap">
+          <button
+            type="button"
+            className="stories-nav project-nav"
+            onClick={() => scrollRail(projectsRailRef.current, -1)}
+            aria-label={t.storyPrev}
+          >
+            ‹
+          </button>
+          <div className="project-rail" ref={projectsRailRef}>
+            {fundraisingProjects.map((project) => (
+              <a
+                className="project-card"
+                key={project.place}
+                href={`${official.home}auxiliares/modulos/conteudo/pdf/${project.pdf}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src={`${A}/${project.image}`} alt="" loading="lazy" />
+                <div className="project-overlay" />
+                <div className="project-meta">
+                  <span>{project.year}</span>
+                  <span>{t.statusFundraising}</span>
+                </div>
+                <div className="project-content project-content-rail">
+                  <p className="project-brand">{t.projectBrand}</p>
+                  <h3>{project.place}</h3>
+                  <span className="project-cta">
+                    {t.projectCta}
+                    <Arrow />
+                  </span>
+                </div>
+              </a>
+            ))}
+            {runningProjects.map((project) => (
+              <article className="project-card" key={project.title}>
+                <img src={`${A}/${project.image}`} alt="" loading="lazy" />
+                <div className="project-overlay" />
+                <div className="project-meta">
+                  <span>RPT</span>
+                  <span className="is-running">{t.statusRunning}</span>
+                </div>
+                <div className="project-content project-content-rail">
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <button
+            type="button"
+            className="stories-nav stories-nav-next project-nav"
+            onClick={() => scrollRail(projectsRailRef.current, 1)}
+            aria-label={t.storyNext}
+          >
+            ›
+          </button>
         </div>
       </section>
 
