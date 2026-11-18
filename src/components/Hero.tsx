@@ -11,18 +11,21 @@ const heroCopy = {
     beyond: "Vai muito além do campo.",
     description: "Promovemos cidadania, e criamos oportunidades por meio do esporte.",
     action: "Faça parte dessa transformação",
+    scroll: "Role para descobrir",
   },
   en: {
     start: "It starts with Rugby.",
     beyond: "It goes far beyond the field.",
     description: "We promote citizenship and create opportunities through sport.",
     action: "Be part of this transformation",
+    scroll: "Scroll to discover",
   },
   fr: {
     start: "Tout commence avec le Rugby.",
     beyond: "Bien au-delà du terrain.",
     description: "Nous favorisons la citoyenneté et créons des opportunités grâce au sport.",
     action: "Participez à cette transformation",
+    scroll: "Faites défiler",
   },
 };
 
@@ -148,6 +151,18 @@ export function Hero({
           {text.action}
         </button>
       </div>
+      <button
+        type="button"
+        className="scroll-cue"
+        onClick={() =>
+          document.getElementById("impacto")?.scrollIntoView({ behavior: "smooth", block: "start" })
+        }
+        aria-label={text.scroll}
+      >
+        <span aria-hidden="true" />
+        {text.scroll}
+        <i className="scroll-cue-chevron" aria-hidden="true" />
+      </button>
     </section>
   );
 }

@@ -357,7 +357,7 @@ footer button {
   position: absolute;
   z-index: 3;
   right: clamp(25px, 5vw, 72px);
-  bottom: 60px;
+  bottom: 48px;
   color: white;
   border: 0;
   background: transparent;
@@ -368,11 +368,48 @@ footer button {
   display: flex;
   align-items: center;
   gap: 12px;
+  cursor: pointer;
+  opacity: 0.92;
+  transition: opacity 0.25s ease;
+}
+.scroll-cue:hover,
+.scroll-cue:focus-visible {
+  opacity: 1;
 }
 .scroll-cue span {
   width: 1px;
   height: 56px;
   background: var(--orange);
+  transform-origin: top center;
+  animation: scrollCueLine 1.8s var(--ease-out) infinite;
+}
+.scroll-cue-chevron {
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  rotate: 45deg;
+  animation: scrollCueBounce 1.8s var(--ease-out) infinite;
+}
+@keyframes scrollCueLine {
+  0%,
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scaleY(0.72);
+    opacity: 0.55;
+  }
+}
+@keyframes scrollCueBounce {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 6px;
+  }
 }
 .hero-index {
   position: absolute;
@@ -1539,7 +1576,20 @@ footer {
     font-size: 14px;
     max-width: 100%;
   }
-  .scroll-cue,
+  .scroll-cue {
+    right: auto;
+    left: 50%;
+    bottom: 28px;
+    translate: -50% 0;
+    writing-mode: horizontal-tb;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 9px;
+  }
+  .scroll-cue span {
+    width: 1px;
+    height: 36px;
+  }
   .hero-index {
     display: none;
   }
