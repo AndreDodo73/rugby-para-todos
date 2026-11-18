@@ -39,7 +39,7 @@ const copy = {
     impactEyebrow: "O campo é só o começo",
     impactTitle: "De Paraisópolis para o mundo.",
     impactBody:
-      "Há mais de duas décadas, o rugby abre caminhos onde antes havia poucas oportunidades. Jovens que começaram no projeto hoje estudam, trabalham e competem no Brasil e no exterior — alguns chegaram à França e ao esporte olímpico.",
+      "Há mais de duas décadas, o Rugby Para Todos amplia as oportunidades de jovens dentro e fora de campo. Quem deu os primeiros passes no projeto hoje estuda, trabalha ou compete no Brasil e em diversos outros países. Alguns desses atletas chegaram aos Jogos Olímpicos.",
     numbers: [
       ["1.200+", "jovens atendidos"],
       ["20+", "anos de impacto"],
@@ -95,7 +95,7 @@ const copy = {
     impactEyebrow: "The field is just the beginning",
     impactTitle: "From Paraisópolis to the world.",
     impactBody:
-      "For over two decades, rugby has opened paths where opportunities were scarce. Young people who started here now study, work and compete in Brazil and abroad — some have reached France and Olympic sport.",
+      "For more than two decades, Rugby Para Todos has expanded opportunities for young people on and off the field. Those who took their first passes in the project now study, work or compete in Brazil and in many other countries. Some of these athletes have reached the Olympic Games.",
     numbers: [
       ["1,200+", "young people reached"],
       ["20+", "years of impact"],
@@ -150,7 +150,7 @@ const copy = {
     impactEyebrow: "Le terrain n'est que le début",
     impactTitle: "De Paraisópolis au monde.",
     impactBody:
-      "Depuis plus de vingt ans, le rugby ouvre des chemins là où les opportunités étaient rares. Des jeunes du projet étudient, travaillent et concourent aujourd'hui au Brésil et à l'étranger — certains jusqu'en France et aux Jeux olympiques.",
+      "Depuis plus de vingt ans, Rugby Para Todos élargit les opportunités des jeunes sur le terrain et en dehors. Ceux qui ont donné leurs premiers passes dans le projet étudient, travaillent ou concourent aujourd’hui au Brésil et dans de nombreux autres pays. Certains de ces athlètes sont allés jusqu’aux Jeux olympiques.",
     numbers: [
       ["1 200+", "jeunes accompagnés"],
       ["20+", "ans d'impact"],
