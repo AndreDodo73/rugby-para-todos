@@ -501,7 +501,10 @@ export default function App() {
 
       <section className="impact" id="impacto">
         <div className="impact-image reveal reveal-image">
-          <img src={`${A}/54817.png`} alt="Jovens atletas treinando rugby em Paraisópolis" />
+          <img
+            src={`${A}/paraisopolis-mundo.jpg`}
+            alt="Atletas do Rugby Para Todos com medalhas e troféus em Paraisópolis"
+          />
         </div>
         <div className="impact-copy reveal">
           <p className="eyebrow">{t.impactEyebrow}</p>
