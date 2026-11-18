@@ -11,21 +11,21 @@ const heroCopy = {
     beyond: "Vai muito além do campo.",
     description: "Promovemos cidadania, e criamos oportunidades por meio do esporte.",
     action: "Faça parte dessa transformação",
-    scroll: "O jogo continua",
+    scroll: "Deslize para descobrir",
   },
   en: {
     start: "It starts with Rugby.",
     beyond: "It goes far beyond the field.",
     description: "We promote citizenship and create opportunities through sport.",
     action: "Be part of this transformation",
-    scroll: "The game goes on",
+    scroll: "Swipe to discover",
   },
   fr: {
     start: "Tout commence avec le Rugby.",
     beyond: "Bien au-delà du terrain.",
     description: "Nous favorisons la citoyenneté et créons des opportunités grâce au sport.",
     action: "Participez à cette transformation",
-    scroll: "Le jeu continue",
+    scroll: "Glissez pour découvrir",
   },
 };
 
