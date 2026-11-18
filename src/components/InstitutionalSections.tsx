@@ -197,6 +197,7 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
         </div>
         <div className="donation-panel reveal">
           <p className="donation-kicker">{t.supportEyebrow}</p>
+          <p className="donation-heading">{isMonthly ? t.monthly : t.once}</p>
           <div className="donation-frequency" role="group" aria-label={t.supportEyebrow}>
             <button type="button" onClick={() => setFrequency("once")} aria-pressed={!isMonthly}>
               {t.once}
@@ -208,18 +209,21 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
           {isMonthly ? (
             <p className="monthly-description">{t.monthlyBody}</p>
           ) : (
-            <div className="donation-amounts" role="group" aria-label={t.give}>
-              {(["50", "100", "200", "other"] as const).map((value) => (
-                <button
-                  key={value}
-                  type="button"
-                  onClick={() => setAmount(value)}
-                  aria-pressed={amount === value}
-                >
-                  {value === "other" ? t.other : `R$ ${value}`}
-                </button>
-              ))}
-            </div>
+            <>
+              <p className="donation-amount-label">{t.chooseAmount}</p>
+              <div className="donation-amounts" role="group" aria-label={t.chooseAmount}>
+                {(["50", "100", "200", "other"] as const).map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setAmount(value)}
+                    aria-pressed={amount === value}
+                  >
+                    {value === "other" ? t.other : `R$ ${value}`}
+                  </button>
+                ))}
+              </div>
+            </>
           )}
           <Outbound
             className="pill donation-submit"
@@ -227,28 +231,33 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
           >
             {isMonthly ? t.giveMonthly : t.give}
           </Outbound>
+          <p className="donation-channel">
+            {isMonthly ? t.channelMonthly : t.channelOnce}
+          </p>
           <p className="external-note">{t.externalPayment}</p>
         </div>
       </div>
       <div className="support-other reveal">
-        <div className="support-path">
+        <article className="support-path">
           <p className="eyebrow">Loja RPT</p>
           <h3>{t.shopTitle}</h3>
           <p>{t.shopBody}</p>
-          <Outbound href={official.shop}>{t.shopCta}</Outbound>
-        </div>
-        <div className="support-path">
+          <Outbound className="pill support-path-cta" href={official.shop}>
+            {t.shopCta}
+          </Outbound>
+        </article>
+        <article className="support-path">
           <p className="eyebrow">Instituto RPT</p>
           <h3>{t.work}</h3>
           <p>{t.workBody}</p>
           <a
-            className="text-link"
+            className="pill support-path-cta"
             href="mailto:rugbyparatodos@rugbyparatodos.org.br?subject=Trabalhe%20conosco"
           >
-            <span className="link-label">{t.contactService}</span>
+            <span className="link-label">{t.workCta}</span>
             <ExtIcon />
           </a>
-        </div>
+        </article>
       </div>
     </section>
   );
