@@ -582,16 +582,17 @@ footer button {
   color: #aaa;
 }
 .story-stage {
-  max-width: 1224px;
+  max-width: 1280px;
   margin: auto;
   padding: 0 24px;
   display: grid;
-  grid-template-columns: 1.25fr 0.75fr;
+  grid-template-columns: 0.92fr 1.08fr;
   position: relative;
-  align-items: end;
+  align-items: stretch;
 }
 .story-photo {
-  height: 640px;
+  min-height: 640px;
+  height: 100%;
   position: relative;
   overflow: hidden;
 }
@@ -629,21 +630,35 @@ footer button {
 .story-card {
   background: var(--yellow);
   color: var(--ink);
-  padding: 48px 42px 42px;
-  min-height: 420px;
-  margin-left: -34px;
+  padding: 52px 48px 40px;
+  margin-left: -40px;
   position: relative;
   z-index: 3;
+  display: flex;
+  flex-direction: column;
+  min-height: 640px;
 }
 .story-card blockquote {
-  font: 700 clamp(26px, 2.2vw, 36px)/1.22 "Montserrat:Bold";
+  font: 700 clamp(28px, 2.5vw, 42px)/1.18 "Montserrat:Bold";
   letter-spacing: -0.03em;
-  margin: 28px 0;
+  margin: 22px 0 28px;
   animation: storyTextIn 0.55s var(--ease-out) both;
 }
-.story-card > p:not(.eyebrow) {
-  font-size: 18px;
-  line-height: 1.55;
+.story-bio {
+  margin: 0;
+  max-width: 46ch;
+  font-size: 17px;
+  line-height: 1.65;
+}
+.story-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 32px;
+  margin-top: auto;
+  padding-top: 36px;
+}
+.story-actions .text-link {
+  margin-top: 0;
 }
 .story-tabs-wrap {
   max-width: 1224px;
@@ -1399,6 +1414,7 @@ footer {
   }
   .story-photo {
     height: 62vh;
+    min-height: 420px;
   }
   .story-card {
     margin: -48px 24px 0;
@@ -1524,11 +1540,13 @@ footer {
     padding: 85px 0 48px;
   }
   .story-photo {
-    height: 460px;
+    height: 420px;
+    min-height: 0;
   }
   .story-card {
     margin: -36px 16px 0;
     padding: 32px 24px;
+    min-height: 0;
   }
   .story-card blockquote {
     font-size: 26px;

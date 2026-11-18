@@ -54,8 +54,7 @@ const copy = {
     storyCta: "Próxima história",
     storyQuote:
       "“O rugby me ensinou que o lugar onde a gente começa não define até onde pode chegar.”",
-    storyCopy:
-      "Talento formado no Instituto RPT. Uma geração que inspira a próxima.",
+    storyYoutube: "Ver as histórias completas no YouTube",
     storyPrev: "Histórias anteriores",
     storyNext: "Próximas histórias",
     projectsEyebrow: "Onde atuamos",
@@ -111,7 +110,7 @@ const copy = {
     storyLabel: "Story",
     storyCta: "Next story",
     storyQuote: "“Rugby taught me that where we start does not define how far we can go.”",
-    storyCopy: "Talent developed at Instituto RPT. A generation inspiring the next.",
+    storyYoutube: "Watch the full stories on YouTube",
     storyPrev: "Previous stories",
     storyNext: "Next stories",
     projectsEyebrow: "Where we work",
@@ -168,7 +167,7 @@ const copy = {
     storyCta: "Histoire suivante",
     storyQuote:
       "« Le rugby m’a appris que notre point de départ ne définit pas jusqu’où nous pouvons aller. »",
-    storyCopy: "Un talent formé à l’Instituto RPT. Une génération qui inspire la suivante.",
+    storyYoutube: "Voir les histoires complètes sur YouTube",
     storyPrev: "Histoires précédentes",
     storyNext: "Histoires suivantes",
     projectsEyebrow: "Nos actions",
@@ -543,15 +542,28 @@ export default function App() {
           </div>
           <article className="story-card">
             <p className="eyebrow">{person.name}</p>
-            <blockquote key={`${language}-${person.name}`}>{t.storyQuote}</blockquote>
-            <p>{t.storyCopy}</p>
-            <button
-              className="text-link"
-              onClick={() => setActiveStory((activeStory + 1) % storyPeople.length)}
-            >
-              <span className="link-label">{t.storyCta}</span>
-              <Arrow />
-            </button>
+            <blockquote key={`${language}-${person.name}`}>
+              {person.quote?.[language] ?? t.storyQuote}
+            </blockquote>
+            <p className="story-bio">{person.bio[language]}</p>
+            <div className="story-actions">
+              <a
+                className="text-link"
+                href={official.social[1].href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="link-label">{t.storyYoutube}</span>
+                <Arrow />
+              </a>
+              <button
+                className="text-link"
+                onClick={() => setActiveStory((activeStory + 1) % storyPeople.length)}
+              >
+                <span className="link-label">{t.storyCta}</span>
+                <Arrow />
+              </button>
+            </div>
           </article>
         </div>
         <div className="story-tabs-wrap">

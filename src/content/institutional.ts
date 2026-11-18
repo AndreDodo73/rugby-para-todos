@@ -126,16 +126,130 @@ export const fundraisingProjects = [
 ];
 
 export const storyPeople = [
-  { name: "Pamela", image: "stories/pamela.jpg" },
-  { name: "Bia", image: "stories/bia.png" },
-  { name: 'Karol "Bedoya"', image: "stories/karol.jpg" },
-  { name: "Lara", image: "stories/lara.png" },
-  { name: "Leila Silva", image: "stories/leila.jpg" },
-  { name: "Valentina", image: "stories/valentina.png" },
-  { name: "Patrício", image: "stories/patricio.jpg" },
-  { name: "Robert Tenório", image: "stories/robert.jpg" },
-  { name: "Eshyllen", image: "stories/eshyllen.png" },
-  { name: "Gilmar", image: "stories/gilmar.jpg" },
+  {
+    name: "Pamela",
+    image: "stories/pamela.jpg",
+    quote: {
+      pt: "“O Instituto representa para mim oportunidade. É um espaço de aprendizado e lazer que, dentro de uma favela, permite às crianças sonhar com algo melhor.”",
+      en: "“The Institute means opportunity to me. It is a place to learn and play that, inside a favela, lets children dream of something better.”",
+      fr: "“L’Institut représente pour moi une opportunité. C’est un espace d’apprentissage et de loisir qui, dans une favela, permet aux enfants de rêver à mieux.”",
+    },
+    bio: {
+      pt: "Pamella começou como aluna em 2012, formou-se fisioterapeuta e também atuou como profissional no Instituto em Paraisópolis. Jogou nas Leoas por cerca de oito anos e foi tricampeã brasileira juvenil.",
+      en: "Pamella joined as a student in 2012, became a physiotherapist and also worked with the Institute in Paraisópolis. She played for the Leoas for about eight years and was a three-time Brazilian youth champion.",
+      fr: "Pamella a commencé comme élève en 2012, est devenue physiothérapeute et a aussi travaillé à l’Institut à Paraisópolis. Elle a joué avec les Leoas pendant environ huit ans et a été trois fois championne du Brésil chez les jeunes.",
+    },
+  },
+  {
+    name: "Bia",
+    image: "stories/bia.png",
+    quote: {
+      pt: "“Não passou pela minha mente que conseguiria ser atleta profissional. O esporte era somente um hobby.”",
+      en: "“It never crossed my mind that I could become a professional athlete. Sport was only a hobby.”",
+      fr: "“Je n’imaginais pas pouvoir devenir athlète professionnelle. Le sport n’était qu’un loisir.”",
+    },
+    bio: {
+      pt: "Bianca Silva começou no Instituto em Paraisópolis em 2011, aos 11 anos. A primeira convocação para a Seleção Brasileira veio em 2017. Em 2023, foi a primeira brasileira a jogar profissionalmente no Japão.",
+      en: "Bianca Silva started at the Institute in Paraisópolis in 2011, at age 11. Her first call-up to the Brazilian national team came in 2017. In 2023 she became the first Brazilian woman to play professionally in Japan.",
+      fr: "Bianca Silva a commencé à l’Institut, à Paraisópolis, en 2011, à 11 ans. Sa première sélection en équipe du Brésil date de 2017. En 2023, elle est devenue la première Brésilienne à jouer professionnellement au Japon.",
+    },
+  },
+  {
+    name: 'Karol "Bedoya"',
+    image: "stories/karol.jpg",
+    quote: null,
+    bio: {
+      pt: "A história da Karol faz parte das trajetórias do Instituto. O relato completo está no canal do Rugby Para Todos no YouTube.",
+      en: "Karol’s story is part of the Institute’s journeys. The full account is on the Rugby Para Todos YouTube channel.",
+      fr: "L’histoire de Karol fait partie des parcours de l’Institut. Le récit complet est sur la chaîne YouTube de Rugby Para Todos.",
+    },
+  },
+  {
+    name: "Lara",
+    image: "stories/lara.png",
+    quote: null,
+    bio: {
+      pt: "A história da Lara faz parte das trajetórias do Instituto. O relato completo está no canal do Rugby Para Todos no YouTube.",
+      en: "Lara’s story is part of the Institute’s journeys. The full account is on the Rugby Para Todos YouTube channel.",
+      fr: "L’histoire de Lara fait partie des parcours de l’Institut. Le récit complet est sur la chaîne YouTube de Rugby Para Todos.",
+    },
+  },
+  {
+    name: "Leila Silva",
+    image: "stories/leila.jpg",
+    quote: null,
+    bio: {
+      pt: "Leila Silva tinha 12 anos quando conheceu o projeto do Instituto Rugby Para Todos em Paraisópolis. Por “pressão” dos amigos da escola começou a praticar, mas, segundo ela, a paixão mesmo chegou em 2014, quando disputou o campeonato Cultura Inglesa. Em 2021, aos 24 anos, participou da sua primeira Olimpíada, em Tóquio, onde pôde representar a comunidade de Paraisópolis, o Rugby Para Todos e a Seleção Brasileira feminina, as Yaras.",
+      en: "Leila Silva was 12 when she met Instituto Rugby Para Todos in Paraisópolis. She started because school friends insisted, and the real passion arrived in 2014, at the Cultura Inglesa championship. In 2021, at 24, she played her first Olympics in Tokyo, representing Paraisópolis, Rugby Para Todos and Brazil’s women’s team, the Yaras.",
+      fr: "Leila Silva avait 12 ans lorsqu’elle a découvert l’Instituto Rugby Para Todos à Paraisópolis. Elle a commencé sous l’insistance de ses amis d’école, et la vraie passion est arrivée en 2014, au championnat Cultura Inglesa. En 2021, à 24 ans, elle a disputé ses premiers Jeux olympiques, à Tokyo, pour Paraisópolis, Rugby Para Todos et l’équipe féminine du Brésil, les Yaras.",
+    },
+  },
+  {
+    name: "Valentina",
+    image: "stories/valentina.png",
+    quote: {
+      pt: "“Quando crescer, quero ser atriz. Meu sonho mesmo é ter uma casa linda, com um quarto bem grande só para mim.”",
+      en: "“When I grow up I want to be an actress. My real dream is a beautiful house, with a big bedroom just for me.”",
+      fr: "“Quand je serai grande, je veux être actrice. Mon vrai rêve, c’est une belle maison, avec une grande chambre rien que pour moi.”",
+    },
+    bio: {
+      pt: "Valentina Pacheco, a Thina, começou no projeto em 2020. Tem 7 anos, está na turma do M10, no 2º ano do ensino fundamental, e ama estudar. A torcida do Instituto é para que ela siga amando a escola e, pela educação, alcance os próprios sonhos.",
+      en: "Valentina Pacheco, Thina, joined in 2020. She is 7, trains with the under-10s, is in second grade and loves school. The Institute is cheering for her to keep loving her studies and to reach her dreams through education.",
+      fr: "Valentina Pacheco, Thina, a commencé en 2020. Elle a 7 ans, s’entraîne avec les moins de 10 ans, est en deuxième année et adore l’école. L’Institut l’encourage à continuer d’aimer étudier et à réaliser ses rêves par l’éducation.",
+    },
+  },
+  {
+    name: "Patrício",
+    image: "stories/patricio.jpg",
+    quote: {
+      pt: "“O rugby me ensinou a respeitar companheiros e adversários. Me deu a chance de jogar pela Seleção e de conhecer outros países.”",
+      en: "“Rugby taught me to respect teammates and opponents. It gave me the chance to play for Brazil and to meet other countries.”",
+      fr: "“Le rugby m’a appris à respecter coéquipiers et adversaires. Il m’a donné la chance de jouer pour le Brésil et de découvrir d’autres pays.”",
+    },
+    bio: {
+      pt: "Patrício foi um dos primeiros alunos do projeto em Paraisópolis. Hoje é nutricionista do Instituto e jogador dos Leões de Paraisópolis. Formado em nutrição, segue ligado ao lugar onde começou.",
+      en: "Patrício was one of the first students in Paraisópolis. Today he is the Institute’s nutritionist and a player for the Leões de Paraisópolis. Trained in nutrition, he remains tied to the place where he started.",
+      fr: "Patrício a été l’un des premiers élèves à Paraisópolis. Aujourd’hui, il est nutritionniste de l’Institut et joueur des Leões de Paraisópolis. Diplômé en nutrition, il reste lié à l’endroit où tout a commencé.",
+    },
+  },
+  {
+    name: "Robert Tenório",
+    image: "stories/robert.jpg",
+    quote: null,
+    bio: {
+      pt: "Robert Tenório começou como aluno e jogou pelos Leões de Paraisópolis. Hoje é um dos destaques da Seleção Brasileira masculina de XV e segue sendo convocado. É mais uma trajetória que nasceu no projeto.",
+      en: "Robert Tenório started as a student and played for the Leões de Paraisópolis. He is now one of the standouts of Brazil’s men’s XV and keeps being called up. Another path that began inside the project.",
+      fr: "Robert Tenório a commencé comme élève et a joué pour les Leões de Paraisópolis. Il est aujourd’hui l’une des figures du XV masculin du Brésil et continue d’être convoqué. Un parcours de plus né dans le projet.",
+    },
+  },
+  {
+    name: "Eshyllen",
+    image: "stories/eshyllen.png",
+    quote: {
+      pt: "“Eu investiria no esporte nas escolas e em projetos sociais, para trazer mais crianças e criar, nas comunidades, um lugar melhor para jogar.”",
+      en: "“I would invest in sport at school and in social projects, to bring in more children and to build a better place to play inside communities.”",
+      fr: "“J’investirais dans le sport à l’école et dans les projets sociaux, pour accueillir plus d’enfants et créer, dans les communautés, un meilleur endroit pour jouer.”",
+    },
+    bio: {
+      pt: "Eshyllen tinha o rugby como caminho no Rio de Janeiro: começou em 2014 na Escolinha Social Rugby Rio, do Instituto. Destacou-se, entrou no Guanabara Rugby e hoje joga pela Seleção Brasileira de Sevens.",
+      en: "Eshyllen found rugby in Rio de Janeiro: she started in 2014 at the Institute’s Escolinha Social Rugby Rio. She stood out, joined Guanabara Rugby and now plays for Brazil’s sevens team.",
+      fr: "Eshyllen a trouvé le rugby à Rio de Janeiro : elle a commencé en 2014 à l’Escolinha Social Rugby Rio, de l’Institut. Elle s’est distinguée, a rejoint le Guanabara Rugby et joue aujourd’hui pour l’équipe brésilienne à sept.",
+    },
+  },
+  {
+    name: "Gilmar",
+    image: "stories/gilmar.jpg",
+    quote: {
+      pt: "“O Instituto foi primordial para a mudança da minha vida. Me desenvolveu como cidadão e me deu diretrizes para imaginar um futuro diferente.”",
+      en: "“The Institute was essential to changing my life. It developed me as a citizen and gave me a way to imagine a different future.”",
+      fr: "“L’Institut a été essentiel pour changer ma vie. Il m’a fait grandir comme citoyen et m’a donné de quoi imaginer un autre avenir.”",
+    },
+    bio: {
+      pt: "Gilmar, o Capitão, está nos Leões de Paraisópolis desde o começo e foi um dos primeiros alunos. Formado em administração, passou pelas seleções juvenis do Brasil e de São Paulo, e por clubes como Oaks, na Califórnia, e Pasteur.",
+      en: "Gilmar, Capitão, has been with the Leões de Paraisópolis from the start and was one of the first students. Trained in business, he played for Brazil and São Paulo youth teams and for clubs including Oaks, in California, and Pasteur.",
+      fr: "Gilmar, le Capitão, est avec les Leões de Paraisópolis depuis le début et fut l’un des premiers élèves. Diplômé en gestion, il est passé par les sélections jeunes du Brésil et de São Paulo, et par des clubs comme les Oaks, en Californie, et Pasteur.",
+    },
+  },
 ];
 
 export const runningProjects = [
