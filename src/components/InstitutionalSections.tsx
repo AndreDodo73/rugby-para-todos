@@ -131,12 +131,20 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
   return (
     <section className="methodology restored-section" id="metodologia">
       <div className="methodology-head reveal">
-        <div className="methodology-copy">
-          <p className="eyebrow">{t.methodEyebrow}</p>
-          <h2>{t.methodTitle}</h2>
+        <p className="eyebrow">{t.methodEyebrow}</p>
+        <h2>
+          {t.methodTitle.split(". ").map((part, index, parts) => (
+            <span key={part}>
+              {part}
+              {index < parts.length - 1 ? "." : ""}
+              {index < parts.length - 1 ? <br /> : null}
+            </span>
+          ))}
+        </h2>
+        <div className="methodology-lead">
           <p>{t.methodBody}</p>
+          <p className="methodology-team">{t.methodTeam}</p>
         </div>
-        <p className="methodology-team">{t.methodTeam}</p>
       </div>
 
       <ol className="method-values reveal" aria-label={t.methodTitle}>
@@ -164,11 +172,10 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
               <li key={award.title}>
                 <span className="award-year">{award.year}</span>
                 <div className="award-body">
-                  <strong>{award.title}</strong>
-                  <p className="award-credit">{award.credit}</p>
-                  <Outbound className="award-link" href={award.href}>
-                    {t.seeLink}
+                  <Outbound className="award-title" href={award.href}>
+                    {award.title}
                   </Outbound>
+                  <p className="award-credit">{award.credit}</p>
                 </div>
               </li>
             ))}

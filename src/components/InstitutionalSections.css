@@ -185,31 +185,33 @@
   background: var(--paper);
 }
 .methodology-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.9fr);
-  gap: clamp(28px, 5vw, 72px);
-  align-items: end;
+  display: flex;
+  flex-direction: column;
   max-width: 1224px;
 }
-.methodology-copy {
-  max-width: 720px;
-}
-.methodology-copy h2 {
+.methodology h2 {
   margin: 0 0 28px;
-  text-wrap: balance;
+  max-width: 12em;
+  line-height: 1.18;
+  overflow: visible;
 }
-.methodology-copy > p:not(.eyebrow) {
+.methodology-lead {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+}
+.methodology-lead > p {
   margin: 0;
   font-size: clamp(17px, 1.35vw, 19px);
-  color: #555;
-  max-width: 38em;
+  color: #444;
 }
 .methodology-team {
   margin: 0;
-  padding-top: 10px;
-  border-top: 1px solid rgb(21 22 21 / 14%);
+  padding-left: 22px;
+  border-left: 3px solid var(--orange);
   font-size: 16px;
-  line-height: 1.55;
+  line-height: 1.6;
   color: #3d3d3d;
 }
 .method-values {
@@ -227,8 +229,12 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: 28px 22px 28px 0;
+  min-width: 0;
+  padding: 28px 22px;
   border-right: 1px solid rgb(21 22 21 / 12%);
+}
+.method-values > li:first-child {
+  padding-left: 0;
 }
 .method-values > li:last-child {
   border-right: 0;
@@ -240,35 +246,32 @@
   color: var(--orange);
 }
 .method-value-label {
-  font: 700 clamp(18px, 1.7vw, 24px)/1.15 "Montserrat:Bold", Arial, sans-serif;
-  letter-spacing: -0.04em;
+  font: 700 clamp(17px, 1.45vw, 22px)/1.25 "Montserrat:Bold", Arial, sans-serif;
+  letter-spacing: -0.03em;
   color: var(--ink);
 }
 .awards-band {
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
   gap: clamp(28px, 4.5vw, 56px);
   align-items: start;
   max-width: 1224px;
 }
 .awards-visual {
   margin: 0;
-  position: sticky;
-  top: 110px;
   overflow: hidden;
-  background: var(--ink);
+  background: #111;
 }
 .awards-visual img {
   width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  object-position: 42% 40%;
+  height: auto;
   display: block;
 }
 .awards-copy h3 {
   margin: 0 0 28px;
   text-transform: none;
-  max-width: 14ch;
+  line-height: 1.2;
+  overflow: visible;
 }
 .award-list {
   list-style: none;
@@ -279,8 +282,8 @@
 }
 .award-list > li {
   display: grid;
-  grid-template-columns: 72px minmax(0, 1fr);
-  gap: 18px;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: 16px;
   align-items: start;
   padding: 18px 0;
   border-top: 1px solid rgb(21 22 21 / 12%);
@@ -291,7 +294,8 @@
 .award-year {
   font: 700 13px/1.4 "Montserrat:Bold", Arial, sans-serif;
   color: var(--orange);
-  padding-top: 2px;
+  padding-top: 3px;
+  white-space: nowrap;
 }
 .award-body {
   display: flex;
@@ -300,30 +304,34 @@
   gap: 6px;
   min-width: 0;
 }
-.award-body strong {
-  font: 700 15px/1.35 "Montserrat:Bold", Arial, sans-serif;
+.award-title {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  color: var(--ink);
+  font: 700 15px/1.4 "Montserrat:Bold", Arial, sans-serif;
   letter-spacing: -0.02em;
   text-transform: none;
-  color: var(--ink);
+}
+.award-title .link-label {
+  border-bottom: 0;
+  padding: 0;
+}
+.award-title:hover .link-label,
+.award-title:focus-visible .link-label {
+  border-bottom-color: currentColor;
+}
+.award-title .arrow {
+  color: var(--orange);
+  flex: 0 0 auto;
+  margin-top: 2px;
 }
 .award-credit {
   margin: 0;
   color: #666;
   font-size: 14px !important;
   line-height: 1.45;
-}
-.award-link {
-  margin-top: 4px;
-  color: var(--ink);
-  font: 600 13px/1.4 "Montserrat:SemiBold", Arial, sans-serif;
-  text-transform: none;
-  letter-spacing: 0;
-}
-.award-link .link-label {
-  border-bottom: 1px solid currentColor;
-}
-.award-link .arrow {
-  color: currentColor;
 }
 
 .service-grid {
@@ -996,6 +1004,18 @@
     gap: 12px;
   }
 }
+@media (max-width: 1180px) {
+  .method-values {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .method-values > li:nth-child(3n) {
+    border-right: 0;
+    padding-right: 0;
+  }
+  .method-values > li:nth-child(n + 4) {
+    border-top: 1px solid rgb(21 22 21 / 12%);
+  }
+}
 @media (max-width: 980px) {
   .restored-section {
     padding-block: 80px;
@@ -1030,33 +1050,37 @@
     width: 100%;
   }
   .governance-grid,
-  .methodology-head,
+  .methodology-lead,
   .awards-band,
   .donation-panel-unified {
     grid-template-columns: 1fr;
     gap: 28px;
   }
+  .methodology-team {
+    padding: 16px 0 0;
+    border-left: 0;
+    border-top: 3px solid var(--orange);
+  }
   .method-values {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .method-values > li {
+  .method-values > li,
+  .method-values > li:nth-child(3n) {
+    border-right: 1px solid rgb(21 22 21 / 12%);
     padding: 22px 18px 22px 0;
   }
   .method-values > li:nth-child(2n) {
     border-right: 0;
     padding-right: 0;
   }
+  .method-values > li:nth-child(n + 4) {
+    border-top: 0;
+  }
   .method-values > li:nth-child(n + 3) {
     border-top: 1px solid rgb(21 22 21 / 12%);
   }
-  .awards-visual {
-    position: static;
-  }
-  .awards-visual img {
-    aspect-ratio: 16 / 10;
-  }
   .award-list > li {
-    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-columns: 96px minmax(0, 1fr);
   }
   .content-editorial {
     grid-template-columns: 1fr;
@@ -1067,10 +1091,16 @@
   }
 }
 @media (max-width: 640px) {
+  .methodology h2 {
+    max-width: none;
+    font-size: 30px;
+  }
   .method-values {
     grid-template-columns: 1fr;
   }
-  .method-values > li {
+  .method-values > li,
+  .method-values > li:nth-child(2n),
+  .method-values > li:nth-child(3n) {
     border-right: 0;
     padding: 18px 0;
   }
