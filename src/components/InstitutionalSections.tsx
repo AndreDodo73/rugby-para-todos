@@ -212,51 +212,56 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
           <p className="donation-lead">{t.supportBody}</p>
         </div>
         <div className="donation-controls">
-          <div className="donation-frequency" role="group" aria-label={t.supportEyebrow}>
-            <button type="button" onClick={() => setFrequency("once")} aria-pressed={!isMonthly}>
-              {t.once}
-            </button>
-            <button type="button" onClick={() => setFrequency("monthly")} aria-pressed={isMonthly}>
-              {t.monthly}
-            </button>
-          </div>
-          {isMonthly ? (
-            <p className="monthly-description">{t.monthlyBody}</p>
-          ) : (
-            <>
-              <p className="donation-amount-label">{t.chooseAmount}</p>
-              <div className="donation-amounts" role="group" aria-label={t.chooseAmount}>
-                {(["50", "100", "200", "other"] as const).map((value) => (
-                  <button
-                    key={value}
-                    type="button"
-                    onClick={() => setAmount(value)}
-                    aria-pressed={amount === value}
-                  >
-                    {value === "other" ? t.other : `R$ ${value}`}
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
-          <Outbound
-            className="pill donation-submit"
-            href={isMonthly ? official.monthly : official.donations[amount]}
-          >
-            {isMonthly ? t.giveMonthly : t.give}
-          </Outbound>
-          <p className="donation-channel">
-            {isMonthly ? t.channelMonthly : t.channelOnce}
-          </p>
-          <div className="donation-alt-paths" role="group" aria-label={t.supportEyebrow}>
-            <Outbound className="pill donation-alt donation-alt-ir" href={official.incomeTax}>
-              {t.incomeTax}
+          <div className="donation-primary">
+            <div className="donation-frequency" role="group" aria-label={t.supportEyebrow}>
+              <button type="button" onClick={() => setFrequency("once")} aria-pressed={!isMonthly}>
+                {t.once}
+              </button>
+              <button type="button" onClick={() => setFrequency("monthly")} aria-pressed={isMonthly}>
+                {t.monthly}
+              </button>
+            </div>
+            {isMonthly ? (
+              <p className="monthly-description">{t.monthlyBody}</p>
+            ) : (
+              <>
+                <p className="donation-amount-label">{t.chooseAmount}</p>
+                <div className="donation-amounts" role="group" aria-label={t.chooseAmount}>
+                  {(["50", "100", "200", "other"] as const).map((value) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setAmount(value)}
+                      aria-pressed={amount === value}
+                    >
+                      {value === "other" ? t.other : `R$ ${value}`}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+            <Outbound
+              className="pill donation-submit"
+              href={isMonthly ? official.monthly : official.donations[amount]}
+            >
+              {isMonthly ? t.giveMonthly : t.give}
             </Outbound>
-            <Outbound className="pill donation-alt" href={official.helpAsYouCan}>
-              {t.helpAsYouCan}
-            </Outbound>
+            <p className="donation-channel">
+              {isMonthly ? t.channelMonthly : t.channelOnce}
+            </p>
           </div>
-          <p className="donation-channel donation-alt-note">{t.incomeTaxNote}</p>
+          <div className="donation-secondary">
+            <p className="donation-secondary-label">{t.otherWays}</p>
+            <div className="donation-alt-paths" role="group" aria-label={t.otherWays}>
+              <Outbound className="pill donation-alt donation-alt-ir" href={official.incomeTax}>
+                {t.incomeTax}
+              </Outbound>
+              <Outbound className="pill donation-alt" href={official.helpAsYouCan}>
+                {t.helpAsYouCan}
+              </Outbound>
+            </div>
+            <p className="donation-channel donation-alt-note">{t.incomeTaxNote}</p>
+          </div>
           <p className="external-note">{t.externalPayment}</p>
         </div>
       </div>

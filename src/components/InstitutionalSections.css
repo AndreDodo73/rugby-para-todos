@@ -501,11 +501,31 @@
 .donation-controls {
   display: flex;
   flex-direction: column;
+  gap: 0;
   max-width: none;
   min-width: 0;
   padding: 22px;
   background: #f7f4ef;
   border-radius: 16px;
+}
+.donation-primary {
+  display: flex;
+  flex-direction: column;
+}
+.donation-secondary {
+  display: flex;
+  flex-direction: column;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgb(21 22 21 / 12%);
+}
+.donation-secondary-label {
+  margin: 0 0 14px;
+  text-align: center;
+  font: 700 11px/1.3 "Montserrat:Bold";
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #666;
 }
 .donation-frequency {
   display: grid;
@@ -547,7 +567,7 @@
   box-shadow: 0 8px 18px rgb(21 22 21 / 18%);
 }
 .donation-amount-label {
-  margin: 22px 0 10px;
+  margin: 18px 0 10px;
   font: 700 11px/1.3 "Montserrat:Bold";
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -557,7 +577,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
-  margin: 0 0 22px;
+  margin: 0 0 16px;
 }
 .donation-amounts button {
   border: 1.5px solid rgb(21 22 21 / 16%);
@@ -575,8 +595,8 @@
   border-color: #2b2c2b;
 }
 .monthly-description {
-  min-height: 118px;
-  margin: 18px 0 22px;
+  min-height: auto;
+  margin: 18px 0 16px;
   font-size: 16px;
   color: #333;
   line-height: 1.55;
@@ -591,6 +611,7 @@
   text-align: center;
   border-radius: 999px;
   min-height: 56px;
+  margin-top: 4px;
   box-shadow: 0 14px 28px rgb(21 22 21 / 18%);
 }
 .donation-submit .link-label {
@@ -603,7 +624,7 @@
   color: inherit;
 }
 .donation-channel {
-  margin: 14px 0 0;
+  margin: 12px 0 0;
   text-align: center;
   font: 600 11px/1.4 "Montserrat:SemiBold";
   letter-spacing: 0.08em;
@@ -614,7 +635,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  margin-top: 22px;
+  margin-top: 0;
 }
 .donation-alt {
   justify-content: center;
@@ -650,10 +671,15 @@
   color: var(--yellow);
 }
 .donation-alt-note {
-  margin-top: 10px;
+  margin-top: 12px;
   text-transform: none;
   letter-spacing: 0.02em;
   font-weight: 500;
+}
+.donation-controls > .external-note {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgb(21 22 21 / 8%);
 }
 .document-link .arrow {
   width: 20px;
