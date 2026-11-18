@@ -180,19 +180,17 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
         <div className="awards-copy">
           <p className="eyebrow">{t.awards}</p>
           <h3>{t.awardsSubtitle}</h3>
-          <ol className="award-list">
+          <div className="award-list">
             {awardsList.map((award) => (
-              <li key={award.title}>
+              <Outbound className="award-link" href={award.href} key={award.title}>
                 <span className="award-year">{award.year}</span>
-                <div className="award-body">
-                  <Outbound className="award-title" href={award.href}>
-                    {award.title}
-                  </Outbound>
-                  <p className="award-credit">{award.credit}</p>
-                </div>
-              </li>
+                <span className="award-body">
+                  <span className="award-title">{award.title}</span>
+                  <small className="award-credit">{award.credit}</small>
+                </span>
+              </Outbound>
             ))}
-          </ol>
+          </div>
         </div>
       </div>
     </section>
