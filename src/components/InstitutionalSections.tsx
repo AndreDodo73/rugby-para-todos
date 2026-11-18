@@ -189,15 +189,13 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
   const isMonthly = frequency === "monthly";
   return (
     <section className="support-options restored-section" id="formas-de-apoiar">
-      <div className="support-options-grid">
-        <div className="support-copy reveal">
+      <div className="donation-panel donation-panel-unified reveal">
+        <div className="donation-intro">
           <p className="eyebrow">{t.supportEyebrow}</p>
           <h2>{t.supportTitle}</h2>
-          <p>{t.supportBody}</p>
+          <p className="donation-lead">{t.supportBody}</p>
         </div>
-        <div className="donation-panel reveal">
-          <p className="donation-kicker">{t.supportEyebrow}</p>
-          <p className="donation-heading">{isMonthly ? t.monthly : t.once}</p>
+        <div className="donation-controls">
           <div className="donation-frequency" role="group" aria-label={t.supportEyebrow}>
             <button type="button" onClick={() => setFrequency("once")} aria-pressed={!isMonthly}>
               {t.once}
