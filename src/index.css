@@ -668,6 +668,9 @@ footer button {
 .story-actions .text-link {
   margin-top: 0;
 }
+.story-card .story-actions .arrow {
+  color: #fff;
+}
 .story-tabs-wrap {
   max-width: 1224px;
   margin: 18px auto 0;
