@@ -4,6 +4,8 @@ import {
   documents,
   institutional,
   official,
+  shopProducts,
+  shopWhatsAppHref,
   type SiteLanguage,
 } from "../content/institutional";
 import "./InstitutionalSections.css";
@@ -197,6 +199,41 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
   );
 }
 
+export function ShopSection({ language }: { language: SiteLanguage }) {
+  const t = institutional[language];
+  return (
+    <section className="shop restored-section" id="loja" aria-labelledby="shop-title">
+      <div className="section-intro reveal">
+        <div>
+          <p className="eyebrow">{t.shopEyebrow}</p>
+          <h2 id="shop-title">{t.shopSectionTitle}</h2>
+        </div>
+        <p>{t.shopSectionBody}</p>
+      </div>
+      <p className="shop-mock-note reveal">{t.shopMockNote}</p>
+      <div className="shop-grid">
+        {shopProducts.map((product) => {
+          const name = product.name[language];
+          return (
+            <article className="shop-card reveal" key={product.id}>
+              <div className="shop-card-media">
+                <img src={`/assets/${product.image}`} alt="" loading="lazy" />
+              </div>
+              <div className="shop-card-copy">
+                <h3>{name}</h3>
+                <p>{product.blurb[language]}</p>
+                <Outbound className="shop-card-cta" href={shopWhatsAppHref(name, language)}>
+                  {t.shopCardCta}
+                </Outbound>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 export function ServicesSection({ language }: { language: SiteLanguage }) {
   const t = institutional[language];
   return (
@@ -361,9 +398,10 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
           <p className="eyebrow">Loja RPT</p>
           <h3>{t.shopTitle}</h3>
           <p>{t.shopBody}</p>
-          <Outbound className="pill support-path-cta" href={official.shop}>
-            {t.shopCta}
-          </Outbound>
+          <a className="pill support-path-cta" href="#loja">
+            <span className="link-label">{t.shopCta}</span>
+            <ExtIcon />
+          </a>
         </article>
         <article className="support-path">
           <p className="eyebrow">Instituto RPT</p>

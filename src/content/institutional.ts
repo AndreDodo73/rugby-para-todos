@@ -4,6 +4,7 @@ export const official = {
   home: "https://rugbyparatodos.org.br/",
   newsletter: "https://rugbyparatodos.org.br/contato_prospect.php",
   shop: "https://rugbyparatodos.mercadoshops.com.br/",
+  whatsapp: "5511989830049",
   monthly: "https://www.catarse.me/orptnaovaiparar",
   incomeTax: "https://doeseuir.abraceumacausa.com.br/projeto/?projectId=1430",
   helpAsYouCan: "https://rugbyparatodos.colabore.org/doeja",
@@ -28,6 +29,69 @@ export const official = {
     { name: "Facebook", href: "https://www.facebook.com/rugbyparatodos", icon: "976d6.svg" },
   ],
 };
+
+export const shopProducts = [
+  {
+    id: "camisa",
+    image: "shop/camisa.svg",
+    name: { pt: "Camisa RPT", en: "RPT jersey", fr: "Maillot RPT" },
+    blurb: {
+      pt: "Mockup de camisa oficial para vestir a causa.",
+      en: "Official jersey mockup to wear the cause.",
+      fr: "Maquette de maillot officiel pour porter la cause.",
+    },
+  },
+  {
+    id: "agasalho",
+    image: "shop/agasalho.svg",
+    name: { pt: "Agasalho RPT", en: "RPT hoodie", fr: "Sweat RPT" },
+    blurb: {
+      pt: "Mockup de agasalho para treinos e o dia a dia.",
+      en: "Hoodie mockup for training and everyday wear.",
+      fr: "Maquette de sweat pour l’entraînement et le quotidien.",
+    },
+  },
+  {
+    id: "mochila",
+    image: "shop/mochila.svg",
+    name: { pt: "Mochila RPT", en: "RPT backpack", fr: "Sac à dos RPT" },
+    blurb: {
+      pt: "Mockup de mochila para levar o rugby pra todo lado.",
+      en: "Backpack mockup to take rugby everywhere.",
+      fr: "Maquette de sac à dos pour emporter le rugby partout.",
+    },
+  },
+  {
+    id: "squeeze",
+    image: "shop/squeeze.svg",
+    name: { pt: "Squeeze RPT", en: "RPT bottle", fr: "Gourde RPT" },
+    blurb: {
+      pt: "Mockup de squeeze para hidratar dentro e fora de campo.",
+      en: "Bottle mockup for hydration on and off the field.",
+      fr: "Maquette de gourde pour s’hydrater sur et hors du terrain.",
+    },
+  },
+  {
+    id: "bola",
+    image: "shop/bola.svg",
+    name: { pt: "Bola de rugby RPT", en: "RPT rugby ball", fr: "Ballon de rugby RPT" },
+    blurb: {
+      pt: "Mockup da bola que começa o jogo e abre caminhos.",
+      en: "Ball mockup that starts the game and opens paths.",
+      fr: "Maquette du ballon qui lance le jeu et ouvre des chemins.",
+    },
+  },
+] as const;
+
+export function shopWhatsAppHref(productName: string, language: SiteLanguage) {
+  const intro =
+    language === "en"
+      ? `Hi! I'd like to order this RPT product: ${productName}`
+      : language === "fr"
+        ? `Bonjour ! Je souhaite commander ce produit RPT : ${productName}`
+        : `Olá! Quero pedir este produto RPT: ${productName}`;
+  return `https://wa.me/${official.whatsapp}?text=${encodeURIComponent(intro)}`;
+}
 
 export const awardsList = [
   {
@@ -295,11 +359,18 @@ export const institutional = {
   pt: {
     more: "Mais",
     links: [
+      { id: "loja", label: "Loja" },
       { id: "servicos", label: "Nossos serviços" },
       { id: "instituto", label: "O Instituto" },
       { id: "transparencia", label: "Transparência" },
       { id: "conteudos", label: "Conteúdos" },
     ],
+    shopEyebrow: "Loja RPT",
+    shopSectionTitle: "Vista essa causa.",
+    shopSectionBody:
+      "Camisa, agasalho, mochila, squeeze e bola com a cara do Rugby Para Todos. Escolha um item e fale com a gente no WhatsApp para pedir.",
+    shopCardCta: "Pedir no WhatsApp",
+    shopMockNote: "Imagens de marcação · mockups para layout",
     methodEyebrow: "Como transformamos",
     methodTitle: "Uma metodologia. Muitas possibilidades.",
     methodBody:
@@ -368,7 +439,7 @@ export const institutional = {
     monthlyBody: "Faça parte do apoio recorrente ao projeto pela campanha oficial no Catarse.",
     shopTitle: "Vista essa causa.",
     shopBody: "Comprando os produtos RPT, você também ajuda a transformar vidas.",
-    shopCta: "Conheça a loja RPT",
+    shopCta: "Ver a loja RPT",
     work: "Trabalhe conosco",
     workBody: "Quer colocar seu talento a serviço da transformação? Converse com o Instituto.",
     workCta: "Quero trabalhar no RPT",
@@ -394,11 +465,18 @@ export const institutional = {
   en: {
     more: "More",
     links: [
+      { id: "loja", label: "Shop" },
       { id: "servicos", label: "Our services" },
       { id: "instituto", label: "The Institute" },
       { id: "transparencia", label: "Transparency" },
       { id: "conteudos", label: "Stories & news" },
     ],
+    shopEyebrow: "RPT shop",
+    shopSectionTitle: "Wear the cause.",
+    shopSectionBody:
+      "Jersey, hoodie, backpack, bottle and rugby ball with Rugby Para Todos spirit. Pick an item and message us on WhatsApp to order.",
+    shopCardCta: "Order on WhatsApp",
+    shopMockNote: "Layout placeholders · mockup images",
     methodEyebrow: "How we make a difference",
     methodTitle: "One methodology. Many possibilities.",
     methodBody:
@@ -467,7 +545,7 @@ export const institutional = {
     monthlyBody: "Provide recurring support through the project's official Catarse campaign.",
     shopTitle: "Wear the cause.",
     shopBody: "Buying RPT products also helps transform lives.",
-    shopCta: "Visit the RPT shop",
+    shopCta: "See the RPT shop",
     work: "Work with us",
     workBody: "Want to put your skills to work for social change? Talk to the Institute.",
     workCta: "I want to work at RPT",
@@ -492,11 +570,18 @@ export const institutional = {
   fr: {
     more: "Plus",
     links: [
+      { id: "loja", label: "Boutique" },
       { id: "servicos", label: "Nos services" },
       { id: "instituto", label: "L’Institut" },
       { id: "transparencia", label: "Transparence" },
       { id: "conteudos", label: "Actualités" },
     ],
+    shopEyebrow: "Boutique RPT",
+    shopSectionTitle: "Portez cette cause.",
+    shopSectionBody:
+      "Maillot, sweat, sac à dos, gourde et ballon à l’image de Rugby Para Todos. Choisissez un article et écrivez-nous sur WhatsApp pour commander.",
+    shopCardCta: "Commander sur WhatsApp",
+    shopMockNote: "Images de marquage · maquettes de layout",
     methodEyebrow: "Notre approche",
     methodTitle: "Une méthode. De nombreuses possibilités.",
     methodBody:
@@ -565,7 +650,7 @@ export const institutional = {
     monthlyBody: "Soutenez régulièrement le projet grâce à sa campagne officielle sur Catarse.",
     shopTitle: "Portez cette cause.",
     shopBody: "Acheter les produits RPT contribue aussi à transformer des vies.",
-    shopCta: "Visiter la boutique RPT",
+    shopCta: "Voir la boutique RPT",
     work: "Travaillez avec nous",
     workBody:
       "Envie de mettre vos compétences au service du changement ? Échangez avec l’Institut.",

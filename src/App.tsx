@@ -6,6 +6,7 @@ import {
   GovernanceSection,
   MethodologySection,
   ServicesSection,
+  ShopSection,
   SupportSection,
   VideoStories,
 } from "./components/InstitutionalSections";
@@ -328,6 +329,7 @@ export default function App() {
       "projetos",
       "parceiros",
       "doe",
+      "loja",
       "servicos",
       "instituto",
       "transparencia",
@@ -701,6 +703,7 @@ export default function App() {
 
       <GovernanceSection language={language} />
 
+      <ShopSection language={language} />
       <SupportSection language={language} />
       <ContentSection language={language} />
 
