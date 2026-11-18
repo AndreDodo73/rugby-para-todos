@@ -610,7 +610,7 @@ export default function App() {
           <div className="project-rail" ref={projectsRailRef}>
             {fundraisingProjects.map((project) => (
               <a
-                className="project-card"
+                className="project-card is-fundraising"
                 key={project.place}
                 href={`${official.home}auxiliares/modulos/conteudo/pdf/${project.pdf}`}
                 target="_blank"
@@ -620,7 +620,7 @@ export default function App() {
                 <div className="project-overlay" />
                 <div className="project-meta">
                   <span>{project.year}</span>
-                  <span>{t.statusFundraising}</span>
+                  <span className="project-status">{t.statusFundraising}</span>
                 </div>
                 <div className="project-content project-content-rail">
                   <p className="project-brand">{t.projectBrand}</p>
@@ -633,12 +633,12 @@ export default function App() {
               </a>
             ))}
             {runningProjects.map((project) => (
-              <article className="project-card" key={project.title}>
+              <article className="project-card is-running" key={project.title}>
                 <img src={`${A}/${project.image}`} alt="" loading="lazy" />
                 <div className="project-overlay" />
                 <div className="project-meta">
                   <span>RPT</span>
-                  <span className="is-running">{t.statusRunning}</span>
+                  <span className="project-status">{t.statusRunning}</span>
                 </div>
                 <div className="project-content project-content-rail">
                   <h3>{project.title}</h3>
