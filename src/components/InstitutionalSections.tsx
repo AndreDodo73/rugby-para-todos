@@ -157,13 +157,20 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
       </ol>
 
       <div className="awards-band reveal">
-        <figure className="awards-visual">
+        <div className="awards-gallery">
           <img
-            src="/assets/premios.jpg"
-            alt=""
+            className="awards-shot awards-shot-lima"
+            src="/assets/rpt-em-movimento.jpg"
+            alt="Atletas com troféus no Sul-Americano de Lima"
             loading="lazy"
           />
-        </figure>
+          <img
+            className="awards-shot awards-shot-leila"
+            src="/assets/stories/leila.jpg"
+            alt="Leila Silva com o Troféu Brasil Rugby"
+            loading="lazy"
+          />
+        </div>
         <div className="awards-copy">
           <p className="eyebrow">{t.awards}</p>
           <h3>{t.awardsSubtitle}</h3>

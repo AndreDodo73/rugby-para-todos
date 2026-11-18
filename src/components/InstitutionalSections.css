@@ -252,20 +252,29 @@
 }
 .awards-band {
   display: grid;
-  grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
-  gap: clamp(28px, 4.5vw, 56px);
+  grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(28px, 4.5vw, 48px);
   align-items: start;
   max-width: 1224px;
 }
-.awards-visual {
+.awards-gallery {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
   margin: 0;
-  overflow: hidden;
-  background: #111;
 }
-.awards-visual img {
+.awards-gallery img {
   width: 100%;
+  aspect-ratio: 4 / 3;
   height: auto;
+  object-fit: cover;
   display: block;
+}
+.awards-shot-lima {
+  object-position: center 22%;
+}
+.awards-shot-leila {
+  object-position: center 18%;
 }
 .awards-copy h3 {
   margin: 0 0 28px;
@@ -1060,6 +1069,10 @@
     padding: 16px 0 0;
     border-left: 0;
     border-top: 3px solid var(--orange);
+  }
+  .awards-gallery {
+    grid-template-rows: none;
+    grid-template-columns: 1fr 1fr;
   }
   .method-values {
     grid-template-columns: repeat(2, minmax(0, 1fr));
