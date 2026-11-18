@@ -130,42 +130,50 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
   const t = institutional[language];
   return (
     <section className="methodology restored-section" id="metodologia">
-      <div className="methodology-copy reveal">
-        <p className="eyebrow">{t.methodEyebrow}</p>
-        <h2>{t.methodTitle}</h2>
-        <p>{t.methodBody}</p>
-        <div className="method-values">
-          {t.methodValues.map((value, i) => (
-            <span key={value}>
-              <small>0{i + 1}</small>
-              {value}
-            </span>
-          ))}
+      <div className="methodology-head reveal">
+        <div className="methodology-copy">
+          <p className="eyebrow">{t.methodEyebrow}</p>
+          <h2>{t.methodTitle}</h2>
+          <p>{t.methodBody}</p>
         </div>
-        <p>{t.methodTeam}</p>
+        <p className="methodology-team">{t.methodTeam}</p>
       </div>
-      <div className="awards-panel reveal">
-        <div className="awards-intro">
-          <img src="/assets/premios.jpg" alt="" loading="lazy" />
-          <div>
-            <p className="eyebrow">{t.awards}</p>
-            <h3>{t.awardsSubtitle}</h3>
-          </div>
+
+      <ol className="method-values reveal" aria-label={t.methodTitle}>
+        {t.methodValues.map((value, i) => (
+          <li key={value}>
+            <span className="method-value-index">0{i + 1}</span>
+            <span className="method-value-label">{value}</span>
+          </li>
+        ))}
+      </ol>
+
+      <div className="awards-band reveal">
+        <figure className="awards-visual">
+          <img
+            src="/assets/premios.jpg"
+            alt=""
+            loading="lazy"
+          />
+        </figure>
+        <div className="awards-copy">
+          <p className="eyebrow">{t.awards}</p>
+          <h3>{t.awardsSubtitle}</h3>
+          <ol className="award-list">
+            {awardsList.map((award) => (
+              <li key={award.title}>
+                <span className="award-year">{award.year}</span>
+                <div className="award-body">
+                  <strong>{award.title}</strong>
+                  <p className="award-credit">{award.credit}</p>
+                  <Outbound className="award-link" href={award.href}>
+                    {t.seeLink}
+                  </Outbound>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
-        <ol className="award-grid">
-          {awardsList.map((award) => (
-            <li key={award.title}>
-              <span>{award.year}</span>
-              <p>
-                <strong>{award.title}</strong>
-              </p>
-              <p className="award-credit">{award.credit}</p>
-              <Outbound className="award-link" href={award.href}>
-                {t.seeLink}
-              </Outbound>
-            </li>
-          ))}
-        </ol>
       </div>
     </section>
   );
