@@ -54,7 +54,6 @@ const copy = {
     storyCta: "Próxima história",
     storyQuote:
       "“O rugby me ensinou que o lugar onde a gente começa não define até onde pode chegar.”",
-    storyYoutube: "Ver as histórias completas no YouTube",
     storyPrev: "Histórias anteriores",
     storyNext: "Próximas histórias",
     projectsEyebrow: "Onde atuamos",
@@ -110,7 +109,6 @@ const copy = {
     storyLabel: "Story",
     storyCta: "Next story",
     storyQuote: "“Rugby taught me that where we start does not define how far we can go.”",
-    storyYoutube: "Watch the full stories on YouTube",
     storyPrev: "Previous stories",
     storyNext: "Next stories",
     projectsEyebrow: "Where we work",
@@ -167,7 +165,6 @@ const copy = {
     storyCta: "Histoire suivante",
     storyQuote:
       "« Le rugby m’a appris que notre point de départ ne définit pas jusqu’où nous pouvons aller. »",
-    storyYoutube: "Voir les histoires complètes sur YouTube",
     storyPrev: "Histoires précédentes",
     storyNext: "Histoires suivantes",
     projectsEyebrow: "Nos actions",
@@ -541,21 +538,12 @@ export default function App() {
             </span>
           </div>
           <article className="story-card">
-            <p className="eyebrow">{person.name}</p>
+            <h3 className="story-name">{person.name}</h3>
             <blockquote key={`${language}-${person.name}`}>
               {person.quote?.[language] ?? t.storyQuote}
             </blockquote>
             <p className="story-bio">{person.bio[language]}</p>
             <div className="story-actions">
-              <a
-                className="text-link"
-                href={official.social[1].href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="link-label">{t.storyYoutube}</span>
-                <Arrow />
-              </a>
               <button
                 className="text-link"
                 onClick={() => setActiveStory((activeStory + 1) % storyPeople.length)}
