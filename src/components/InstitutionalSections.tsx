@@ -201,6 +201,17 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
 
 export function ShopSection({ language }: { language: SiteLanguage }) {
   const t = institutional[language];
+  const railRef = useRef<HTMLDivElement>(null);
+  const scrollRail = (direction: -1 | 1) => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const card = rail.querySelector<HTMLElement>(".shop-card");
+    const distance = (card?.offsetWidth ?? 300) + 18;
+    rail.scrollBy({
+      left: direction * distance,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    });
+  };
   return (
     <section className="shop restored-section" id="loja" aria-labelledby="shop-title">
       <div className="section-intro reveal">
@@ -211,24 +222,37 @@ export function ShopSection({ language }: { language: SiteLanguage }) {
         <p>{t.shopSectionBody}</p>
       </div>
       <p className="shop-mock-note reveal">{t.shopMockNote}</p>
-      <div className="shop-grid">
-        {shopProducts.map((product) => {
-          const name = product.name[language];
-          return (
-            <article className="shop-card reveal" key={product.id}>
-              <div className="shop-card-media">
-                <img src={`/assets/${product.image}`} alt="" loading="lazy" />
-              </div>
-              <div className="shop-card-copy">
-                <h3>{name}</h3>
-                <p>{product.blurb[language]}</p>
-                <Outbound className="shop-card-cta" href={shopWhatsAppHref(name, language)}>
-                  {t.shopCardCta}
-                </Outbound>
-              </div>
-            </article>
-          );
-        })}
+      <div className="shop-rail-wrap">
+        <button type="button" className="stories-nav" onClick={() => scrollRail(-1)} aria-label={t.shopPrev}>
+          ‹
+        </button>
+        <div className="shop-rail" ref={railRef}>
+          {shopProducts.map((product) => {
+            const name = product.name[language];
+            return (
+              <article className="shop-card reveal" key={product.id}>
+                <div className="shop-card-media">
+                  <img src={`/assets/${product.image}`} alt="" loading="lazy" />
+                </div>
+                <div className="shop-card-copy">
+                  <h3>{name}</h3>
+                  <p>{product.blurb[language]}</p>
+                  <Outbound className="shop-card-cta" href={shopWhatsAppHref(name, language)}>
+                    {t.shopCardCta}
+                  </Outbound>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+        <button
+          type="button"
+          className="stories-nav stories-nav-next"
+          onClick={() => scrollRail(1)}
+          aria-label={t.shopNext}
+        >
+          ›
+        </button>
       </div>
     </section>
   );

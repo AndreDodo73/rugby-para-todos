@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" fill="none">
-  <rect width="800" height="1000" fill="#F4F4F4"/>
-  <path d="M230 260 L310 220 L400 255 L490 220 L570 260 L540 360 L500 340 V740 H300 V340 L260 360 Z" fill="#151615"/>
-  <path d="M360 255 V740 H440 V255" fill="#F39200"/>
-  <path d="M310 220 L400 255 L490 220 L460 310 L400 290 L340 310 Z" fill="#FFFFFF" opacity=".9"/>
-  <rect x="300" y="740" width="80" height="36" rx="8" fill="#F39200"/>
-  <rect x="420" y="740" width="80" height="36" rx="8" fill="#F39200"/>
-  <text x="400" y="900" text-anchor="middle" fill="#151615" font-family="Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="4">AGASALHO RPT</text>
-</svg>

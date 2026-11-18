@@ -33,7 +33,7 @@ export const official = {
 export const shopProducts = [
   {
     id: "camisa",
-    image: "shop/camisa.svg",
+    image: "shop/camisa.jpg",
     name: { pt: "Camisa RPT", en: "RPT jersey", fr: "Maillot RPT" },
     blurb: {
       pt: "Mockup de camisa oficial para vestir a causa.",
@@ -43,7 +43,7 @@ export const shopProducts = [
   },
   {
     id: "agasalho",
-    image: "shop/agasalho.svg",
+    image: "shop/agasalho.jpg",
     name: { pt: "Agasalho RPT", en: "RPT hoodie", fr: "Sweat RPT" },
     blurb: {
       pt: "Mockup de agasalho para treinos e o dia a dia.",
@@ -53,7 +53,7 @@ export const shopProducts = [
   },
   {
     id: "mochila",
-    image: "shop/mochila.svg",
+    image: "shop/mochila.jpg",
     name: { pt: "Mochila RPT", en: "RPT backpack", fr: "Sac à dos RPT" },
     blurb: {
       pt: "Mockup de mochila para levar o rugby pra todo lado.",
@@ -63,7 +63,7 @@ export const shopProducts = [
   },
   {
     id: "squeeze",
-    image: "shop/squeeze.svg",
+    image: "shop/squeeze.jpg",
     name: { pt: "Squeeze RPT", en: "RPT bottle", fr: "Gourde RPT" },
     blurb: {
       pt: "Mockup de squeeze para hidratar dentro e fora de campo.",
@@ -73,7 +73,7 @@ export const shopProducts = [
   },
   {
     id: "bola",
-    image: "shop/bola.svg",
+    image: "shop/bola.jpg",
     name: { pt: "Bola de rugby RPT", en: "RPT rugby ball", fr: "Ballon de rugby RPT" },
     blurb: {
       pt: "Mockup da bola que começa o jogo e abre caminhos.",
@@ -370,6 +370,8 @@ export const institutional = {
     shopSectionBody:
       "Camisa, agasalho, mochila, squeeze e bola com a cara do Rugby Para Todos. Escolha um item e fale com a gente no WhatsApp para pedir.",
     shopCardCta: "Pedir no WhatsApp",
+    shopPrev: "Produtos anteriores",
+    shopNext: "Próximos produtos",
     shopMockNote: "Imagens de marcação · mockups para layout",
     methodEyebrow: "Como transformamos",
     methodTitle: "Uma metodologia. Muitas possibilidades.",
@@ -476,6 +478,8 @@ export const institutional = {
     shopSectionBody:
       "Jersey, hoodie, backpack, bottle and rugby ball with Rugby Para Todos spirit. Pick an item and message us on WhatsApp to order.",
     shopCardCta: "Order on WhatsApp",
+    shopPrev: "Previous products",
+    shopNext: "Next products",
     shopMockNote: "Layout placeholders · mockup images",
     methodEyebrow: "How we make a difference",
     methodTitle: "One methodology. Many possibilities.",
@@ -581,6 +585,8 @@ export const institutional = {
     shopSectionBody:
       "Maillot, sweat, sac à dos, gourde et ballon à l’image de Rugby Para Todos. Choisissez un article et écrivez-nous sur WhatsApp pour commander.",
     shopCardCta: "Commander sur WhatsApp",
+    shopPrev: "Produits précédents",
+    shopNext: "Produits suivants",
     shopMockNote: "Images de marquage · maquettes de layout",
     methodEyebrow: "Notre approche",
     methodTitle: "Une méthode. De nombreuses possibilités.",

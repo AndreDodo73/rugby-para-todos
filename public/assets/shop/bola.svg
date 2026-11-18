@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" fill="none">
-  <rect width="800" height="1000" fill="#F4F4F4"/>
-  <ellipse cx="400" cy="460" rx="210" ry="145" fill="#151615"/>
-  <ellipse cx="400" cy="460" rx="210" ry="145" fill="none" stroke="#F39200" stroke-width="10"/>
-  <path d="M250 460 Q400 390 550 460" stroke="#FFFFFF" stroke-width="8" fill="none" opacity=".55"/>
-  <path d="M250 460 Q400 530 550 460" stroke="#FFFFFF" stroke-width="8" fill="none" opacity=".55"/>
-  <line x1="400" y1="330" x2="400" y2="590" stroke="#F39200" stroke-width="6"/>
-  <text x="400" y="900" text-anchor="middle" fill="#151615" font-family="Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="4">BOLA RPT</text>
-</svg>
