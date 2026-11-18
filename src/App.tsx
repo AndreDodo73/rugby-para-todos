@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Hero } from "./components/Hero";
 import { AnimatedNumber } from "./components/AnimatedNumber";
 import {
@@ -9,7 +9,12 @@ import {
   SupportSection,
   VideoStories,
 } from "./components/InstitutionalSections";
-import { institutional, official } from "./content/institutional";
+import {
+  fundraisingProjects,
+  institutional,
+  official,
+  storyPeople,
+} from "./content/institutional";
 
 type Language = "pt" | "en" | "fr";
 
@@ -41,27 +46,18 @@ const copy = {
       ["86", "famílias acompanhadas"],
     ],
     storiesEyebrow: "Vidas em movimento",
-    storiesTitle: "O resultado tem nome, rosto e futuro.",
-    storiesBody:
-      "Por trás de cada número existe uma trajetória que começou na comunidade e ganhou o mundo.",
-    storyLabel: "História",
-    storyCta: "Conheça a trajetória",
-    storyQuote:
-      "“O rugby me ensinou que o lugar onde a gente começa não define até onde pode chegar.”",
-    storyCopy:
-      "Talento formado em Paraisópolis, hoje construindo uma trajetória internacional na França. Uma geração que inspira a próxima.",
+    storiesTitle: "Aqui a #inspiração é o coração das nossas histórias.",
+    storiesBody: "Conheça a garra destes leões e se inspire!",
+    storyPrev: "Histórias anteriores",
+    storyNext: "Próximas histórias",
     projectsEyebrow: "Onde atuamos",
-    projectsTitle: "Projetos que criam possibilidades.",
+    projectsTitle: "Projetos em captação e execução",
     projectsBody:
-      "Esporte, educação e desenvolvimento humano trabalhando juntos em cada fase da vida.",
-    projectStatus: "Em execução",
-    projects: ["RPT Paraisópolis", "Rugby Escolar", "RPT Cidades", "Intercâmbio Social"],
-    projectDescriptions: [
-      "Formação esportiva e cidadã no coração da comunidade.",
-      "Valores do rugby dentro das escolas públicas.",
-      "Uma metodologia social pronta para alcançar novos territórios.",
-      "Experiências culturais e esportivas que atravessam fronteiras.",
-    ],
+      "Os projetos do Instituto RPT contribuem para o desenvolvimento social de crianças e adolescentes em comunidades vulneráveis pelo Brasil. Escolha um projeto e torne-se parceiro pessoa física ou jurídica.",
+    projectBrand: "Rugby Para Todos",
+    projectStatus: "Em captação",
+    projectCta: "Ver apresentação",
+    sealsLabel: "Reconhecimentos",
     communityEyebrow: "Desde 2004",
     communityTitle: "Uma comunidade inteira joga junto.",
     communityBody:
@@ -100,25 +96,18 @@ const copy = {
       ["86", "families supported"],
     ],
     storiesEyebrow: "Lives in motion",
-    storiesTitle: "Impact has a name, a face and a future.",
-    storiesBody:
-      "Behind each number is a journey that began in the community and reached the world.",
-    storyLabel: "Story",
-    storyCta: "Discover the journey",
-    storyQuote: "“Rugby taught me that where we start does not define how far we can go.”",
-    storyCopy:
-      "Talent developed in Paraisópolis, now building an international journey in France. A generation inspiring the next.",
+    storiesTitle: "Here, #inspiration is at the heart of our stories.",
+    storiesBody: "Meet the grit of these lions and get inspired!",
+    storyPrev: "Previous stories",
+    storyNext: "Next stories",
     projectsEyebrow: "Where we work",
-    projectsTitle: "Projects that create possibilities.",
-    projectsBody: "Sport, education and human development working together at every stage of life.",
-    projectStatus: "In progress",
-    projects: ["RPT Paraisópolis", "School Rugby", "RPT Cities", "Social Exchange"],
-    projectDescriptions: [
-      "Sports and citizenship education at the heart of the community.",
-      "Rugby values inside public schools.",
-      "A social methodology ready to reach new territories.",
-      "Cultural and sports experiences across borders.",
-    ],
+    projectsTitle: "Projects in fundraising and delivery",
+    projectsBody:
+      "Instituto RPT projects support the social development of children and adolescents in vulnerable communities across Brazil. Choose a project and become a partner as an individual or organization.",
+    projectBrand: "Rugby Para Todos",
+    projectStatus: "Fundraising",
+    projectCta: "View presentation",
+    sealsLabel: "Recognition",
     communityEyebrow: "Since 2004",
     communityTitle: "An entire community plays together.",
     communityBody:
@@ -157,27 +146,18 @@ const copy = {
       ["86", "familles accompagnées"],
     ],
     storiesEyebrow: "Des vies en mouvement",
-    storiesTitle: "L'impact a un nom, un visage et un avenir.",
-    storiesBody:
-      "Derrière chaque chiffre se trouve un parcours né dans la communauté et ouvert sur le monde.",
-    storyLabel: "Histoire",
-    storyCta: "Découvrir le parcours",
-    storyQuote:
-      "« Le rugby m'a appris que notre point de départ ne définit pas jusqu'où nous pouvons aller. »",
-    storyCopy:
-      "Un talent formé à Paraisópolis, qui construit aujourd'hui un parcours international en France. Une génération qui inspire la suivante.",
+    storiesTitle: "Ici, l’#inspiration est au cœur de nos histoires.",
+    storiesBody: "Découvrez la détermination de ces lions et laissez-vous inspirer !",
+    storyPrev: "Histoires précédentes",
+    storyNext: "Histoires suivantes",
     projectsEyebrow: "Nos actions",
-    projectsTitle: "Des projets qui créent des possibilités.",
+    projectsTitle: "Projets en collecte et en exécution",
     projectsBody:
-      "Le sport, l'éducation et le développement humain réunis à chaque étape de la vie.",
-    projectStatus: "En cours",
-    projects: ["RPT Paraisópolis", "Rugby scolaire", "RPT Villes", "Échange social"],
-    projectDescriptions: [
-      "Formation sportive et citoyenne au cœur de la communauté.",
-      "Les valeurs du rugby dans les écoles publiques.",
-      "Une méthode sociale prête à gagner de nouveaux territoires.",
-      "Des expériences culturelles et sportives au-delà des frontières.",
-    ],
+      "Les projets de l’Instituto RPT contribuent au développement social d’enfants et d’adolescents dans des communautés vulnérables au Brésil. Choisissez un projet et devenez partenaire, en tant que personne physique ou morale.",
+    projectBrand: "Rugby Para Todos",
+    projectStatus: "En collecte",
+    projectCta: "Voir la présentation",
+    sealsLabel: "Reconnaissances",
     communityEyebrow: "Depuis 2004",
     communityTitle: "Toute une communauté joue ensemble.",
     communityBody:
@@ -229,8 +209,20 @@ const presentLogos = new Set([
 ]);
 const sponsors = sponsorsAll.filter((logo) => presentLogos.has(logo));
 const supporters = [...new Set(supportersAll.filter((logo) => presentLogos.has(logo)))];
-const storyImages = ["efd1c.png", "054c1.png", "6d6d5.png", "36764.png"];
-const projectImages = ["38e25.png", "8b5c7.png", "dcc66.png", "46562.png"];
+const footerSeals = [
+  {
+    src: "seals/melhores-ongs-2024.png",
+    alt: "Prêmio Melhores ONGs 2024",
+  },
+  {
+    src: "seals/melhores-ongs-2022.png",
+    alt: "Prêmio Melhores ONGs 2022",
+  },
+  {
+    src: "seals/transparencia-2024.png",
+    alt: "Prêmio Transparência 2024",
+  },
+];
 
 function Arrow() {
   // Make/Figma line arrow (↗) — color via currentColor (laranja ou branco).
@@ -252,15 +244,26 @@ function Arrow() {
 
 export default function App() {
   const [language, setLanguage] = useState<Language>("pt");
-  const [activeStory, setActiveStory] = useState(0);
-  const [activeProject, setActiveProject] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [sponsorsPaused, setSponsorsPaused] = useState(false);
   const [activeSection, setActiveSection] = useState("impacto");
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const storiesRailRef = useRef<HTMLDivElement>(null);
   const t = copy[language];
   const extra = institutional[language];
+
+  const scrollStories = (direction: -1 | 1) => {
+    const rail = storiesRailRef.current;
+    if (!rail) return;
+    const amount = Math.max(260, Math.round(rail.clientWidth * 0.72));
+    rail.scrollBy({
+      left: direction * amount,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  };
 
   useEffect(() => {
     let frame = 0;
@@ -494,53 +497,38 @@ export default function App() {
       </section>
 
       <section className="stories" id="historias">
-        <div className="section-intro on-dark reveal">
+        <div className="section-intro on-dark reveal stories-intro">
           <div>
             <p className="eyebrow light">{t.storiesEyebrow}</p>
             <h2>{t.storiesTitle}</h2>
           </div>
           <p>{t.storiesBody}</p>
         </div>
-        <div className="story-stage reveal" aria-live="polite">
-          <div className="story-photo">
-            <img
-              key={activeStory}
-              src={`${A}/${storyImages[activeStory]}`}
-              alt="Atleta do Instituto Rugby Para Todos"
-            />
-            <span className="story-count">0{activeStory + 1} / 04</span>
-          </div>
-          <article className="story-card">
-            <p
-              className="eyebrow"
-              style={activeStory === 0 ? { color: "var(--paper)" } : undefined}
-            >
-              {t.storyLabel} 0{activeStory + 1}
-            </p>
-            <blockquote key={`${language}-${activeStory}`}>{t.storyQuote}</blockquote>
-            <p>{t.storyCopy}</p>
-            <button
-              className="text-link"
-              onClick={() => setActiveStory((activeStory + 1) % storyImages.length)}
-            >
-              <span className="link-label">{t.storyCta}</span>
-              <Arrow />
-            </button>
-          </article>
-          <div className="story-tabs">
-            {storyImages.map((image, i) => (
-              <button
-                key={image}
-                className={activeStory === i ? "active" : ""}
-                onClick={() => setActiveStory(i)}
-                aria-label={`História ${i + 1}`}
-                aria-pressed={activeStory === i}
-              >
-                <img src={`${A}/${image}`} alt="" />
-                <span>0{i + 1}</span>
-              </button>
+        <div className="stories-carousel reveal">
+          <button
+            type="button"
+            className="stories-nav stories-nav-prev"
+            onClick={() => scrollStories(-1)}
+            aria-label={t.storyPrev}
+          >
+            ‹
+          </button>
+          <div className="stories-rail" ref={storiesRailRef} tabIndex={0}>
+            {storyPeople.map((person) => (
+              <article className="story-portrait" key={person.name}>
+                <img src={`${A}/${person.image}`} alt="" loading="lazy" />
+                <span>{person.name}</span>
+              </article>
             ))}
           </div>
+          <button
+            type="button"
+            className="stories-nav stories-nav-next"
+            onClick={() => scrollStories(1)}
+            aria-label={t.storyNext}
+          >
+            ›
+          </button>
         </div>
       </section>
 
@@ -554,27 +542,28 @@ export default function App() {
           </div>
           <p>{t.projectsBody}</p>
         </div>
-        <div className="project-grid">
-          {t.projects.map((project, i) => (
-            <button
-              type="button"
-              className={`project-card reveal ${activeProject === i ? "active" : ""}`}
-              key={project}
-              onClick={() => setActiveProject(activeProject === i ? null : i)}
-              aria-expanded={activeProject === i}
+        <div className="project-grid project-grid-captacao">
+          {fundraisingProjects.map((project) => (
+            <a
+              className="project-card reveal"
+              key={project.place}
+              href={`${official.home}auxiliares/modulos/conteudo/pdf/${project.pdf}`}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <img src={`${A}/${projectImages[i]}`} alt="" />
+              <img src={`${A}/${project.image}`} alt="" loading="lazy" />
               <div className="project-overlay" />
-              <div className="project-meta">
-                <span>0{i + 1}</span>
-                <span>{t.projectStatus}</span>
+              <div className="project-content project-content-captacao">
+                <p className="project-brand">{t.projectBrand}</p>
+                <h3>{project.place}</h3>
+                <p className="project-year">{project.year}</p>
+                <span className="project-status">{t.projectStatus}</span>
+                <span className="project-cta">
+                  {t.projectCta}
+                  <Arrow />
+                </span>
               </div>
-              <div className="project-content">
-                <h3>{project}</h3>
-                <p>{t.projectDescriptions[i]}</p>
-                <Arrow />
-              </div>
-            </button>
+            </a>
           ))}
         </div>
       </section>
@@ -632,6 +621,11 @@ export default function App() {
           <div className="footer-brand">
             <img src={`${A}/ff39b.png`} alt="Instituto Rugby Para Todos" />
             <p>{t.footerNote}</p>
+            <div className="footer-seals" aria-label={t.sealsLabel}>
+              {footerSeals.map((seal) => (
+                <img key={seal.src} src={`${A}/${seal.src}`} alt={seal.alt} loading="lazy" />
+              ))}
+            </div>
           </div>
           <div>
             <p className="footer-label">{t.footerNav}</p>

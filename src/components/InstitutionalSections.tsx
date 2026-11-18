@@ -1,5 +1,11 @@
 import { useState, type ReactNode } from "react";
-import { documents, institutional, official, type SiteLanguage } from "../content/institutional";
+import {
+  awardsList,
+  documents,
+  institutional,
+  official,
+  type SiteLanguage,
+} from "../content/institutional";
 import "./InstitutionalSections.css";
 
 function ExtIcon() {
@@ -64,10 +70,18 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
         <p className="eyebrow">{t.awards}</p>
         <h3>{t.awardsSubtitle}</h3>
         <ol className="award-list">
-          {t.awardNames.map((award, i) => (
-            <li key={award}>
-              <span>{["2006 / 08", "2012", "2013", "2017"][i]}</span>
-              <p>{award}</p>
+          {awardsList.map((award) => (
+            <li key={award.title}>
+              <span>{award.year}</span>
+              <div>
+                <p>
+                  <strong>{award.title}</strong>
+                </p>
+                <p className="award-credit">{award.credit}</p>
+                <Outbound className="award-link" href={award.href}>
+                  {t.seeLink}
+                </Outbound>
+              </div>
             </li>
           ))}
         </ol>
@@ -232,6 +246,15 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
           <p className="donation-channel">
             {isMonthly ? t.channelMonthly : t.channelOnce}
           </p>
+          <div className="donation-alt-paths" role="group" aria-label={t.supportEyebrow}>
+            <Outbound className="pill donation-alt donation-alt-ir" href={official.incomeTax}>
+              {t.incomeTax}
+            </Outbound>
+            <Outbound className="pill donation-alt" href={official.helpAsYouCan}>
+              {t.helpAsYouCan}
+            </Outbound>
+          </div>
+          <p className="donation-channel donation-alt-note">{t.incomeTaxNote}</p>
           <p className="external-note">{t.externalPayment}</p>
         </div>
       </div>

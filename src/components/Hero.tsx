@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 const HERO_VIDEO = "/media/hero-rugby.mp4";
 const HERO_POSTER = "/media/hero-rugby-poster.jpg";
+/** Complete the clip sooner in the scroll so the scrub feels quicker. */
+const SCROLL_SPAN_FACTOR = 0.52;
 
 const heroCopy = {
   pt: {
@@ -42,27 +44,48 @@ export function Hero({
     if (!video || !section) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let frame = 0;
+    let raf = 0;
     let desiredTime = 0;
+    let seeking = false;
+    let pending = false;
 
-    // Keep the decoder paused: scrolling selects frames, never starts playback.
-    const seek = () => {
-      if (video.readyState < 1 || video.seeking) return;
-      if (Math.abs(video.currentTime - desiredTime) > 1 / 48) {
+    const seekToDesired = () => {
+      if (video.readyState < 1) return;
+      if (seeking) {
+        pending = true;
+        return;
+      }
+      if (Math.abs(video.currentTime - desiredTime) < 0.012) return;
+      seeking = true;
+      pending = false;
+      try {
         video.currentTime = desiredTime;
+      } catch {
+        seeking = false;
       }
     };
+
+    const onSeeked = () => {
+      seeking = false;
+      if (pending) seekToDesired();
+    };
+
     const update = () => {
-      frame = 0;
+      raf = 0;
       if (!Number.isFinite(video.duration) || video.duration <= 0) return;
-      const progress = Math.min(1, Math.max(0, window.scrollY / section.clientHeight));
-      const lastFrame = Math.max(0, video.duration - 1 / 24);
-      desiredTime = reducedMotion.matches ? 0 : Math.round(progress * lastFrame * 24) / 24;
-      seek();
+      const span = Math.max(180, section.clientHeight * SCROLL_SPAN_FACTOR);
+      const raw = Math.min(1, Math.max(0, window.scrollY / span));
+      // Ease-out so early scroll advances the clip faster, then settles.
+      const progress = 1 - (1 - raw) * (1 - raw);
+      const lastFrame = Math.max(0, video.duration - 0.04);
+      desiredTime = reducedMotion.matches ? 0 : progress * lastFrame;
+      seekToDesired();
     };
+
     const scheduleUpdate = () => {
-      if (!frame) frame = requestAnimationFrame(update);
+      if (!raf) raf = requestAnimationFrame(update);
     };
+
     const onMeta = () => {
       if (Number.isFinite(video.duration) && video.duration > 0) {
         setVideoReady(true);
@@ -74,17 +97,17 @@ export function Hero({
     video.pause();
     video.addEventListener("loadedmetadata", onMeta);
     video.addEventListener("error", onFail);
-    video.addEventListener("seeked", seek);
+    video.addEventListener("seeked", onSeeked);
     window.addEventListener("scroll", scheduleUpdate, { passive: true });
     window.addEventListener("resize", scheduleUpdate);
     reducedMotion.addEventListener("change", scheduleUpdate);
     scheduleUpdate();
 
     return () => {
-      cancelAnimationFrame(frame);
+      cancelAnimationFrame(raf);
       video.removeEventListener("loadedmetadata", onMeta);
       video.removeEventListener("error", onFail);
-      video.removeEventListener("seeked", seek);
+      video.removeEventListener("seeked", onSeeked);
       window.removeEventListener("scroll", scheduleUpdate);
       window.removeEventListener("resize", scheduleUpdate);
       reducedMotion.removeEventListener("change", scheduleUpdate);
@@ -108,7 +131,7 @@ export function Hero({
         poster={HERO_POSTER}
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
         disablePictureInPicture
         aria-hidden="true"
         style={videoReady ? undefined : { opacity: 0, pointerEvents: "none" }}

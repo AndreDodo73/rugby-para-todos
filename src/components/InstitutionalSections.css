@@ -183,6 +183,30 @@
 }
 .award-list p {
   font-size: 16px;
+  margin: 0;
+}
+.award-list strong {
+  font: 700 15px/1.35 "Montserrat:Bold";
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.award-credit {
+  margin-top: 6px !important;
+  color: #555;
+  font-size: 14px !important;
+}
+.award-link {
+  margin-top: 10px;
+  color: #1a5fb4;
+  font: 600 13px/1.4 "Montserrat:SemiBold";
+  text-transform: none;
+  letter-spacing: 0;
+}
+.award-link .link-label {
+  border-bottom-color: currentColor;
+}
+.award-link .arrow {
+  color: currentColor;
 }
 .methodology-copy h2 {
   margin-bottom: 32px;
@@ -567,6 +591,51 @@
   text-transform: uppercase;
   color: #777;
 }
+.donation-alt-paths {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 22px;
+}
+.donation-alt {
+  justify-content: center;
+  min-height: 48px;
+  border-radius: 999px;
+  background: white;
+  color: var(--ink);
+  border: 1.5px solid rgb(21 22 21 / 18%);
+  box-shadow: none;
+  text-align: center;
+}
+.donation-alt .link-label {
+  border-bottom: 0;
+  padding-bottom: 0;
+  color: inherit;
+}
+.donation-alt .arrow {
+  padding-bottom: 0;
+  color: inherit;
+}
+.donation-alt-ir {
+  background: var(--ink);
+  color: var(--yellow);
+  border-color: var(--ink);
+}
+.donation-alt:hover {
+  background: #2b2c2b;
+  color: white;
+  border-color: #2b2c2b;
+}
+.donation-alt-ir:hover {
+  background: #000;
+  color: var(--yellow);
+}
+.donation-alt-note {
+  margin-top: 10px;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-weight: 500;
+}
 .document-link .arrow {
   width: 20px;
   height: 20px;
@@ -898,6 +967,9 @@
   }
   .donation-amounts {
     grid-template-columns: 1fr 1fr;
+  }
+  .donation-alt-paths {
+    grid-template-columns: 1fr;
   }
   .donation-controls {
     max-width: none;

@@ -5,6 +5,8 @@ export const official = {
   newsletter: "https://rugbyparatodos.org.br/contato_prospect.php",
   shop: "https://rugbyparatodos.mercadoshops.com.br/",
   monthly: "https://www.catarse.me/orptnaovaiparar",
+  incomeTax: "https://doeseuir.abraceumacausa.com.br/projeto/?projectId=1430",
+  helpAsYouCan: "https://rugbyparatodos.colabore.org/doeja",
   donations: {
     "50": "https://www.paypal.com/donate?hosted_button_id=U8AC4EP6G8DRC",
     "100": "https://www.paypal.com/donate?hosted_button_id=4QUPEKR75EZQ2",
@@ -26,6 +28,115 @@ export const official = {
     { name: "Facebook", href: "https://www.facebook.com/rugbyparatodos", icon: "976d6.svg" },
   ],
 };
+
+export const awardsList = [
+  {
+    title: 'Prêmio Solidário Amaro Domingues | 10º Prêmio Sou do Esporte Foco Radical 2025',
+    credit: "Sou do Esporte",
+    year: "2025",
+    href: "https://www.youtube.com/watch?v=oWL1v6F5-nI",
+  },
+  {
+    title: 'Prêmio "Melhores ONGs 2024"',
+    credit: "Instituto Doar, Instituto 'O mundo que queremos' e 'Ambev VOA'",
+    year: "2024",
+    href: "https://www.premiomelhores.org/",
+  },
+  {
+    title: 'Prêmio "Ouro (2024) ONG Referência do Programa do Grupo Foguete"',
+    credit: "Gerando Falcões",
+    year: "2024",
+    href: "https://rugbyparatodos.org.br/conteudo.php?idc=8&idcd=379&tit=Pr%C3%AAmio+OURO+da+Gerando+Falc%C3%B5es",
+  },
+  {
+    title: 'Prêmio "Carolina de Maria de Jesus para Defensores de Direitos Humanos"',
+    credit: 'Fiocruz — projeto "Cesta Básica Digital"',
+    year: "2024",
+    href: "https://www.instagram.com/p/C2LJLp2xC7E/",
+  },
+  {
+    title: 'Prêmio "Melhores ONGs 2022"',
+    credit: "Instituto Doar, Instituto 'O mundo que queremos' e 'Ambev VOA'",
+    year: "2022",
+    href: "https://www.premiomelhores.org/",
+  },
+  {
+    title: 'Prêmio "Desenvolvimento 2022"',
+    credit: "Subprefeitura de Santo Amaro",
+    year: "2022",
+    href: "https://www.noticiasdaregiao.com.br/aniversario-de-santo-amaro-comeca-com-o-premio-desenvolvimento/",
+  },
+  {
+    title: 'Prêmio "Falcão Captação 2021"',
+    credit: "Gerando Falcões",
+    year: "2021",
+    href: "https://rugbyparatodos.org.br/conteudo.php?idc=8&idcd=187&tit=NL+RPT+Abril+|+Pr%C3%AAmio+Falc%C3%A3o+Capta%C3%A7%C3%A3o+2021",
+  },
+  {
+    title: "Prêmio Esporte e Cidadania 2006 e 2008",
+    credit: "Prefeitura de São Paulo",
+    year: "2006 / 08",
+    href: "https://youtu.be/nCl3LLWUA28",
+  },
+  {
+    title: "Troféu Brasil Rugby 2013 — Melhor Projeto Social de 2012",
+    credit: "Confederação Brasileira de Rugby — CBRu",
+    year: "2013",
+    href: "https://www.facebook.com/media/set/?vanity=rugbyparatodos&set=a.10151309079366961",
+  },
+  {
+    title: "Troféu Brasil Rugby 2017 — Apoiador do Rugby Brasileiro",
+    credit: "Confederação Brasileira de Rugby — CBRu",
+    year: "2017",
+    href: "https://brasilrugby.com.br/2018/03/20/melhores-da-temporada-2017-sao-premiados-no-trofeu-brasil-rugby/",
+  },
+];
+
+export const fundraisingProjects = [
+  {
+    place: "Paraisópolis",
+    year: "Ano 20",
+    image: "captacao/paraisopolis.jpg",
+    pdf: "Apresentacao-Rpt-Paraisopolis-Ano-20-Captado-Compressed-20260409132008.pdf",
+  },
+  {
+    place: "ESRRio",
+    year: "Ano 11",
+    image: "captacao/esrrio.jpg",
+    pdf: "Apresentacao-Esrrio-Ano-11-2025-Compressed-20250919112310.pdf",
+  },
+  {
+    place: "Leoas",
+    year: "Ano 1",
+    image: "captacao/leoas.jpg",
+    pdf: "Apresentacao-Jogue-Como-Uma-Leoa-2026-Compressed-20260409130002.pdf",
+  },
+  {
+    place: "Jd. Colombo",
+    year: "Ano 1",
+    image: "captacao/colombo.jpg",
+    pdf: "Apresentacao-Rugby-Para-Todos-Jardim-Colombo-2026-Compressed-20260409131744.pdf",
+  },
+  {
+    place: "Guarulhos",
+    year: "Ano 2",
+    image: "captacao/guarulhos.jpg",
+    pdf: "Rpt-Guarulhos-1-Compressed-20250821104615.pdf",
+  },
+];
+
+export const storyPeople = [
+  { name: "Pamela", image: "stories/pamela.jpg" },
+  { name: "Bia", image: "stories/bia.png" },
+  { name: 'Karol "Bedoya"', image: "stories/karol.jpg" },
+  { name: "Lara", image: "stories/lara.png" },
+  { name: "Leila Silva", image: "stories/leila.jpg" },
+  { name: "Valentina", image: "stories/valentina.png" },
+  { name: "Patrício", image: "stories/patricio.jpg" },
+  { name: "Robert Tenório", image: "stories/robert.jpg" },
+  { name: "Eshyllen", image: "stories/eshyllen.png" },
+  { name: "Gilmar", image: "stories/gilmar.jpg" },
+];
 
 export const documents = [
   { file: "Estatuto-Social-Consolidado-Rpt-Age-02-03-2024-20240926212423.pdf", year: "2024" },
@@ -53,13 +164,13 @@ export const institutional = {
       "Jogadores e técnicos de rugby, educação física, pedagogia, psicologia, fisioterapia, nutrição e serviço social. Um time multidisciplinar que trabalha pelo desenvolvimento integral de cada jovem.",
     methodValues: ["Pessoas", "Planeta", "Prosperidade", "Paz", "Parcerias"],
     awards: "Prêmios recebidos",
-    awardsSubtitle: "Muito suor e orgulho.",
-    awardNames: [
-      "Prêmio Esporte e Cidadania — Prefeitura de São Paulo",
-      "São José Polo Awards",
-      "Troféu Brasil Rugby — Melhor Projeto Social de 2012",
-      "Troféu Brasil Rugby — Apoiador do Rugby Brasileiro",
-    ],
+    awardsSubtitle: "muito suor e orgulho",
+    seeLink: "veja o link",
+    incomeTax: "Doar com I.R.*",
+    helpAsYouCan: "Ajude como puder",
+    incomeTaxNote: "*Doação via incentivo fiscal (I.R.).",
+    incomeTaxChannel: "Canal oficial · Doe Seu IR",
+    helpChannel: "Canal oficial · Colabore",
     serviceEyebrow: "Experiências que desenvolvem",
     serviceTitle: "Nossos serviços.",
     serviceBody:
@@ -151,13 +262,13 @@ export const institutional = {
       "Rugby players and coaches, physical education, teaching, psychology, physiotherapy, nutrition and social work. A multidisciplinary team supporting each young person's development.",
     methodValues: ["People", "Planet", "Prosperity", "Peace", "Partnership"],
     awards: "Awards",
-    awardsSubtitle: "Hard work. Shared pride.",
-    awardNames: [
-      "Sport and Citizenship Award — São Paulo City Hall",
-      "São José Polo Awards",
-      "Brasil Rugby Trophy — Best Social Project of 2012",
-      "Brasil Rugby Trophy — Supporter of Brazilian Rugby",
-    ],
+    awardsSubtitle: "hard work and pride",
+    seeLink: "see the link",
+    incomeTax: "Donate with income tax*",
+    helpAsYouCan: "Help as you can",
+    incomeTaxNote: "*Donation through a tax incentive program.",
+    incomeTaxChannel: "Official channel · Doe Seu IR",
+    helpChannel: "Official channel · Colabore",
     serviceEyebrow: "Experiences that develop people",
     serviceTitle: "Our services.",
     serviceBody:
@@ -248,13 +359,13 @@ export const institutional = {
       "Joueurs et entraîneurs de rugby, éducation physique, pédagogie, psychologie, kinésithérapie, nutrition et travail social. Une équipe pluridisciplinaire au service du développement de chaque jeune.",
     methodValues: ["Personnes", "Planète", "Prospérité", "Paix", "Partenariats"],
     awards: "Nos distinctions",
-    awardsSubtitle: "Du travail. Une fierté partagée.",
-    awardNames: [
-      "Prix Sport et Citoyenneté — Mairie de São Paulo",
-      "São José Polo Awards",
-      "Trophée Brasil Rugby — Meilleur projet social de 2012",
-      "Trophée Brasil Rugby — Soutien au rugby brésilien",
-    ],
+    awardsSubtitle: "beaucoup de travail et de fierté",
+    seeLink: "voir le lien",
+    incomeTax: "Donner via l’impôt*",
+    helpAsYouCan: "Aidez comme vous le pouvez",
+    incomeTaxNote: "*Don via un dispositif d’incitation fiscale.",
+    incomeTaxChannel: "Canal officiel · Doe Seu IR",
+    helpChannel: "Canal officiel · Colabore",
     serviceEyebrow: "Des expériences qui font grandir",
     serviceTitle: "Nos services.",
     serviceBody:
