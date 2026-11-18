@@ -624,19 +624,6 @@ export default function App() {
 
       <GovernanceSection language={language} />
 
-      <section className="join" id="doe">
-        <div className="join-bg" />
-        <div className="join-content reveal">
-          <p className="eyebrow light">{t.joinEyebrow}</p>
-          <h2>{t.joinTitle}</h2>
-          <p>{t.joinBody}</p>
-          <button className="pill light-pill" onClick={() => goTo("formas-de-apoiar")}>
-            {t.joinCta}
-            <Arrow />
-          </button>
-        </div>
-      </section>
-
       <SupportSection language={language} />
       <ContentSection language={language} />
 

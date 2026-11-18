@@ -188,7 +188,7 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
   const t = institutional[language];
   const isMonthly = frequency === "monthly";
   return (
-    <section className="support-options restored-section" id="formas-de-apoiar">
+    <section className="support-options restored-section" id="doe">
       <div className="donation-panel donation-panel-unified reveal">
         <div className="donation-intro">
           <p className="eyebrow">{t.supportEyebrow}</p>

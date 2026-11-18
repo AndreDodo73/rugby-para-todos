@@ -95,10 +95,10 @@ export const institutional = {
     ombudsman: "Ouvidoria",
     ombudsmanBody:
       "Informações, sugestões, elogios e reclamações ajudam a aprimorar os processos de governança do RPT.",
-    supportEyebrow: "Escolha como fazer parte",
+    supportEyebrow: "Faça parte",
     supportTitle: "Seu apoio abre caminhos.",
     supportBody:
-      "Contribua para manter o esporte, a educação e o cuidado com as famílias em movimento.",
+      "Toda transformação precisa de um time. Sua doação mantém o esporte, a educação e o cuidado com as famílias em movimento.",
     once: "Doar uma vez",
     monthly: "Doar mensalmente",
     other: "Outro valor",
@@ -193,9 +193,10 @@ export const institutional = {
     ombudsman: "Ombudsman",
     ombudsmanBody:
       "Information, suggestions, compliments and complaints help improve RPT's governance processes.",
-    supportEyebrow: "Choose how to take part",
+    supportEyebrow: "Join us",
     supportTitle: "Your support opens doors.",
-    supportBody: "Help keep sport, education and support for families moving forward.",
+    supportBody:
+      "Every transformation needs a team. Your donation keeps sport, education and care for families moving forward.",
     once: "Give once",
     monthly: "Give monthly",
     other: "Other amount",
@@ -289,9 +290,10 @@ export const institutional = {
     ombudsman: "Médiation",
     ombudsmanBody:
       "Informations, suggestions, compliments et réclamations contribuent à améliorer la gouvernance du RPT.",
-    supportEyebrow: "Choisissez comment participer",
+    supportEyebrow: "Rejoignez-nous",
     supportTitle: "Votre soutien ouvre des portes.",
-    supportBody: "Contribuez au sport, à l’éducation et à l’accompagnement des familles.",
+    supportBody:
+      "Chaque transformation a besoin d’une équipe. Votre don maintient le sport, l’éducation et l’accompagnement des familles en mouvement.",
     once: "Don ponctuel",
     monthly: "Don mensuel",
     other: "Autre montant",
