@@ -237,10 +237,19 @@ const storyImages = ["efd1c.png", "054c1.png", "6d6d5.png", "36764.png"];
 const projectImages = ["38e25.png", "8b5c7.png", "dcc66.png", "46562.png"];
 
 function Arrow() {
-  // Internal UI chevron — Keep Make external-link SVG only on Outbound links.
+  // Internal navigation arrow — institutional orange mark (not the outbound icon).
   return (
     <span aria-hidden="true" className="arrow">
-      ↗
+      <svg viewBox="0 0 24 24" width="18" height="18" focusable="false">
+        <path
+          d="M8.5 15.5 15.2 8.8M10.2 8.5h5.3v5.3"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
     </span>
   );
 }

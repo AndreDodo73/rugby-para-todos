@@ -182,6 +182,7 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
           <p>{t.supportBody}</p>
         </div>
         <div className="donation-panel reveal">
+          <p className="donation-kicker">{t.supportEyebrow}</p>
           <div className="donation-frequency" role="group" aria-label={t.supportEyebrow}>
             <button type="button" onClick={() => setFrequency("once")} aria-pressed={!isMonthly}>
               {t.once}

@@ -81,8 +81,8 @@
 }
 .brand {
   width: auto;
-  max-width: 280px;
-  height: 64px;
+  max-width: min(340px, 32vw);
+  height: 78px;
   flex-shrink: 0;
   background: none;
   border: 0;
@@ -93,17 +93,17 @@
 .brand img {
   width: auto;
   height: 100%;
-  max-height: 64px;
+  max-height: 78px;
   max-width: 100%;
   object-fit: contain;
   object-position: left center;
   display: block;
 }
 .site-header.scrolled .brand {
-  height: 48px;
+  height: 58px;
 }
 .site-header.scrolled .brand img {
-  max-height: 48px;
+  max-height: 58px;
 }
 .nav {
   margin-left: auto;
@@ -344,7 +344,14 @@ footer button {
   color: #fff;
 }
 .arrow {
-  font: 400 20px Arial;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--orange);
+  line-height: 0;
+}
+.arrow svg {
+  display: block;
 }
 .scroll-cue {
   position: absolute;
@@ -444,29 +451,32 @@ footer button {
   animation: marquee 32s linear infinite;
 }
 .logo-cell {
-  width: 190px;
-  height: 125px;
+  width: 220px;
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-right: 1px solid #ddd;
-  padding: 32px;
+  padding: 22px 28px;
+  overflow: visible;
+  box-sizing: border-box;
 }
 .logo-cell img {
+  width: auto;
+  height: auto;
   max-width: 100%;
-  max-height: 65px;
+  max-height: 72px;
   object-fit: contain;
-  filter: grayscale(1);
-  opacity: 0.72;
+  object-position: center;
+  filter: none;
+  opacity: 0.78;
   transition:
-    filter 0.35s,
     opacity 0.35s,
     transform 0.5s var(--ease-out);
 }
 .logo-cell:hover img {
   opacity: 1;
-  filter: grayscale(0);
-  transform: scale(1.06);
+  transform: scale(1.04);
 }
 @keyframes marquee {
   to {
@@ -476,18 +486,24 @@ footer button {
 
 .impact {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
   background: var(--paper);
   min-height: 850px;
 }
 .impact-image {
   overflow: hidden;
-  min-height: 650px;
+  min-height: 0;
+  height: 100%;
+  align-self: stretch;
 }
 .impact-image img {
   width: 100%;
   height: 100%;
+  min-height: 650px;
   object-fit: cover;
+  object-position: center;
+  display: block;
   transition: transform 1s ease;
 }
 .impact:hover .impact-image img {
@@ -498,6 +514,9 @@ footer button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-self: stretch;
+  background: var(--paper);
+  box-sizing: border-box;
 }
 .impact-copy h2,
 .community h2 {
@@ -920,7 +939,7 @@ footer button {
   position: absolute;
   right: 0;
   bottom: 0;
-  color: var(--yellow);
+  color: var(--orange);
 }
 .pill .arrow,
 .text-link .arrow,
@@ -1001,25 +1020,31 @@ footer button {
 }
 .supporter-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 180px));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 200px));
   justify-content: center;
-  gap: 30px;
+  gap: 28px 36px;
   max-width: 1200px;
   margin: 40px auto 0;
   align-items: center;
 }
 .supporter-grid div {
-  height: 75px;
+  height: 96px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  overflow: visible;
 }
 .supporter-grid img {
+  width: auto;
+  height: auto;
   max-width: 100%;
-  max-height: 60px;
-  filter: grayscale(1);
-  opacity: 0.65;
+  max-height: 72px;
+  filter: none;
+  opacity: 0.72;
   object-fit: contain;
+  object-position: center;
 }
 
 .join {
@@ -1134,11 +1159,11 @@ footer {
   }
   .brand {
     width: auto;
-    max-width: 200px;
-    height: 48px;
+    max-width: 240px;
+    height: 56px;
   }
   .brand img {
-    max-height: 48px;
+    max-height: 56px;
   }
   .hero {
     margin-top: 82px;
@@ -1192,6 +1217,10 @@ footer {
   }
   .impact-image {
     height: 70vh;
+    min-height: 420px;
+  }
+  .impact-image img {
+    min-height: 100%;
   }
   .metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1242,11 +1271,11 @@ footer {
   }
   .brand {
     width: auto;
-    max-width: 168px;
-    height: 40px;
+    max-width: 200px;
+    height: 48px;
   }
   .brand img {
-    max-height: 40px;
+    max-height: 48px;
   }
   .language-switcher {
     padding-left: 0;
@@ -1306,8 +1335,12 @@ footer {
     padding-top: 70px;
   }
   .logo-cell {
-    width: 145px;
-    height: 105px;
+    width: 168px;
+    height: 110px;
+    padding: 18px 20px;
+  }
+  .logo-cell img {
+    max-height: 58px;
   }
   .impact-copy {
     padding: 75px 20px;
