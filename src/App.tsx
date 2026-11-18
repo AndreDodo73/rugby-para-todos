@@ -659,31 +659,21 @@ export default function App() {
       </section>
 
       <section className="community" id="instituto">
+        <div className="community-bg" aria-hidden="true">
+          <img
+            src={`${A}/community-fullbleed.jpg`}
+            alt=""
+            loading="lazy"
+          />
+        </div>
         <div className="community-copy reveal">
           <p className="eyebrow">{t.communityEyebrow}</p>
           <h2>{t.communityTitle}</h2>
           <p>{t.communityBody}</p>
-          <button className="pill dark-pill" onClick={() => goTo("impacto")}>
+          <button className="pill light-pill" onClick={() => goTo("impacto")}>
             {t.communityCta}
             <Arrow />
           </button>
-        </div>
-        <div className="community-collage reveal">
-          <img
-            className="collage-main"
-            src={`${A}/9a2ba.png`}
-            alt="Treino do Instituto Rugby Para Todos em Paraisópolis"
-          />
-          <img
-            className="collage-small"
-            src={`${A}/e9a3a.png`}
-            alt="Comunidade do Instituto Rugby Para Todos reunida"
-          />
-          <span className="collage-mark">
-            RPT
-            <br />
-            04—24
-          </span>
         </div>
       </section>
 
