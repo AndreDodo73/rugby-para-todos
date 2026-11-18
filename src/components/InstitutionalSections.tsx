@@ -159,21 +159,21 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
       <div className="awards-band reveal">
         <div className="awards-gallery">
           <img
-            className="awards-shot awards-shot-lima"
-            src="/assets/rpt-em-movimento.jpg"
-            alt="Atletas com troféus no Sul-Americano de Lima"
+            className="awards-shot awards-shot-ceremony"
+            src="/assets/awards/ceremony.jpg"
+            alt="Entrega de premiação do Instituto Rugby Para Todos"
             loading="lazy"
           />
           <img
-            className="awards-shot awards-shot-leila"
-            src="/assets/stories/leila.jpg"
-            alt="Leila Silva com o Troféu Brasil Rugby"
+            className="awards-shot awards-shot-trophy"
+            src="/assets/awards/trophy.jpg"
+            alt="Jovens atletas erguem o troféu"
             loading="lazy"
           />
           <img
-            className="awards-shot awards-shot-field"
-            src="/assets/stories/lara.png"
-            alt="Jogadoras em partida do Rugby Para Todos"
+            className="awards-shot awards-shot-match"
+            src="/assets/awards/match.jpg"
+            alt="Crianças em jogo de rugby"
             loading="lazy"
           />
         </div>

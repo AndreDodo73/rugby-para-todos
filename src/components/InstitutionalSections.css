@@ -272,14 +272,14 @@
   object-fit: cover;
   display: block;
 }
-.awards-shot-lima {
-  object-position: center 28%;
+.awards-shot-ceremony {
+  object-position: center 42%;
 }
-.awards-shot-leila {
-  object-position: center 20%;
+.awards-shot-trophy {
+  object-position: center 46%;
 }
-.awards-shot-field {
-  object-position: center 40%;
+.awards-shot-match {
+  object-position: 58% 48%;
 }
 .awards-copy h3 {
   margin: 0 0 28px;
