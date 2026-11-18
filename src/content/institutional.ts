@@ -160,11 +160,15 @@ export const storyPeople = [
     name: "Karol Bedoya",
     image: "stories/karol.jpg",
     objectPosition: "50% 18%",
-    quote: null,
+    quote: {
+      pt: "“É mostrar potência: sair do lugar da insuficiência, do que falta, e ir para um lugar de força e de realização.”",
+      en: "“It’s about showing power: leaving the place of lack and moving toward strength and achievement.”",
+      fr: "“Il s’agit de montrer sa puissance : quitter le lieu du manque pour aller vers la force et la réalisation.”",
+    },
     bio: {
-      pt: "A história da Karol faz parte das trajetórias do Instituto. O relato completo está no canal do Rugby Para Todos no YouTube.",
-      en: "Karol’s story is part of the Institute’s journeys. The full account is on the Rugby Para Todos YouTube channel.",
-      fr: "L’histoire de Karol fait partie des parcours de l’Institut. Le récit complet est sur la chaîne YouTube de Rugby Para Todos.",
+      pt: "Karolina Bedoya é ex-aluna do Instituto em Paraisópolis. Hoje joga pelas Leoas, treina as categorias de base e atua como educadora no Rugby Para Todos. Em intercâmbio cultural na França (Essai Du Bout Du Monde), foi uma das 12 Leoas que viveram a experiência com o Rugby Olympique Pantin.",
+      en: "Karolina Bedoya is a former Institute student from Paraisópolis. Today she plays for the Leoas, coaches their youth sides and works as an educator at Rugby Para Todos. On a cultural exchange in France (Essai Du Bout Du Monde), she was one of 12 Leoas who shared the experience with Rugby Olympique Pantin.",
+      fr: "Karolina Bedoya est une ancienne élève de l’Institut à Paraisópolis. Aujourd’hui, elle joue avec les Leoas, entraîne les catégories de base et travaille comme éducatrice à Rugby Para Todos. Lors d’un échange culturel en France (Essai Du Bout Du Monde), elle a été l’une des 12 Leoas à vivre l’expérience avec le Rugby Olympique Pantin.",
     },
   },
   {
