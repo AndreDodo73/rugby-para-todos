@@ -591,10 +591,14 @@ footer button {
   align-items: stretch;
 }
 .story-photo {
-  min-height: 640px;
-  height: 100%;
+  aspect-ratio: 270 / 390;
+  width: 100%;
+  height: auto;
+  max-height: 720px;
+  align-self: center;
   position: relative;
   overflow: hidden;
+  background: #111;
 }
 .story-photo::after {
   content: "";
@@ -606,17 +610,15 @@ footer button {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
-  animation: storyIn 0.7s var(--ease-out) both;
+  object-position: center 18%;
+  animation: storyIn 0.45s var(--ease-out) both;
 }
 @keyframes storyIn {
   from {
     opacity: 0;
-    transform: scale(1.04);
   }
   to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 .story-count {
@@ -686,8 +688,9 @@ footer button {
   scrollbar-color: var(--orange) transparent;
 }
 .story-tabs button {
-  flex: 0 0 168px;
-  height: 108px;
+  flex: 0 0 132px;
+  height: auto;
+  aspect-ratio: 270 / 390;
   padding: 0;
   position: relative;
   overflow: hidden;
@@ -708,7 +711,7 @@ footer button {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 16%;
   filter: grayscale(0.55);
 }
 .story-tabs button.active img,
@@ -1420,8 +1423,9 @@ footer {
     grid-template-columns: 1fr;
   }
   .story-photo {
-    height: 62vh;
-    min-height: 420px;
+    height: auto;
+    max-height: 70vh;
+    min-height: 0;
   }
   .story-card {
     margin: -48px 24px 0;
@@ -1547,7 +1551,8 @@ footer {
     padding: 85px 0 48px;
   }
   .story-photo {
-    height: 420px;
+    height: auto;
+    max-height: none;
     min-height: 0;
   }
   .story-card {
@@ -1562,8 +1567,8 @@ footer {
     font-size: 24px;
   }
   .story-tabs button {
-    flex-basis: 148px;
-    height: 92px;
+    flex-basis: 112px;
+    height: auto;
   }
   .projects {
     padding: 85px 0 24px;
