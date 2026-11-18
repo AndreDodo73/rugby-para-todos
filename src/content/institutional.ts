@@ -157,8 +157,9 @@ export const storyPeople = [
     },
   },
   {
-    name: 'Karol "Bedoya"',
+    name: "Karol Bedoya",
     image: "stories/karol.jpg",
+    objectPosition: "50% 18%",
     quote: null,
     bio: {
       pt: "A história da Karol faz parte das trajetórias do Instituto. O relato completo está no canal do Rugby Para Todos no YouTube.",
