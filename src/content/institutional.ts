@@ -127,8 +127,9 @@ export const fundraisingProjects = [
 
 export const storyPeople = [
   {
-    name: "Pamela",
+    name: "Pamella",
     image: "stories/pamela.jpg",
+    objectPosition: "48% 16%",
     quote: {
       pt: "“O Instituto representa para mim oportunidade. É um espaço de aprendizado e lazer que, dentro de uma favela, permite às crianças sonhar com algo melhor.”",
       en: "“The Institute means opportunity to me. It is a place to learn and play that, inside a favela, lets children dream of something better.”",
@@ -143,7 +144,7 @@ export const storyPeople = [
   {
     name: "Bianca Silva",
     image: "stories/bia.jpg",
-    objectPosition: "52% 18%",
+    objectPosition: "30% 18%",
     quote: {
       pt: "“Não passou pela minha mente que conseguiria ser atleta profissional. O esporte era somente um hobby.”",
       en: "“It never crossed my mind that I could become a professional athlete. Sport was only a hobby.”",
