@@ -532,6 +532,11 @@ export default function App() {
               key={person.name}
               src={`${A}/${person.image}`}
               alt={person.name}
+              style={
+                "objectPosition" in person && person.objectPosition
+                  ? { objectPosition: person.objectPosition }
+                  : undefined
+              }
             />
             <span className="story-count">
               {storyCount} / {storyTotal}

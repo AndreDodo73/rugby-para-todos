@@ -143,6 +143,7 @@ export const storyPeople = [
   {
     name: "Bianca Silva",
     image: "stories/bia.jpg",
+    objectPosition: "52% 18%",
     quote: {
       pt: "“Não passou pela minha mente que conseguiria ser atleta profissional. O esporte era somente um hobby.”",
       en: "“It never crossed my mind that I could become a professional athlete. Sport was only a hobby.”",
