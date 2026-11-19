@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   apparelSizes,
   awardsList,
@@ -10,6 +10,7 @@ import {
   shopWhatsAppHref,
   type SiteLanguage,
 } from "../content/institutional";
+import { fetchShopOverrides, fetchSiteTexts } from "../lib/cms";
 import "./InstitutionalSections.css";
 
 function ExtIcon() {
@@ -209,6 +210,25 @@ export function ShopSection({ language }: { language: SiteLanguage }) {
         .map((product) => [product.id, product.colors?.[0].id ?? ""]),
     ),
   );
+  const [priceByProduct, setPriceByProduct] = useState<Record<string, number>>({});
+  const [sectionTitle, setSectionTitle] = useState(t.shopSectionTitle);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const [overrides, texts] = await Promise.all([fetchShopOverrides(), fetchSiteTexts(language)]);
+      if (cancelled) return;
+      if (texts["shop.sectionTitle"]) setSectionTitle(texts["shop.sectionTitle"]);
+      else setSectionTitle(institutional[language].shopSectionTitle);
+      const next: Record<string, number> = {};
+      for (const row of overrides) {
+        if (row.priceCents != null) next[row.id] = row.priceCents;
+      }
+      setPriceByProduct(next);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [language]);
   const scrollRail = (direction: -1 | 1) => {
     const rail = railRef.current;
     if (!rail) return;
@@ -224,7 +244,7 @@ export function ShopSection({ language }: { language: SiteLanguage }) {
       <div className="section-intro reveal">
         <div>
           <p className="eyebrow">{t.shopEyebrow}</p>
-          <h2 id="shop-title">{t.shopSectionTitle}</h2>
+          <h2 id="shop-title">{sectionTitle}</h2>
         </div>
         <p>{t.shopSectionBody}</p>
       </div>
@@ -244,8 +264,8 @@ export function ShopSection({ language }: { language: SiteLanguage }) {
             const palette = product.colors;
             const selectedColor = palette?.find((option) => option.id === colorByProduct[product.id]) ?? palette?.[0];
             const image = selectedColor?.image ?? product.image;
-            const price =
-              product.priceCents == null ? undefined : formatShopPrice(product.priceCents, language);
+            const priceCents = priceByProduct[product.id] ?? product.priceCents;
+            const price = priceCents == null ? undefined : formatShopPrice(priceCents, language);
             return (
               <article className="shop-card reveal reveal-x" key={product.id}>
                 <div className="shop-card-media">
