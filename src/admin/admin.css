@@ -8,7 +8,37 @@
   --admin-accent-ink: #1a1208;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--admin-bg);
+  color: var(--admin-ink);
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
 .admin-shell {
+  isolation: isolate;
+  position: relative;
+  z-index: 1;
   min-height: 100svh;
   width: 100%;
   max-width: 1100px;
@@ -18,7 +48,6 @@
     radial-gradient(circle at top left, rgba(247, 148, 29, 0.18), transparent 40%),
     linear-gradient(180deg, #f7f5f1 0%, var(--admin-bg) 100%);
   color: var(--admin-ink);
-  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
 }
 
 .admin-card,
@@ -51,16 +80,24 @@
   margin: 4px 0 8px;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   line-height: 1.15;
+  letter-spacing: normal;
+  font-family: inherit;
 }
 
 .admin-shell h2 {
   margin: 0 0 14px;
   font-size: 1.15rem;
+  letter-spacing: normal;
+  font-family: inherit;
 }
 
 .admin-shell h3 {
-  margin: 0 0 10px;
-  font-size: 1rem;
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.35;
+  letter-spacing: normal;
+  font-family: inherit;
+  font-weight: 700;
 }
 
 .admin-muted {
@@ -76,7 +113,7 @@
 .admin-login label,
 .admin-field label,
 .admin-toolbar label,
-.admin-shop-card label {
+.admin-shop-card label:not(.admin-file) {
   display: grid;
   gap: 6px;
   font-size: 0.92rem;
@@ -125,6 +162,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  white-space: nowrap;
 }
 
 .admin-file {
@@ -135,11 +175,15 @@
 .admin-file input {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   cursor: pointer;
   min-height: 0;
   padding: 0;
   border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .admin-file.compact {
@@ -149,6 +193,8 @@
 .admin-link {
   color: var(--admin-ink);
   font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .admin-top {
@@ -185,6 +231,7 @@
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+  color: var(--admin-ink);
 }
 
 .admin-tabs button.active {
@@ -202,24 +249,27 @@
 .admin-panel {
   padding: 18px;
   display: grid;
-  gap: 22px;
+  gap: 28px;
 }
 
 .admin-section {
   display: grid;
   gap: 12px;
+  min-width: 0;
 }
 
 .admin-field {
   padding: 14px;
   display: grid;
   gap: 10px;
+  min-width: 0;
 }
 
 .admin-media-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 14px;
+  align-items: start;
 }
 
 .admin-media-card,
@@ -227,15 +277,30 @@
   padding: 12px;
   display: grid;
   gap: 10px;
+  min-width: 0;
+  align-content: start;
 }
 
-.admin-media-preview,
-.admin-shop-card img {
+.admin-media-preview {
   width: 100%;
   aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  background: #e8e4dc;
+  overflow: hidden;
+}
+
+.admin-media-preview img,
+.admin-shop-card > img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 12px;
   background: #e8e4dc;
+}
+
+.admin-shop-card > img {
+  aspect-ratio: 4 / 3;
+  height: auto;
 }
 
 .admin-shop-list {
@@ -244,7 +309,7 @@
 }
 
 .admin-shop-card {
-  grid-template-columns: 140px 1fr;
+  grid-template-columns: 140px minmax(0, 1fr);
   align-items: start;
 }
 
@@ -277,7 +342,15 @@
 }
 
 @media (max-width: 720px) {
+  .admin-shell {
+    padding: 16px 12px 48px;
+  }
+
   .admin-shop-card {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-media-grid {
     grid-template-columns: 1fr;
   }
 }
