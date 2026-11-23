@@ -3,10 +3,9 @@ import { mediaUrl, textValue } from "../content/cmsCatalog";
 import { useCms } from "../lib/CmsContext";
 import { scrollToAnchor } from "../lib/scrollToAnchor";
 
-/** Active hero clip. Restore previous: swap both paths back to hero-rugby.*. */
-const HERO_VIDEO = "/media/hero-boy-tossing.mp4";
-const HERO_POSTER = "/media/hero-boy-tossing-poster.jpg";
-/** Kept in public/media for one-step restore: hero-rugby.mp4 + hero-rugby-poster.jpg */
+/** Default hero clip. Alternate kept in public/media: hero-boy-tossing.*. */
+const HERO_VIDEO = "/media/hero-rugby.mp4";
+const HERO_POSTER = "/media/hero-rugby-poster.jpg";
 /** Complete the clip sooner in the scroll so the scrub feels quicker. */
 const SCROLL_SPAN_FACTOR = 0.52;
 
@@ -54,11 +53,13 @@ export function Hero({
     scroll: textValue(cms.texts, "hero.scroll", fallback.scroll),
   };
   const poster = mediaUrl(cms.media, "hero.poster", HERO_POSTER);
+  const videoSrc = mediaUrl(cms.media, "hero.video", HERO_VIDEO);
 
   useEffect(() => {
     const video = videoRef.current;
     const section = sectionRef.current;
     if (!video || !section) return;
+    setVideoReady(false);
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let raf = 0;
@@ -129,7 +130,7 @@ export function Hero({
       window.removeEventListener("resize", scheduleUpdate);
       reducedMotion.removeEventListener("change", scheduleUpdate);
     };
-  }, []);
+  }, [videoSrc]);
 
   return (
     <section className="hero" ref={sectionRef} id="conteudo" aria-labelledby="hero-title">
@@ -143,7 +144,7 @@ export function Hero({
       <video
         ref={videoRef}
         className="hero-media"
-        src={HERO_VIDEO}
+        src={videoSrc}
         poster={poster}
         muted
         playsInline
