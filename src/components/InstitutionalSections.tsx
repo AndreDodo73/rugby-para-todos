@@ -24,8 +24,10 @@ const MAX_CUSTOM_DONATION = 100_000;
 const FOCUSABLE_SELECTOR =
   'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
+/** Primeira foto = a já escolhida no site novo; demais só para o ciclo. */
 const SERVICE_GALLERIES = [
   [
+    "/assets/clinica-rugby.jpg",
     "/assets/services/clinica/01.jpg",
     "/assets/services/clinica/02.jpg",
     "/assets/services/clinica/03.jpg",
@@ -34,6 +36,7 @@ const SERVICE_GALLERIES = [
     "/assets/services/clinica/06.jpg",
   ],
   [
+    "/assets/e9a3a.png",
     "/assets/services/team-building/01.jpg",
     "/assets/services/team-building/02.png",
     "/assets/services/team-building/03.png",
@@ -42,6 +45,7 @@ const SERVICE_GALLERIES = [
     "/assets/services/team-building/06.jpg",
   ],
   [
+    "/assets/46562.png",
     "/assets/services/intercambio/01.jpg",
     "/assets/services/intercambio/02.jpg",
     "/assets/services/intercambio/03.jpg",
