@@ -863,6 +863,125 @@
   color: white;
   border-color: #2b2c2b;
 }
+
+.donation-other-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+  background: rgb(12 14 14 / 55%);
+  backdrop-filter: blur(4px);
+}
+.donation-other-dialog {
+  width: min(100%, 420px);
+  max-height: min(88vh, 560px);
+  overflow: auto;
+  padding: 22px 18px 20px;
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid rgb(21 22 21 / 10%);
+  box-shadow: 0 28px 60px rgb(21 22 21 / 28%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.donation-other-dialog-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.donation-other-dialog-head .eyebrow {
+  margin-bottom: 6px;
+}
+.donation-other-dialog-head h3 {
+  margin: 0;
+  font-size: clamp(22px, 4vw, 28px);
+  line-height: 1.15;
+  color: var(--ink);
+}
+.donation-other-close {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: #f3f1ec;
+  color: #444;
+  font: 700 11px/1 "Montserrat:Bold";
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.donation-other-close:hover {
+  background: #e8e4dc;
+}
+.donation-other-hint {
+  margin: 0;
+  font: 500 14px/1.4 "Montserrat:Medium";
+  color: #666;
+}
+.donation-other-rail {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 8px 4px 14px;
+  margin: 0 -4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--orange) transparent;
+}
+.donation-other-chip {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  min-width: 118px;
+  min-height: 72px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1.5px solid rgb(21 22 21 / 14%);
+  background: #fafafa;
+  color: var(--ink);
+  font: 700 15px/1.2 "Montserrat:Bold";
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
+}
+.donation-other-chip[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--yellow);
+  border-color: var(--ink);
+  transform: scale(1.04);
+  box-shadow: 0 10px 22px rgb(21 22 21 / 18%);
+}
+.donation-other-chip:hover {
+  border-color: var(--ink);
+}
+.donation-other-preview {
+  margin: 0;
+  text-align: center;
+  font: 700 clamp(28px, 6vw, 36px)/1 "Montserrat:Bold";
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.donation-other-confirm {
+  width: 100%;
+  justify-content: center;
+  min-height: 52px;
+  border: 0;
+  background: var(--ink);
+  color: var(--yellow);
+  cursor: pointer;
+}
+.donation-other-confirm:hover {
+  background: #2b2c2b;
+}
 .monthly-description {
   min-height: auto;
   margin: 18px 0 16px;

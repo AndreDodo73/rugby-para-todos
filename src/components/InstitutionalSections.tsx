@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { mediaUrl, textValue } from "../content/cmsCatalog";
 import {
   apparelSizes,
@@ -13,6 +13,34 @@ import {
 } from "../content/institutional";
 import { useCms } from "../lib/CmsContext";
 import "./InstitutionalSections.css";
+
+const PRESET_DONATION_AMOUNTS = ["50", "100", "200"] as const;
+type PresetDonationAmount = (typeof PRESET_DONATION_AMOUNTS)[number];
+type OtherDonationAmount = (typeof official.otherDonationAmounts)[number];
+type DonationAmount = PresetDonationAmount | OtherDonationAmount;
+
+function formatDonationAmount(value: string, language: SiteLanguage) {
+  const locale = language === "en" ? "en-US" : language === "fr" ? "fr-FR" : "pt-BR";
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: "BRL",
+    maximumFractionDigits: 0,
+  }).format(Number(value));
+}
+
+function donationHref(amount: DonationAmount) {
+  if (amount === "50" || amount === "100" || amount === "200") {
+    return official.donations[amount];
+  }
+  const url = new URL(official.donations.other);
+  url.searchParams.set("amount", amount);
+  url.searchParams.set("currency_code", "BRL");
+  return url.toString();
+}
+
+function isOtherDonationAmount(amount: DonationAmount): amount is OtherDonationAmount {
+  return (official.otherDonationAmounts as readonly string[]).includes(amount);
+}
 
 function ExtIcon() {
   // Make/Figma: seta linha limpa ↗ (sem quadrado)
@@ -453,12 +481,50 @@ export function GovernanceSection({ language }: { language: SiteLanguage }) {
 
 export function SupportSection({ language }: { language: SiteLanguage }) {
   const [frequency, setFrequency] = useState<"once" | "monthly">("once");
-  const [amount, setAmount] = useState<keyof typeof official.donations>("100");
+  const [amount, setAmount] = useState<DonationAmount>("100");
+  const [otherPickerOpen, setOtherPickerOpen] = useState(false);
+  const [draftOtherAmount, setDraftOtherAmount] = useState<OtherDonationAmount>(
+    official.otherDonationAmounts[0],
+  );
+  const otherRailRef = useRef<HTMLDivElement>(null);
   const t = institutional[language];
   const cms = useCms();
   const supportTitle = textValue(cms.texts, "support.title", t.supportTitle);
   const supportBody = textValue(cms.texts, "support.body", t.supportBody);
   const isMonthly = frequency === "monthly";
+  const otherSelected = isOtherDonationAmount(amount);
+
+  useEffect(() => {
+    if (!otherPickerOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOtherPickerOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    const frame = window.requestAnimationFrame(() => {
+      const rail = otherRailRef.current;
+      if (!rail) return;
+      const active = rail.querySelector<HTMLElement>('[aria-pressed="true"]');
+      active?.scrollIntoView({ inline: "center", block: "nearest", behavior: "auto" });
+    });
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+      window.cancelAnimationFrame(frame);
+    };
+  }, [otherPickerOpen]);
+
+  const openOtherPicker = () => {
+    setDraftOtherAmount(otherSelected ? amount : official.otherDonationAmounts[0]);
+    setOtherPickerOpen(true);
+  };
+
+  const confirmOtherAmount = () => {
+    setAmount(draftOtherAmount);
+    setOtherPickerOpen(false);
+  };
+
   return (
     <section className="support-options restored-section" id="doe">
       <div className="donation-panel donation-panel-unified reveal">
@@ -483,22 +549,30 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
               <>
                 <p className="donation-amount-label">{t.chooseAmount}</p>
                 <div className="donation-amounts" role="group" aria-label={t.chooseAmount}>
-                  {(["50", "100", "200", "other"] as const).map((value) => (
+                  {PRESET_DONATION_AMOUNTS.map((value) => (
                     <button
                       key={value}
                       type="button"
                       onClick={() => setAmount(value)}
                       aria-pressed={amount === value}
                     >
-                      {value === "other" ? t.other : `R$ ${value}`}
+                      {formatDonationAmount(value, language)}
                     </button>
                   ))}
+                  <button
+                    type="button"
+                    onClick={openOtherPicker}
+                    aria-pressed={otherSelected}
+                    aria-haspopup="dialog"
+                  >
+                    {otherSelected ? formatDonationAmount(amount, language) : t.other}
+                  </button>
                 </div>
               </>
             )}
             <Outbound
               className="pill donation-submit"
-              href={isMonthly ? official.monthly : official.donations[amount]}
+              href={isMonthly ? official.monthly : donationHref(amount)}
             >
               {isMonthly ? t.giveMonthly : t.give}
             </Outbound>
@@ -521,6 +595,58 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
           <p className="external-note">{t.externalPayment}</p>
         </div>
       </div>
+
+      {otherPickerOpen ? (
+        <div
+          className="donation-other-modal"
+          role="presentation"
+          onClick={() => setOtherPickerOpen(false)}
+        >
+          <div
+            className="donation-other-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="donation-other-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="donation-other-dialog-head">
+              <div>
+                <p className="eyebrow">{t.other}</p>
+                <h3 id="donation-other-title">{t.otherAmountTitle}</h3>
+              </div>
+              <button
+                type="button"
+                className="donation-other-close"
+                onClick={() => setOtherPickerOpen(false)}
+              >
+                {t.otherAmountClose}
+              </button>
+            </div>
+            <p className="donation-other-hint">{t.otherAmountHint}</p>
+            <div className="donation-other-rail" ref={otherRailRef} role="listbox" aria-label={t.otherAmountTitle}>
+              {official.otherDonationAmounts.map((value) => (
+                <button
+                  key={value}
+                  type="button"
+                  role="option"
+                  className="donation-other-chip"
+                  aria-selected={draftOtherAmount === value}
+                  aria-pressed={draftOtherAmount === value}
+                  onClick={() => setDraftOtherAmount(value)}
+                >
+                  {formatDonationAmount(value, language)}
+                </button>
+              ))}
+            </div>
+            <p className="donation-other-preview" aria-live="polite">
+              {formatDonationAmount(draftOtherAmount, language)}
+            </p>
+            <button type="button" className="pill donation-other-confirm" onClick={confirmOtherAmount}>
+              {t.otherAmountConfirm}
+            </button>
+          </div>
+        </div>
+      ) : null}
       <div className="support-other reveal">
         <article className="support-path">
           <p className="eyebrow">Loja RPT</p>
