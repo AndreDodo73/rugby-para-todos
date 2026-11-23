@@ -11,6 +11,7 @@ import {
   VideoStories,
 } from "./components/InstitutionalSections";
 import {
+  featuredSupporterLogo,
   mediaUrl,
   sponsorLogos,
   storyPersonSlug,
@@ -47,6 +48,7 @@ const copy = {
     scroll: "Deslize para conhecer o RPT",
     sponsorTitle: "Quem acredita, transforma junto.",
     sponsorBody: "Patrocinadores e apoiadores que entram em campo com o Instituto RPT.",
+    supportersTitle: "Patrocinadores, apoiadores e parceiros Institucionais",
     impactEyebrow: "O campo é só o começo",
     impactTitle: "De Paraisópolis para o mundo.",
     impactBody:
@@ -103,6 +105,7 @@ const copy = {
     scroll: "Swipe to meet RPT",
     sponsorTitle: "Those who believe, transform with us.",
     sponsorBody: "Sponsors and supporters who take the field with Instituto RPT.",
+    supportersTitle: "Sponsors, supporters and institutional partners",
     impactEyebrow: "The field is just the beginning",
     impactTitle: "From Paraisópolis to the world.",
     impactBody:
@@ -158,6 +161,7 @@ const copy = {
     scroll: "Glissez pour découvrir le RPT",
     sponsorTitle: "Ceux qui y croient transforment avec nous.",
     sponsorBody: "Sponsors et partenaires qui entrent sur le terrain avec l'Instituto RPT.",
+    supportersTitle: "Sponsors, partenaires et partenaires institutionnels",
     impactEyebrow: "Le terrain n'est que le début",
     impactTitle: "De Paraisópolis au monde.",
     impactBody:
@@ -252,6 +256,7 @@ export default function App() {
     donate: textValue(cms.texts, "nav.donate", base.donate),
     sponsorTitle: textValue(cms.texts, "partners.title", base.sponsorTitle),
     sponsorBody: textValue(cms.texts, "partners.body", base.sponsorBody),
+    supportersTitle: textValue(cms.texts, "supporters.title", base.supportersTitle),
     impactEyebrow: textValue(cms.texts, "impact.eyebrow", base.impactEyebrow),
     impactTitle: textValue(cms.texts, "impact.title", base.impactTitle),
     impactBody: textValue(cms.texts, "impact.body", base.impactBody),
@@ -332,6 +337,18 @@ export default function App() {
         label: logo.label,
         src: mediaUrl(cms.media, `partners.sponsor.${logo.id}`, `${A}/${logo.file}`),
       })),
+    [cms.media],
+  );
+  const featuredSupporter = useMemo(
+    () => ({
+      id: featuredSupporterLogo.id,
+      label: featuredSupporterLogo.label,
+      src: mediaUrl(
+        cms.media,
+        `partners.featured.${featuredSupporterLogo.id}`,
+        `${A}/${featuredSupporterLogo.file}`,
+      ),
+    }),
     [cms.media],
   );
   const supporters = useMemo(
@@ -775,8 +792,13 @@ export default function App() {
       <MethodologySection language={language} />
       <ServicesSection language={language} />
 
-      <section className="supporters">
-        <p className="eyebrow">Apoiadores institucionais</p>
+      <section className="supporters" id="apoiadores" aria-labelledby="apoiadores-title">
+        <div className="supporter-featured reveal">
+          <img src={featuredSupporter.src} alt={featuredSupporter.label} />
+        </div>
+        <h2 id="apoiadores-title" className="supporter-title">
+          {t.supportersTitle}
+        </h2>
         <div className="supporter-grid reveal">
           {supporters.map((logo) => (
             <div key={logo.id}>

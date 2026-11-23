@@ -34,14 +34,19 @@ export const sponsorLogos = [
   { id: "yaman", file: "2406a.png", label: "Yaman" },
 ] as const;
 
-/** Logos da grade de apoiadores institucionais. */
+/** Logo em destaque na segunda seção de parceiros. */
+export const featuredSupporterLogo = {
+  id: "itau",
+  file: "partners/itau.png",
+  label: "Itaú",
+} as const;
+
+/** Logos da grade sob o título institucional (abaixo do destaque). */
 export const supporterLogos = [
-  { id: "einstein", file: "05b7e.png", label: "Einstein" },
-  { id: "rede-esporte", file: "a8b5c.png", label: "Rede Esporte" },
-  { id: "csn", file: "64b7d.png", label: "CSN" },
-  { id: "vita", file: "893eb.png", label: "Vita" },
-  { id: "outback", file: "9108e.png", label: "Outback" },
-  { id: "facchini", file: "d51f0.png", label: "Facchini" },
+  { id: "yduqs", file: "partners/yduqs.png", label: "Estácio / Instituto YDUQS" },
+  { id: "qitech", file: "partners/qitech.png", label: "QI Tech" },
+  { id: "rede-esporte", file: "partners/rede-esporte.jpg", label: "Rede Esporte Pela Mudança Social" },
+  { id: "parque-ufrj", file: "partners/parque-ufrj.png", label: "Parque Tecnológico UFRJ" },
 ] as const;
 
 const copyDefaults = {
@@ -66,6 +71,7 @@ const copyDefaults = {
     communityCta: "Conheça o Instituto",
     sponsorTitle: "Quem acredita, transforma junto.",
     sponsorBody: "Patrocinadores e apoiadores que entram em campo com o Instituto RPT.",
+    supportersTitle: "Patrocinadores, apoiadores e parceiros Institucionais",
     footerNote: "Esporte, educação e oportunidades desde 2004.",
   },
   en: {
@@ -89,6 +95,7 @@ const copyDefaults = {
     communityCta: "Meet the Institute",
     sponsorTitle: "Those who believe, transform with us.",
     sponsorBody: "Sponsors and supporters who take the field with Instituto RPT.",
+    supportersTitle: "Sponsors, supporters and institutional partners",
     footerNote: "Sport, education and opportunity since 2004.",
   },
   fr: {
@@ -112,6 +119,7 @@ const copyDefaults = {
     communityCta: "Découvrir l'Institut",
     sponsorTitle: "Ceux qui y croient transforment avec nous.",
     sponsorBody: "Sponsors et partenaires qui entrent sur le terrain avec l'Instituto RPT.",
+    supportersTitle: "Sponsors, partenaires et partenaires institutionnels",
     footerNote: "Sport, éducation et opportunités depuis 2004.",
   },
 } as const;
@@ -265,6 +273,11 @@ export const TEXT_FIELDS: TextField[] = [
     en: copyDefaults.en.sponsorBody,
     fr: copyDefaults.fr.sponsorBody,
   }),
+  field("supporters.title", "Apoiadores", "Título da seção", {
+    pt: copyDefaults.pt.supportersTitle,
+    en: copyDefaults.en.supportersTitle,
+    fr: copyDefaults.fr.supportersTitle,
+  }, false),
   field("footer.note", "Rodapé", "Frase do rodapé", {
     pt: copyDefaults.pt.footerNote,
     en: copyDefaults.en.footerNote,
@@ -404,6 +417,13 @@ export const MEDIA_FIELDS: MediaField[] = [
     defaultUrl: `/assets/${logo.file}`,
     alt: logo.label,
   })),
+  {
+    key: `partners.featured.${featuredSupporterLogo.id}`,
+    section: "Apoiadores — logos",
+    label: `Destaque — ${featuredSupporterLogo.label}`,
+    defaultUrl: `/assets/${featuredSupporterLogo.file}`,
+    alt: featuredSupporterLogo.label,
+  },
   ...supporterLogos.map((logo) => ({
     key: `partners.supporter.${logo.id}`,
     section: "Apoiadores — logos",
