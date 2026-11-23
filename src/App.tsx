@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Hero } from "./components/Hero";
 import { AnimatedNumber } from "./components/AnimatedNumber";
 import {
@@ -10,6 +10,7 @@ import {
   SupportSection,
   VideoStories,
 } from "./components/InstitutionalSections";
+import { mediaUrl, storyPersonSlug, textValue } from "./content/cmsCatalog";
 import {
   fundraisingProjects,
   institutional,
@@ -17,6 +18,8 @@ import {
   runningProjects,
   storyPeople,
 } from "./content/institutional";
+import { useCmsContent } from "./hooks/useCmsContent";
+import { CmsProvider } from "./lib/CmsContext";
 import { scrollToAnchor, syncAnchorOffset } from "./lib/scrollToAnchor";
 
 type Language = "pt" | "en" | "fr";
@@ -272,7 +275,86 @@ export default function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const storyTabsRef = useRef<HTMLDivElement>(null);
   const projectsRailRef = useRef<HTMLDivElement>(null);
-  const t = copy[language];
+  const cms = useCmsContent(language);
+  const base = copy[language];
+  const t = {
+    ...base,
+    donate: textValue(cms.texts, "nav.donate", base.donate),
+    sponsorTitle: textValue(cms.texts, "partners.title", base.sponsorTitle),
+    sponsorBody: textValue(cms.texts, "partners.body", base.sponsorBody),
+    impactEyebrow: textValue(cms.texts, "impact.eyebrow", base.impactEyebrow),
+    impactTitle: textValue(cms.texts, "impact.title", base.impactTitle),
+    impactBody: textValue(cms.texts, "impact.body", base.impactBody),
+    storiesEyebrow: textValue(cms.texts, "stories.eyebrow", base.storiesEyebrow),
+    storiesTitle: textValue(cms.texts, "stories.title", base.storiesTitle),
+    storiesBody: textValue(cms.texts, "stories.body", base.storiesBody),
+    projectsEyebrow: textValue(cms.texts, "projects.eyebrow", base.projectsEyebrow),
+    projectsTitle: textValue(cms.texts, "projects.title", base.projectsTitle),
+    projectsBody: textValue(cms.texts, "projects.body", base.projectsBody),
+    communityEyebrow: textValue(cms.texts, "community.eyebrow", base.communityEyebrow),
+    communityTitle: textValue(cms.texts, "community.title", base.communityTitle),
+    communityBody: textValue(cms.texts, "community.body", base.communityBody),
+    communityCta: textValue(cms.texts, "community.cta", base.communityCta),
+    footerNote: textValue(cms.texts, "footer.note", base.footerNote),
+  };
+  const people = useMemo(
+    () =>
+      storyPeople.map((person) => {
+        const slug = storyPersonSlug(person.name);
+        return {
+          ...person,
+          name: textValue(cms.texts, `story.${slug}.name`, person.name),
+          image: mediaUrl(cms.media, `story.${slug}.image`, person.image).replace(
+            /^\/assets\//,
+            "",
+          ),
+          imageSrc: mediaUrl(cms.media, `story.${slug}.image`, `/assets/${person.image}`),
+          quote: person.quote
+            ? {
+                ...person.quote,
+                [language]: textValue(
+                  cms.texts,
+                  `story.${slug}.quote`,
+                  person.quote[language],
+                ),
+              }
+            : null,
+          bio: {
+            ...person.bio,
+            [language]: textValue(cms.texts, `story.${slug}.bio`, person.bio[language]),
+          },
+        };
+      }),
+    [cms.media, cms.texts, language],
+  );
+  const fundraising = useMemo(
+    () =>
+      fundraisingProjects.map((project) => ({
+        ...project,
+        imageSrc: mediaUrl(
+          cms.media,
+          `fundraising.${storyPersonSlug(project.place)}.image`,
+          `/assets/${project.image}`,
+        ),
+      })),
+    [cms.media],
+  );
+  const running = useMemo(
+    () =>
+      runningProjects.map((project) => ({
+        ...project,
+        imageSrc: mediaUrl(
+          cms.media,
+          `running.${storyPersonSlug(project.title)}.image`,
+          `/assets/${project.image}`,
+        ),
+      })),
+    [cms.media],
+  );
+  const impactImage = mediaUrl(cms.media, "impact.image", `${A}/paraisopolis-mundo.jpg`);
+  const communityImage = mediaUrl(cms.media, "community.image", `${A}/community-fullbleed.jpg`);
+  const footerLogoColor = mediaUrl(cms.media, "footer.logoColor", `${A}/footer-logo-color.svg`);
+  const footerLogoMono = mediaUrl(cms.media, "footer.logoMono", `${A}/footer-logo-mono.svg`);
   const extra = institutional[language];
   const primaryNav = [
     { id: "impacto", label: t.nav[0] },
@@ -280,9 +362,9 @@ export default function App() {
     { id: "projetos", label: t.nav[2] },
   ] as const;
   const navItems = [...primaryNav, ...extra.links];
-  const person = storyPeople[activeStory];
+  const person = people[activeStory] ?? people[0];
   const storyCount = String(activeStory + 1).padStart(2, "0");
-  const storyTotal = String(storyPeople.length).padStart(2, "0");
+  const storyTotal = String(people.length).padStart(2, "0");
 
   const scrollRail = (rail: HTMLDivElement | null, direction: -1 | 1) => {
     if (!rail) return;
@@ -407,6 +489,7 @@ export default function App() {
   };
 
   return (
+    <CmsProvider value={cms}>
     <main>
       <a className="skip-link" href="#conteudo">
         Pular para o conteúdo
@@ -511,7 +594,7 @@ export default function App() {
       <section className="impact" id="impacto" aria-labelledby="impacto-title">
         <div className="impact-image reveal reveal-image">
           <img
-            src={`${A}/paraisopolis-mundo.jpg`}
+            src={impactImage}
             alt="Atletas do Rugby Para Todos com medalhas e troféus em Paraisópolis"
           />
         </div>
@@ -549,7 +632,7 @@ export default function App() {
           <div className="story-photo">
             <img
               key={person.name}
-              src={`${A}/${person.image}`}
+              src={person.imageSrc}
               alt={person.name}
               style={
                 "objectPosition" in person && person.objectPosition
@@ -570,7 +653,7 @@ export default function App() {
             <div className="story-actions">
               <button
                 className="text-link"
-                onClick={() => setActiveStory((activeStory + 1) % storyPeople.length)}
+                onClick={() => setActiveStory((activeStory + 1) % people.length)}
               >
                 <span className="link-label">{t.storyCta}</span>
                 <Arrow />
@@ -588,7 +671,7 @@ export default function App() {
             ‹
           </button>
           <div className="story-tabs" ref={storyTabsRef}>
-            {storyPeople.map((item, i) => (
+            {people.map((item, i) => (
               <button
                 key={item.name}
                 className={activeStory === i ? "active" : ""}
@@ -596,7 +679,7 @@ export default function App() {
                 aria-label={item.name}
                 aria-pressed={activeStory === i}
               >
-                <img src={`${A}/${item.image}`} alt="" />
+                <img src={item.imageSrc} alt="" />
                 <span>{item.name}</span>
               </button>
             ))}
@@ -632,7 +715,7 @@ export default function App() {
             ‹
           </button>
           <div className="project-rail" ref={projectsRailRef}>
-            {fundraisingProjects.map((project) => (
+            {fundraising.map((project) => (
               <a
                 className="project-card is-fundraising"
                 key={project.place}
@@ -640,7 +723,7 @@ export default function App() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={`${A}/${project.image}`} alt="" loading="lazy" />
+                <img src={project.imageSrc} alt="" loading="lazy" />
                 <div className="project-overlay" />
                 <div className="project-meta">
                   <span>{project.year}</span>
@@ -656,9 +739,9 @@ export default function App() {
                 </div>
               </a>
             ))}
-            {runningProjects.map((project) => (
+            {running.map((project) => (
               <article className="project-card is-running" key={project.title}>
-                <img src={`${A}/${project.image}`} alt="" loading="lazy" />
+                <img src={project.imageSrc} alt="" loading="lazy" />
                 <div className="project-overlay" />
                 <div className="project-meta">
                   <span>RPT</span>
@@ -685,7 +768,7 @@ export default function App() {
       <section className="community" id="instituto">
         <div className="community-bg" aria-hidden="true">
           <img
-            src={`${A}/community-fullbleed.jpg`}
+            src={communityImage}
             alt=""
             loading="lazy"
           />
@@ -724,7 +807,7 @@ export default function App() {
       <footer>
         <div className="footer-top">
           <div className="footer-brand">
-            <img src={`${A}/footer-logo-color.svg`} alt="Instituto Rugby Para Todos" />
+            <img src={footerLogoColor} alt="Instituto Rugby Para Todos" />
             <p>{t.footerNote}</p>
             <div className="footer-seals" aria-label={t.sealsLabel}>
               {footerSeals.map((seal) => (
@@ -762,7 +845,7 @@ export default function App() {
             </div>
           </div>
           <div className="footer-mark">
-            <img src={`${A}/footer-logo-mono.svg`} alt="" aria-hidden="true" />
+            <img src={footerLogoMono} alt="" aria-hidden="true" />
             <button
               type="button"
               className="back-top"
@@ -791,5 +874,6 @@ export default function App() {
         </div>
       </footer>
     </main>
+    </CmsProvider>
   );
 }

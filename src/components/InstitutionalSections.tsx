@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
+import { mediaUrl, textValue } from "../content/cmsCatalog";
 import {
   apparelSizes,
   awardsList,
@@ -10,7 +11,7 @@ import {
   shopWhatsAppHref,
   type SiteLanguage,
 } from "../content/institutional";
-import { fetchShopOverrides, fetchSiteTexts } from "../lib/cms";
+import { useCms } from "../lib/CmsContext";
 import "./InstitutionalSections.css";
 
 function ExtIcon() {
@@ -128,12 +129,15 @@ export function VideoStories({ language }: { language: SiteLanguage }) {
 
 export function MethodologySection({ language }: { language: SiteLanguage }) {
   const t = institutional[language];
+  const cms = useCms();
+  const methodTitle = textValue(cms.texts, "method.title", t.methodTitle);
+  const methodBody = textValue(cms.texts, "method.body", t.methodBody);
   return (
     <section className="methodology restored-section" id="metodologia">
       <div className="methodology-head reveal">
         <p className="eyebrow">{t.methodEyebrow}</p>
         <h2>
-          {t.methodTitle.split(". ").map((part, index, parts) => (
+          {methodTitle.split(". ").map((part, index, parts) => (
             <span key={part}>
               {part}
               {index < parts.length - 1 ? "." : ""}
@@ -142,12 +146,12 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
           ))}
         </h2>
         <div className="methodology-lead">
-          <p>{t.methodBody}</p>
+          <p>{methodBody}</p>
           <p className="methodology-team">{t.methodTeam}</p>
         </div>
       </div>
 
-      <ol className="method-values reveal" aria-label={t.methodTitle}>
+      <ol className="method-values reveal" aria-label={methodTitle}>
         {t.methodValues.map((value, i) => (
           <li key={value}>
             <span className="method-value-index">0{i + 1}</span>
@@ -199,6 +203,7 @@ export function MethodologySection({ language }: { language: SiteLanguage }) {
 
 export function ShopSection({ language }: { language: SiteLanguage }) {
   const t = institutional[language];
+  const cms = useCms();
   const railRef = useRef<HTMLDivElement>(null);
   const [sizeByProduct, setSizeByProduct] = useState<Record<string, string>>(() =>
     Object.fromEntries(shopProducts.filter((product) => product.apparel).map((product) => [product.id, "M"])),
@@ -210,25 +215,16 @@ export function ShopSection({ language }: { language: SiteLanguage }) {
         .map((product) => [product.id, product.colors?.[0].id ?? ""]),
     ),
   );
-  const [priceByProduct, setPriceByProduct] = useState<Record<string, number>>({});
-  const [sectionTitle, setSectionTitle] = useState(t.shopSectionTitle);
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const [overrides, texts] = await Promise.all([fetchShopOverrides(), fetchSiteTexts(language)]);
-      if (cancelled) return;
-      if (texts["shop.sectionTitle"]) setSectionTitle(texts["shop.sectionTitle"]);
-      else setSectionTitle(institutional[language].shopSectionTitle);
-      const next: Record<string, number> = {};
-      for (const row of overrides) {
-        if (row.priceCents != null) next[row.id] = row.priceCents;
-      }
-      setPriceByProduct(next);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [language]);
+  const sectionTitle = textValue(cms.texts, "shop.sectionTitle", t.shopSectionTitle);
+  const sectionBody = textValue(cms.texts, "shop.sectionBody", t.shopSectionBody);
+  const priceByProduct = Object.fromEntries(
+    cms.shop
+      .filter((row) => row.priceCents != null)
+      .map((row) => [row.id, row.priceCents as number]),
+  );
+  const imageByProduct = Object.fromEntries(
+    cms.shop.filter((row) => row.image).map((row) => [row.id, row.image as string]),
+  );
   const scrollRail = (direction: -1 | 1) => {
     const rail = railRef.current;
     if (!rail) return;
@@ -246,7 +242,7 @@ export function ShopSection({ language }: { language: SiteLanguage }) {
           <p className="eyebrow">{t.shopEyebrow}</p>
           <h2 id="shop-title">{sectionTitle}</h2>
         </div>
-        <p>{t.shopSectionBody}</p>
+        <p>{sectionBody}</p>
       </div>
       <div className="shop-rail-wrap">
         <button
@@ -259,21 +255,38 @@ export function ShopSection({ language }: { language: SiteLanguage }) {
         </button>
         <div className="shop-rail" ref={railRef}>
           {shopProducts.map((product) => {
-            const name = product.name[language];
+            const name = textValue(
+              cms.texts,
+              `shop.product.${product.id}.name`,
+              product.name[language],
+            );
+            const blurb = textValue(
+              cms.texts,
+              `shop.product.${product.id}.blurb`,
+              product.blurb[language],
+            );
             const size = product.apparel ? sizeByProduct[product.id] ?? "M" : undefined;
             const palette = product.colors;
             const selectedColor = palette?.find((option) => option.id === colorByProduct[product.id]) ?? palette?.[0];
-            const image = selectedColor?.image ?? product.image;
-            const priceCents = priceByProduct[product.id] ?? product.priceCents;
+            const fallbackImage = selectedColor?.image ?? product.image;
+            const image =
+              imageByProduct[product.id] ||
+              mediaUrl(cms.media, `shop.${product.id}.image`, `/assets/${fallbackImage}`);
+            // Only show a price when the database has a confirmed value.
+            const priceCents = priceByProduct[product.id];
             const price = priceCents == null ? undefined : formatShopPrice(priceCents, language);
             return (
               <article className="shop-card reveal reveal-x" key={product.id}>
                 <div className="shop-card-media">
-                  <img src={`/assets/${image}`} alt={name} loading="lazy" />
+                  <img
+                    src={image.startsWith("http") || image.startsWith("/") ? image : `/assets/${image}`}
+                    alt={name}
+                    loading="lazy"
+                  />
                 </div>
                 <div className="shop-card-copy">
                   <h3>{name}</h3>
-                  <p className="shop-card-blurb">{product.blurb[language]}</p>
+                  <p className="shop-card-blurb">{blurb}</p>
                   <div className="shop-price">
                     <p className="shop-price-kicker">{t.shopPriceLabel}</p>
                     <p className="shop-card-price">{price ?? t.shopPriceNote}</p>
@@ -342,14 +355,17 @@ export function ShopSection({ language }: { language: SiteLanguage }) {
 
 export function ServicesSection({ language }: { language: SiteLanguage }) {
   const t = institutional[language];
+  const cms = useCms();
+  const serviceTitle = textValue(cms.texts, "service.title", t.serviceTitle);
+  const serviceBody = textValue(cms.texts, "service.body", t.serviceBody);
   return (
     <section className="services restored-section" id="servicos" aria-labelledby="services-title">
       <div className="section-intro reveal">
         <div>
           <p className="eyebrow">{t.serviceEyebrow}</p>
-          <h2 id="services-title">{t.serviceTitle}</h2>
+          <h2 id="services-title">{serviceTitle}</h2>
         </div>
-        <p>{t.serviceBody}</p>
+        <p>{serviceBody}</p>
       </div>
       <div className="service-grid">
         {t.serviceTitles.map((title, i) => (
@@ -389,14 +405,17 @@ export function ServicesSection({ language }: { language: SiteLanguage }) {
 
 export function GovernanceSection({ language }: { language: SiteLanguage }) {
   const t = institutional[language];
+  const cms = useCms();
+  const governanceTitle = textValue(cms.texts, "governance.title", t.governanceTitle);
+  const governanceBody = textValue(cms.texts, "governance.body", t.governanceBody);
   return (
     <section className="governance restored-section" id="transparencia">
       <div className="section-intro reveal">
         <div>
           <p className="eyebrow">{t.governanceEyebrow}</p>
-          <h2>{t.governanceTitle}</h2>
+          <h2>{governanceTitle}</h2>
         </div>
-        <p>{t.governanceBody}</p>
+        <p>{governanceBody}</p>
       </div>
       <div className="governance-grid">
         <div className="governance-copy reveal">
@@ -436,14 +455,17 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
   const [frequency, setFrequency] = useState<"once" | "monthly">("once");
   const [amount, setAmount] = useState<keyof typeof official.donations>("100");
   const t = institutional[language];
+  const cms = useCms();
+  const supportTitle = textValue(cms.texts, "support.title", t.supportTitle);
+  const supportBody = textValue(cms.texts, "support.body", t.supportBody);
   const isMonthly = frequency === "monthly";
   return (
     <section className="support-options restored-section" id="doe">
       <div className="donation-panel donation-panel-unified reveal">
         <div className="donation-intro">
           <p className="eyebrow">{t.supportEyebrow}</p>
-          <h2>{t.supportTitle}</h2>
-          <p className="donation-lead">{t.supportBody}</p>
+          <h2>{supportTitle}</h2>
+          <p className="donation-lead">{supportBody}</p>
         </div>
         <div className="donation-controls">
           <div className="donation-primary">

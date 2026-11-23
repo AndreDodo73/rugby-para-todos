@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { mediaUrl, textValue } from "../content/cmsCatalog";
+import { useCms } from "../lib/CmsContext";
 import { scrollToAnchor } from "../lib/scrollToAnchor";
 
 const HERO_VIDEO = "/media/hero-rugby.mp4";
@@ -40,7 +42,16 @@ export function Hero({
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
-  const text = heroCopy[language];
+  const cms = useCms();
+  const fallback = heroCopy[language];
+  const text = {
+    start: textValue(cms.texts, "hero.start", fallback.start),
+    beyond: textValue(cms.texts, "hero.beyond", fallback.beyond),
+    description: textValue(cms.texts, "hero.description", fallback.description),
+    action: textValue(cms.texts, "hero.action", fallback.action),
+    scroll: textValue(cms.texts, "hero.scroll", fallback.scroll),
+  };
+  const poster = mediaUrl(cms.media, "hero.poster", HERO_POSTER);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -132,7 +143,7 @@ export function Hero({
         ref={videoRef}
         className="hero-media"
         src={HERO_VIDEO}
-        poster={HERO_POSTER}
+        poster={poster}
         muted
         playsInline
         preload="auto"

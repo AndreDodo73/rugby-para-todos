@@ -1,0 +1,255 @@
+:root {
+  --admin-bg: #f3f1ec;
+  --admin-ink: #12161c;
+  --admin-muted: #5b6470;
+  --admin-card: #ffffff;
+  --admin-line: #d9dde3;
+  --admin-accent: #f7941d;
+  --admin-accent-ink: #1a1208;
+}
+
+.admin-shell {
+  min-height: 100svh;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+  background:
+    radial-gradient(circle at top left, rgba(247, 148, 29, 0.18), transparent 40%),
+    linear-gradient(180deg, #f7f5f1 0%, var(--admin-bg) 100%);
+  color: var(--admin-ink);
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+.admin-card,
+.admin-panel,
+.admin-field,
+.admin-media-card,
+.admin-shop-card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-line);
+  border-radius: 18px;
+}
+
+.admin-login {
+  max-width: 420px;
+  margin: 12vh auto 0;
+  padding: 28px;
+  display: grid;
+  gap: 14px;
+}
+
+.admin-kicker {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  color: var(--admin-muted);
+}
+
+.admin-shell h1 {
+  margin: 4px 0 8px;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.15;
+}
+
+.admin-shell h2 {
+  margin: 0 0 14px;
+  font-size: 1.15rem;
+}
+
+.admin-shell h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.admin-muted {
+  color: var(--admin-muted);
+  margin: 0;
+}
+
+.admin-error {
+  color: #9f1d1d;
+  margin: 0;
+}
+
+.admin-login label,
+.admin-field label,
+.admin-toolbar label,
+.admin-shop-card label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.admin-shell input,
+.admin-shell textarea,
+.admin-shell select {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--admin-line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: inherit;
+  background: #fff;
+  color: var(--admin-ink);
+}
+
+.admin-shell textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.admin-primary,
+.admin-secondary,
+.admin-file {
+  min-height: 44px;
+  border-radius: 999px;
+  border: 0;
+  padding: 0 18px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-primary {
+  background: var(--admin-accent);
+  color: var(--admin-accent-ink);
+}
+
+.admin-secondary,
+.admin-file {
+  background: #ece7df;
+  color: var(--admin-ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-file input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+}
+
+.admin-file.compact {
+  padding: 0 14px;
+}
+
+.admin-link {
+  color: var(--admin-ink);
+  font-weight: 600;
+}
+
+.admin-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.admin-top-actions,
+.admin-toolbar,
+.admin-inline-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: end;
+}
+
+.admin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.admin-tabs button {
+  min-height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--admin-line);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0 16px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-tabs button.active {
+  background: var(--admin-ink);
+  color: #fff;
+  border-color: var(--admin-ink);
+}
+
+.admin-status {
+  min-height: 1.4em;
+  margin: 0 0 16px;
+  color: var(--admin-muted);
+}
+
+.admin-panel {
+  padding: 18px;
+  display: grid;
+  gap: 22px;
+}
+
+.admin-section {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-field {
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.admin-media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.admin-media-card,
+.admin-shop-card {
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.admin-media-preview,
+.admin-shop-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #e8e4dc;
+}
+
+.admin-shop-list {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-shop-card {
+  grid-template-columns: 140px 1fr;
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .admin-shop-card {
+    grid-template-columns: 1fr;
+  }
+}
