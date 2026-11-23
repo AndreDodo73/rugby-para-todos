@@ -11,7 +11,6 @@ import {
   VideoStories,
 } from "./components/InstitutionalSections";
 import {
-  featuredSupporterLogo,
   mediaUrl,
   sponsorLogos,
   storyPersonSlug,
@@ -339,18 +338,6 @@ export default function App() {
       })),
     [cms.media],
   );
-  const featuredSupporter = useMemo(
-    () => ({
-      id: featuredSupporterLogo.id,
-      label: featuredSupporterLogo.label,
-      src: mediaUrl(
-        cms.media,
-        `partners.featured.${featuredSupporterLogo.id}`,
-        `${A}/${featuredSupporterLogo.file}`,
-      ),
-    }),
-    [cms.media],
-  );
   const supporters = useMemo(
     () =>
       supporterLogos.map((logo) => ({
@@ -574,7 +561,7 @@ export default function App() {
         <div className="logo-marquee" data-paused={sponsorsPaused}>
           <div className="logo-track">
             {[...sponsors, ...sponsors].map((logo, i) => (
-              <div className="logo-cell" key={`${logo.id}-${i}`} tabIndex={0}>
+              <div className="logo-cell" key={`${logo.id}-${i}`}>
                 <img src={logo.src} alt={logo.label} />
               </div>
             ))}
@@ -793,9 +780,6 @@ export default function App() {
       <ServicesSection language={language} />
 
       <section className="supporters" id="apoiadores" aria-labelledby="apoiadores-title">
-        <div className="supporter-featured reveal">
-          <img src={featuredSupporter.src} alt={featuredSupporter.label} />
-        </div>
         <h2 id="apoiadores-title" className="supporter-title">
           {t.supportersTitle}
         </h2>

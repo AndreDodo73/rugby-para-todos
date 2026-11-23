@@ -25,28 +25,23 @@ export type MediaField = {
 
 /** Logos da faixa de patrocinadores (marquee). */
 export const sponsorLogos = [
-  { id: "cultura", file: "partners/sponsors/cultura-inglesa.png", label: "Cultura Inglesa" },
-  { id: "ministerio", file: "partners/sponsors/ministerio-patria-amada.png", label: "Ministério / governo" },
-  { id: "lei-incentivo", file: "partners/sponsors/lei-incentivo.png", label: "Lei de Incentivo ao Esporte" },
-  { id: "montana", file: "partners/sponsors/montana.png", label: "Montana" },
-  { id: "societe", file: "partners/sponsors/societe-generale.png", label: "Instituto Societe Generale" },
-  { id: "outback", file: "partners/sponsors/outback.png", label: "Outback" },
-  { id: "yaman", file: "partners/sponsors/yaman.png", label: "Yaman" },
+  { id: "cultura", file: "51872.png", label: "Cultura / institucional" },
+  { id: "ministerio", file: "d2fa6.png", label: "Ministério / governo" },
+  { id: "lei-incentivo", file: "680ac.png", label: "Lei de Incentivo" },
+  { id: "montana", file: "463ef.png", label: "Montana" },
+  { id: "csn", file: "2575f.png", label: "CSN" },
+  { id: "outback", file: "c264d.png", label: "Outback" },
+  { id: "yaman", file: "2406a.png", label: "Yaman" },
 ] as const;
 
-/** Logo em destaque na segunda seção de parceiros. */
-export const featuredSupporterLogo = {
-  id: "itau",
-  file: "partners/itau.png",
-  label: "Itaú",
-} as const;
-
-/** Logos da grade sob o título institucional (abaixo do destaque). */
+/** Logos da grade de apoiadores institucionais. */
 export const supporterLogos = [
-  { id: "yduqs", file: "partners/yduqs.png", label: "Estácio / Instituto YDUQS" },
-  { id: "qitech", file: "partners/qitech.png", label: "QI Tech" },
-  { id: "rede-esporte", file: "partners/rede-esporte.jpg", label: "Rede Esporte Pela Mudança Social" },
-  { id: "parque-ufrj", file: "partners/parque-ufrj.png", label: "Parque Tecnológico UFRJ" },
+  { id: "einstein", file: "05b7e.png", label: "Einstein" },
+  { id: "rede-esporte", file: "a8b5c.png", label: "Rede Esporte" },
+  { id: "csn", file: "64b7d.png", label: "CSN" },
+  { id: "vita", file: "893eb.png", label: "Vita" },
+  { id: "outback", file: "9108e.png", label: "Outback" },
+  { id: "facchini", file: "d51f0.png", label: "Facchini" },
 ] as const;
 
 const copyDefaults = {
@@ -417,13 +412,6 @@ export const MEDIA_FIELDS: MediaField[] = [
     defaultUrl: `/assets/${logo.file}`,
     alt: logo.label,
   })),
-  {
-    key: `partners.featured.${featuredSupporterLogo.id}`,
-    section: "Apoiadores — logos",
-    label: `Destaque — ${featuredSupporterLogo.label}`,
-    defaultUrl: `/assets/${featuredSupporterLogo.file}`,
-    alt: featuredSupporterLogo.label,
-  },
   ...supporterLogos.map((logo) => ({
     key: `partners.supporter.${logo.id}`,
     section: "Apoiadores — logos",
