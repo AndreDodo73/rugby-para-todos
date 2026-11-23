@@ -1,11 +1,14 @@
 /* Shared runtime tokens. Layout/component rules remain in their existing files. */
 :root {
   --orange: #f39200;
+  /* Text on light backgrounds — brand orange alone fails AA/AAA contrast. */
+  --orange-ink: #7a3f00;
   --yellow: #fead34;
   --ink: #151615;
   --charcoal: #252626;
   --paper: #f4f4f4;
   --grey: #7b7b7c;
+  --muted: #3d3d3d;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   /* Framer-like springy exit for scroll reveals */
   --ease-frame: cubic-bezier(0.16, 1, 0.3, 1);

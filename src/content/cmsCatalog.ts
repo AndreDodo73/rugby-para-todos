@@ -21,6 +21,8 @@ export type MediaField = {
   label: string;
   defaultUrl: string;
   alt?: string;
+  /** Defaults to image. Use video for hero clip uploads in admin. */
+  kind?: "image" | "video";
 };
 
 const copyDefaults = {
@@ -341,6 +343,14 @@ export const TEXT_FIELDS: TextField[] = [
 ];
 
 export const MEDIA_FIELDS: MediaField[] = [
+  {
+    key: "hero.video",
+    section: "Hero",
+    label: "Vídeo principal (scroll)",
+    defaultUrl: "/media/hero-boy-tossing.mp4",
+    alt: "Vídeo principal do hero",
+    kind: "video",
+  },
   {
     key: "hero.poster",
     section: "Hero",

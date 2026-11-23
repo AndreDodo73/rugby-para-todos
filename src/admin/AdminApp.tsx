@@ -167,8 +167,9 @@ export default function AdminApp() {
   async function replacePhoto(key: string, file: File | null) {
     const field = MEDIA_FIELDS.find((item) => item.key === key);
     if (!field || !file) return;
+    const isVideo = field.kind === "video";
     setBusy(true);
-    setStatus(`Enviando foto “${field.label}”…`);
+    setStatus(`Enviando ${isVideo ? "vídeo" : "foto"} “${field.label}”…`);
     try {
       const url = await uploadSiteImage(key, file);
       await upsertSiteMedia({
@@ -188,10 +189,14 @@ export default function AdminApp() {
           sortOrder: current?.sortOrder ?? 0,
         });
       }
-      setStatus(`Foto “${field.label}” atualizada.`);
+      setStatus(`${isVideo ? "Vídeo" : "Foto"} “${field.label}” atualizado.`);
       await loadCms();
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : "Erro ao enviar foto.");
+      setStatus(
+        error instanceof Error
+          ? error.message
+          : `Erro ao enviar ${isVideo ? "vídeo" : "foto"}.`,
+      );
     } finally {
       setBusy(false);
     }
@@ -397,17 +402,26 @@ export default function AdminApp() {
               <div className="admin-media-grid">
                 {fields.map((field) => {
                   const current = mediaByKey[field.key]?.url || field.defaultUrl;
+                  const isVideo = field.kind === "video";
                   return (
                     <article className="admin-media-card" key={field.key}>
                       <div className="admin-media-preview">
-                        <img src={current} alt={field.alt || field.label} />
+                        {isVideo ? (
+                          <video src={current} muted playsInline preload="metadata" />
+                        ) : (
+                          <img src={current} alt={field.alt || field.label} />
+                        )}
                       </div>
                       <h3>{field.label}</h3>
                       <label className="admin-file">
-                        Trocar foto
+                        {isVideo ? "Trocar vídeo" : "Trocar foto"}
                         <input
                           type="file"
-                          accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+                          accept={
+                            isVideo
+                              ? "video/mp4,video/webm,video/quicktime"
+                              : "image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+                          }
                           disabled={busy}
                           onChange={(event) => {
                             const file = event.target.files?.[0] ?? null;
