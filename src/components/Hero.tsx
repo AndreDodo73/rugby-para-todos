@@ -3,9 +3,9 @@ import { mediaUrl, textValue } from "../content/cmsCatalog";
 import { useCms } from "../lib/CmsContext";
 import { scrollToAnchor } from "../lib/scrollToAnchor";
 
-/** Default hero clip. Alternate kept in public/media: hero-boy-tossing.*. */
-const HERO_VIDEO = "/media/hero-rugby.mp4";
-const HERO_POSTER = "/media/hero-rugby-poster.jpg";
+/** Hero clip uploaded by the team (landscape, no orientation rotate). */
+const HERO_VIDEO = "/media/hero-boy-tossing.mp4";
+const HERO_POSTER = "/media/hero-boy-tossing-poster.jpg";
 /** Complete the clip sooner in the scroll so the scrub feels quicker. */
 const SCROLL_SPAN_FACTOR = 0.52;
 
