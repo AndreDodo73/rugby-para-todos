@@ -574,7 +574,7 @@ export default function App() {
         <div className="logo-marquee" data-paused={sponsorsPaused}>
           <div className="logo-track">
             {[...sponsors, ...sponsors].map((logo, i) => (
-              <div className="logo-cell" key={`${logo.id}-${i}`}>
+              <div className="logo-cell" key={`${logo.id}-${i}`} tabIndex={0}>
                 <img src={logo.src} alt={logo.label} />
               </div>
             ))}

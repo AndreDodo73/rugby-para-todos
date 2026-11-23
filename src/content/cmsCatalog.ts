@@ -25,13 +25,13 @@ export type MediaField = {
 
 /** Logos da faixa de patrocinadores (marquee). */
 export const sponsorLogos = [
-  { id: "cultura", file: "51872.png", label: "Cultura / institucional" },
-  { id: "ministerio", file: "d2fa6.png", label: "Ministério / governo" },
-  { id: "lei-incentivo", file: "680ac.png", label: "Lei de Incentivo" },
-  { id: "montana", file: "463ef.png", label: "Montana" },
-  { id: "csn", file: "2575f.png", label: "CSN" },
-  { id: "outback", file: "c264d.png", label: "Outback" },
-  { id: "yaman", file: "2406a.png", label: "Yaman" },
+  { id: "cultura", file: "partners/sponsors/cultura-inglesa.png", label: "Cultura Inglesa" },
+  { id: "ministerio", file: "partners/sponsors/ministerio-patria-amada.png", label: "Ministério / governo" },
+  { id: "lei-incentivo", file: "partners/sponsors/lei-incentivo.png", label: "Lei de Incentivo ao Esporte" },
+  { id: "montana", file: "partners/sponsors/montana.png", label: "Montana" },
+  { id: "societe", file: "partners/sponsors/societe-generale.png", label: "Instituto Societe Generale" },
+  { id: "outback", file: "partners/sponsors/outback.png", label: "Outback" },
+  { id: "yaman", file: "partners/sponsors/yaman.png", label: "Yaman" },
 ] as const;
 
 /** Logo em destaque na segunda seção de parceiros. */

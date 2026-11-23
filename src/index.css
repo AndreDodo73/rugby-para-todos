@@ -603,6 +603,11 @@ footer button {
   padding: 22px 28px;
   overflow: visible;
   box-sizing: border-box;
+  outline: none;
+}
+.logo-cell:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: -2px;
 }
 .logo-cell img {
   width: auto;
@@ -611,13 +616,16 @@ footer button {
   max-height: 72px;
   object-fit: contain;
   object-position: center;
-  filter: none;
-  opacity: 0.78;
+  filter: grayscale(1);
+  opacity: 0.72;
   transition:
-    opacity 0.35s,
+    filter 0.35s ease,
+    opacity 0.35s ease,
     transform 0.5s var(--ease-out);
 }
-.logo-cell:hover img {
+.logo-cell:hover img,
+.logo-cell:focus-within img {
+  filter: grayscale(0);
   opacity: 1;
   transform: scale(1.04);
 }
