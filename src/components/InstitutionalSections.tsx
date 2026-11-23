@@ -709,7 +709,10 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
         <div
           className="donation-other-modal"
           role="presentation"
-          onClick={() => setOtherPickerOpen(false)}
+          onClick={(event) => {
+            // Só fecha no backdrop — evita fechar se o clique “vaza” do diálogo.
+            if (event.target === event.currentTarget) setOtherPickerOpen(false);
+          }}
         >
           <div
             ref={dialogRef}
@@ -718,7 +721,6 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
             aria-modal="true"
             aria-labelledby="donation-other-title"
             aria-describedby="donation-other-hint"
-            onClick={(event) => event.stopPropagation()}
           >
             <div className="donation-other-dialog-head">
               <div>

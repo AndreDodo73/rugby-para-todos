@@ -14,8 +14,8 @@ export const official = {
     "200": "https://www.paypal.com/donate?hosted_button_id=6P3R7T3VZKJ7J",
     other: "https://www.paypal.com/donate?hosted_button_id=CPBKD3YKWNQZE",
   },
-  /** Valores do modal “Outro valor” (em reais) — começa baixo para não afastar. */
-  otherDonationAmounts: ["50", "100", "250", "500", "1000", "2000"] as const,
+  /** Valores do modal “Outro valor” (em reais) — faixas acima dos presets 50/100/200. */
+  otherDonationAmounts: ["500", "1000", "2000", "5000", "10000", "20000"] as const,
   social: [
     { name: "Instagram", href: "https://www.instagram.com/rugbyparatodos/", icon: "c381b.svg" },
     {
