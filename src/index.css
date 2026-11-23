@@ -34,12 +34,15 @@
     scroll-behavior: smooth;
     scroll-padding-top: var(--site-anchor-offset);
     background: var(--ink);
+    overflow-x: clip;
+    max-width: 100%;
   }
   body {
     color: var(--ink);
     background: #fff;
     font-family: "Hind:Regular", Arial, sans-serif;
-    overflow-x: hidden;
+    overflow-x: clip;
+    max-width: 100%;
   }
   button,
   a {
@@ -271,13 +274,18 @@ footer button {
   box-sizing: border-box;
 }
 .eyebrow {
-  font: 700 11px "Montserrat:Bold";
+  font: 700 12px "Montserrat:Bold";
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--orange);
+  letter-spacing: 0.16em;
+  color: var(--orange-ink);
   margin-bottom: 22px;
 }
 .eyebrow.light {
+  color: var(--yellow);
+}
+.hero .eyebrow,
+.community .eyebrow,
+.impact .eyebrow {
   color: var(--yellow);
 }
 .hero h1 {
@@ -523,7 +531,9 @@ footer button {
 
 .sponsors {
   padding: 80px 0 65px;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
+  max-width: 100%;
 }
 .section-intro {
   padding: 0 clamp(24px, 7.5vw, 108px);
@@ -550,11 +560,14 @@ footer button {
 .section-intro > p {
   font-size: 18px;
   line-height: 1.5;
-  color: #555;
+  color: var(--muted);
   max-width: 430px;
 }
 .logo-marquee {
   border-block: 1px solid #ddd;
+  overflow: hidden;
+  max-width: 100%;
+  width: 100%;
 }
 .logo-marquee:hover .logo-track,
 .logo-marquee:focus-within .logo-track,
@@ -572,9 +585,10 @@ footer button {
   gap: 9px;
   border: 0;
   background: none;
-  color: #555;
+  color: var(--muted);
   padding: 8px;
-  font: 600 10px "Montserrat:SemiBold";
+  min-height: 44px;
+  font: 600 11px "Montserrat:SemiBold";
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -830,22 +844,27 @@ footer button {
 }
 .story-tabs-wrap {
   max-width: 1224px;
+  width: 100%;
   margin: 18px auto 0;
   padding: 0 12px 0 24px;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 6px;
+  box-sizing: border-box;
+  overflow-x: clip;
 }
 .story-tabs {
   display: flex;
   gap: 10px;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   padding: 4px 4px 10px;
   scrollbar-width: thin;
   scrollbar-color: var(--orange) transparent;
+  min-width: 0;
 }
 .story-tabs button {
   flex: 0 0 132px;
@@ -968,6 +987,8 @@ footer button {
 
 .projects {
   padding: 130px 0;
+  overflow-x: clip;
+  max-width: 100%;
 }
 .project-grid {
   display: grid;
@@ -979,18 +1000,23 @@ footer button {
   align-items: center;
   gap: 6px;
   max-width: 1224px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 12px 0 24px;
+  box-sizing: border-box;
+  overflow-x: clip;
 }
 .project-rail {
   display: flex;
   gap: 14px;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   padding: 4px 4px 16px;
   scrollbar-width: thin;
   scrollbar-color: var(--orange) #eee;
+  min-width: 0;
 }
 .project-nav {
   color: var(--ink);
@@ -1450,6 +1476,14 @@ footer button {
 .supporters {
   padding: 80px clamp(24px, 7.5vw, 108px);
   text-align: center;
+}
+.supporter-title {
+  max-width: 36ch;
+  margin: 0 auto;
+  color: var(--charcoal);
+  font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+  line-height: 1.25;
+  text-wrap: balance;
 }
 .supporter-grid {
   display: grid;

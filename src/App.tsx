@@ -199,22 +199,22 @@ const copy = {
 // Make hash lists. Only files present in public/assets are rendered
 // (missing logos 404 as HTML via Vite SPA fallback and break the strip).
 const sponsorsAll = [
-  "51872.png", // Cultura / institucional
-  "d2fa6.png", // Ministério / governo
-  "680ac.png", // Lei de Incentivo
-  "463ef.png", // Montana
-  "2575f.png", // CSN (único)
-  "c264d.png", // Outback variante patrocínio
-  "2406a.png", // Yaman / outro
-];
+  { file: "51872.png", label: "Cultura Inglesa" },
+  { file: "d2fa6.png", label: "Ministério / governo" },
+  { file: "680ac.png", label: "Lei de Incentivo ao Esporte" },
+  { file: "463ef.png", label: "Montana" },
+  { file: "2575f.png", label: "CSN" },
+  { file: "c264d.png", label: "Outback" },
+  { file: "2406a.png", label: "Yaman" },
+] as const;
 const supportersAll = [
-  "05b7e.png", // Einstein
-  "a8b5c.png", // Rede Esporte
-  "64b7d.png", // CSN (único)
-  "893eb.png", // Vita
-  "9108e.png", // Outback
-  "d51f0.png", // Facchini
-];
+  { file: "05b7e.png", label: "Einstein" },
+  { file: "a8b5c.png", label: "Rede Esporte" },
+  { file: "64b7d.png", label: "CSN" },
+  { file: "893eb.png", label: "Instituto Vita" },
+  { file: "9108e.png", label: "Outback" },
+  { file: "d51f0.png", label: "Facchini" },
+] as const;
 const presentLogos = new Set([
   "05b7e.png",
   "2406a.png",
@@ -230,8 +230,14 @@ const presentLogos = new Set([
   "d2fa6.png",
   "d51f0.png",
 ]);
-const sponsors = sponsorsAll.filter((logo) => presentLogos.has(logo));
-const supporters = [...new Set(supportersAll.filter((logo) => presentLogos.has(logo)))];
+const sponsors = sponsorsAll.filter((logo) => presentLogos.has(logo.file));
+const supporters = [
+  ...new Map(
+    supportersAll
+      .filter((logo) => presentLogos.has(logo.file))
+      .map((logo) => [logo.file, logo] as const),
+  ).values(),
+];
 const footerSeals = [
   {
     src: "seals/melhores-ongs-2024.png",
@@ -360,6 +366,7 @@ export default function App() {
     { id: "impacto", label: t.nav[0] },
     { id: "historias", label: t.nav[1] },
     { id: "projetos", label: t.nav[2] },
+    { id: "parceiros", label: t.nav[3] },
   ] as const;
   const navItems = [...primaryNav, ...extra.links];
   const person = people[activeStory] ?? people[0];
@@ -515,7 +522,11 @@ export default function App() {
         >
           <img src={`${A}/logo-horizontal.png`} alt="Instituto Rugby Para Todos" />
         </button>
-        <nav className={menuOpen ? "nav open" : "nav"} aria-label="Navegação principal">
+        <nav
+          id="site-primary-nav"
+          className={menuOpen ? "nav open" : "nav"}
+          aria-label="Navegação principal"
+        >
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -547,8 +558,9 @@ export default function App() {
           <button
             className="menu-toggle"
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Abrir menu"
+            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={menuOpen}
+            aria-controls="site-primary-nav"
           >
             <span />
             <span />
@@ -569,8 +581,8 @@ export default function App() {
         <div className="logo-marquee" data-paused={sponsorsPaused}>
           <div className="logo-track">
             {[...sponsors, ...sponsors].map((logo, i) => (
-              <div className="logo-cell" key={`${logo}-${i}`}>
-                <img src={`${A}/${logo}`} alt="" />
+              <div className="logo-cell" key={`${logo.file}-${i}`}>
+                <img src={`${A}/${logo.file}`} alt={logo.label} />
               </div>
             ))}
           </div>
@@ -787,12 +799,20 @@ export default function App() {
       <MethodologySection language={language} />
       <ServicesSection language={language} />
 
-      <section className="supporters">
-        <p className="eyebrow">Apoiadores institucionais</p>
+      <section className="supporters" id="apoiadores" aria-labelledby="apoiadores-title">
+        <h2 id="apoiadores-title" className="supporter-title">
+          {
+            {
+              pt: "Patrocinadores, apoiadores e parceiros Institucionais",
+              en: "Sponsors, supporters and institutional partners",
+              fr: "Sponsors, partenaires et partenaires institutionnels",
+            }[language]
+          }
+        </h2>
         <div className="supporter-grid reveal">
           {supporters.map((logo) => (
-            <div key={logo}>
-              <img src={`${A}/${logo}`} alt="" />
+            <div key={logo.file}>
+              <img src={`${A}/${logo.file}`} alt={logo.label} />
             </div>
           ))}
         </div>

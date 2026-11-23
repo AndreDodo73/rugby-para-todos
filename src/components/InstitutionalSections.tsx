@@ -16,8 +16,13 @@ import "./InstitutionalSections.css";
 
 const PRESET_DONATION_AMOUNTS = ["50", "100", "200"] as const;
 type PresetDonationAmount = (typeof PRESET_DONATION_AMOUNTS)[number];
-type OtherDonationAmount = (typeof official.otherDonationAmounts)[number];
-type DonationAmount = PresetDonationAmount | OtherDonationAmount;
+/** Preset chips or any custom whole-reais amount chosen in the modal. */
+type DonationAmount = PresetDonationAmount | string;
+
+const MIN_CUSTOM_DONATION = 50;
+const MAX_CUSTOM_DONATION = 100_000;
+const FOCUSABLE_SELECTOR =
+  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 function formatDonationAmount(value: string, language: SiteLanguage) {
   const locale = language === "en" ? "en-US" : language === "fr" ? "fr-FR" : "pt-BR";
@@ -26,6 +31,17 @@ function formatDonationAmount(value: string, language: SiteLanguage) {
     currency: "BRL",
     maximumFractionDigits: 0,
   }).format(Number(value));
+}
+
+function formatDonationDigits(value: string, language: SiteLanguage) {
+  const locale = language === "en" ? "en-US" : language === "fr" ? "fr-FR" : "pt-BR";
+  const digits = value.replace(/\D/g, "");
+  if (!digits) return "";
+  return new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(Number(digits));
+}
+
+function parseDonationDigits(raw: string) {
+  return raw.replace(/\D/g, "");
 }
 
 function donationHref(amount: DonationAmount) {
@@ -38,8 +54,38 @@ function donationHref(amount: DonationAmount) {
   return url.toString();
 }
 
-function isOtherDonationAmount(amount: DonationAmount): amount is OtherDonationAmount {
+function isPresetDonationAmount(amount: DonationAmount): amount is PresetDonationAmount {
+  return (PRESET_DONATION_AMOUNTS as readonly string[]).includes(amount);
+}
+
+function isSuggestedOtherAmount(amount: string) {
   return (official.otherDonationAmounts as readonly string[]).includes(amount);
+}
+
+function validateCustomDonation(digits: string, language: SiteLanguage) {
+  const t = institutional[language];
+  if (!digits) {
+    return { ok: false as const, message: t.otherAmountErrorInvalid };
+  }
+  const value = Number(digits);
+  if (!Number.isFinite(value) || value <= 0) {
+    return { ok: false as const, message: t.otherAmountErrorInvalid };
+  }
+  if (value < MIN_CUSTOM_DONATION) {
+    return { ok: false as const, message: t.otherAmountErrorMin };
+  }
+  if (value > MAX_CUSTOM_DONATION) {
+    return {
+      ok: false as const,
+      message:
+        language === "en"
+          ? `The maximum amount is ${formatDonationAmount(String(MAX_CUSTOM_DONATION), language)}.`
+          : language === "fr"
+            ? `Le montant maximum est de ${formatDonationAmount(String(MAX_CUSTOM_DONATION), language)}.`
+            : `O valor máximo é ${formatDonationAmount(String(MAX_CUSTOM_DONATION), language)}.`,
+    };
+  }
+  return { ok: true as const, value: String(value) };
 }
 
 function ExtIcon() {
@@ -79,12 +125,14 @@ function Outbound({
 }) {
   const plainLabel = typeof children === "string" || typeof children === "number";
   const hideIcon = className.includes("social-channel");
+  const accessibleName = plainLabel ? String(children) : undefined;
   return (
     <a
       href={href}
       className={className}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={accessibleName ? `${accessibleName} (abre em nova aba)` : undefined}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onFocus={onFocus}
@@ -483,45 +531,98 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
   const [frequency, setFrequency] = useState<"once" | "monthly">("once");
   const [amount, setAmount] = useState<DonationAmount>("100");
   const [otherPickerOpen, setOtherPickerOpen] = useState(false);
-  const [draftOtherAmount, setDraftOtherAmount] = useState<OtherDonationAmount>(
-    official.otherDonationAmounts[0],
-  );
+  const [draftDigits, setDraftDigits] = useState<string>(official.otherDonationAmounts[0]);
+  const [customTouched, setCustomTouched] = useState(false);
   const otherRailRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const otherTriggerRef = useRef<HTMLButtonElement>(null);
+  const customInputRef = useRef<HTMLInputElement>(null);
   const t = institutional[language];
   const cms = useCms();
   const supportTitle = textValue(cms.texts, "support.title", t.supportTitle);
   const supportBody = textValue(cms.texts, "support.body", t.supportBody);
   const isMonthly = frequency === "monthly";
-  const otherSelected = isOtherDonationAmount(amount);
+  const otherSelected = !isPresetDonationAmount(amount);
+  const draftValidation = validateCustomDonation(draftDigits, language);
+  const showDraftError = customTouched && !draftValidation.ok;
+  const draftPreview = draftDigits
+    ? formatDonationAmount(draftDigits, language)
+    : formatDonationAmount("0", language);
 
   useEffect(() => {
     if (!otherPickerOpen) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOtherPickerOpen(false);
-    };
-    window.addEventListener("keydown", onKeyDown);
+    const dialog = dialogRef.current;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+
     const frame = window.requestAnimationFrame(() => {
+      customInputRef.current?.focus();
       const rail = otherRailRef.current;
-      if (!rail) return;
-      const active = rail.querySelector<HTMLElement>('[aria-pressed="true"]');
+      const active = rail?.querySelector<HTMLElement>('[aria-pressed="true"]');
       active?.scrollIntoView({ inline: "center", block: "nearest", behavior: "auto" });
     });
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOtherPickerOpen(false);
+        return;
+      }
+      if (event.key !== "Tab" || !dialog) return;
+      const focusables = Array.from(dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
+        (el) => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true",
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
       window.cancelAnimationFrame(frame);
+      previouslyFocused?.focus?.();
+      if (document.activeElement === document.body) {
+        otherTriggerRef.current?.focus();
+      }
     };
   }, [otherPickerOpen]);
 
   const openOtherPicker = () => {
-    setDraftOtherAmount(otherSelected ? amount : official.otherDonationAmounts[0]);
+    const initial = otherSelected ? amount : official.otherDonationAmounts[0];
+    setDraftDigits(parseDonationDigits(initial));
+    setCustomTouched(false);
     setOtherPickerOpen(true);
   };
 
+  const selectSuggestedAmount = (value: string) => {
+    setDraftDigits(value);
+    setCustomTouched(false);
+  };
+
+  const onCustomInputChange = (raw: string) => {
+    setDraftDigits(parseDonationDigits(raw));
+    setCustomTouched(true);
+  };
+
   const confirmOtherAmount = () => {
-    setAmount(draftOtherAmount);
+    setCustomTouched(true);
+    const result = validateCustomDonation(draftDigits, language);
+    if (!result.ok) {
+      customInputRef.current?.focus();
+      return;
+    }
+    setAmount(result.value);
     setOtherPickerOpen(false);
   };
 
@@ -547,8 +648,14 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
               <p className="monthly-description">{t.monthlyBody}</p>
             ) : (
               <>
-                <p className="donation-amount-label">{t.chooseAmount}</p>
-                <div className="donation-amounts" role="group" aria-label={t.chooseAmount}>
+                <p className="donation-amount-label" id="donation-amount-label">
+                  {t.chooseAmount}
+                </p>
+                <div
+                  className="donation-amounts"
+                  role="group"
+                  aria-labelledby="donation-amount-label"
+                >
                   {PRESET_DONATION_AMOUNTS.map((value) => (
                     <button
                       key={value}
@@ -560,10 +667,12 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
                     </button>
                   ))}
                   <button
+                    ref={otherTriggerRef}
                     type="button"
                     onClick={openOtherPicker}
                     aria-pressed={otherSelected}
                     aria-haspopup="dialog"
+                    aria-expanded={otherPickerOpen}
                   >
                     {otherSelected ? formatDonationAmount(amount, language) : t.other}
                   </button>
@@ -603,10 +712,12 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
           onClick={() => setOtherPickerOpen(false)}
         >
           <div
+            ref={dialogRef}
             className="donation-other-dialog"
             role="dialog"
             aria-modal="true"
             aria-labelledby="donation-other-title"
+            aria-describedby="donation-other-hint"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="donation-other-dialog-head">
@@ -618,30 +729,85 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
                 type="button"
                 className="donation-other-close"
                 onClick={() => setOtherPickerOpen(false)}
+                aria-label={t.otherAmountClose}
               >
                 {t.otherAmountClose}
               </button>
             </div>
-            <p className="donation-other-hint">{t.otherAmountHint}</p>
-            <div className="donation-other-rail" ref={otherRailRef} role="listbox" aria-label={t.otherAmountTitle}>
+            <p className="donation-other-hint" id="donation-other-hint">
+              {t.otherAmountHint}
+            </p>
+            <p className="donation-other-rail-label" id="donation-other-suggestions">
+              {t.otherAmountSuggestions}
+            </p>
+            <div
+              className="donation-other-rail"
+              ref={otherRailRef}
+              role="listbox"
+              aria-labelledby="donation-other-suggestions"
+            >
               {official.otherDonationAmounts.map((value) => (
                 <button
                   key={value}
                   type="button"
                   role="option"
                   className="donation-other-chip"
-                  aria-selected={draftOtherAmount === value}
-                  aria-pressed={draftOtherAmount === value}
-                  onClick={() => setDraftOtherAmount(value)}
+                  aria-selected={isSuggestedOtherAmount(draftDigits) && draftDigits === value}
+                  aria-pressed={isSuggestedOtherAmount(draftDigits) && draftDigits === value}
+                  onClick={() => selectSuggestedAmount(value)}
                 >
                   {formatDonationAmount(value, language)}
                 </button>
               ))}
             </div>
+            <div className="donation-other-custom">
+              <label className="donation-other-custom-label" htmlFor="donation-other-input">
+                {t.otherAmountCustomLabel}
+              </label>
+              <div
+                className={`donation-other-input-wrap${showDraftError ? " is-invalid" : ""}`}
+              >
+                <span className="donation-other-input-prefix" aria-hidden="true">
+                  {t.otherAmountCustomPrefix}
+                </span>
+                <input
+                  ref={customInputRef}
+                  id="donation-other-input"
+                  className="donation-other-input"
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="off"
+                  enterKeyHint="done"
+                  value={formatDonationDigits(draftDigits, language)}
+                  aria-invalid={showDraftError}
+                  aria-describedby={
+                    showDraftError ? "donation-other-error donation-other-hint" : "donation-other-hint"
+                  }
+                  onChange={(event) => onCustomInputChange(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      confirmOtherAmount();
+                    }
+                  }}
+                />
+              </div>
+              {showDraftError ? (
+                <p className="donation-other-error" id="donation-other-error" role="alert">
+                  {draftValidation.message}
+                </p>
+              ) : null}
+            </div>
             <p className="donation-other-preview" aria-live="polite">
-              {formatDonationAmount(draftOtherAmount, language)}
+              {draftPreview}
             </p>
-            <button type="button" className="pill donation-other-confirm" onClick={confirmOtherAmount}>
+            <button
+              type="button"
+              className="pill donation-other-confirm"
+              onClick={confirmOtherAmount}
+              disabled={!draftValidation.ok}
+              aria-disabled={!draftValidation.ok}
+            >
               {t.otherAmountConfirm}
             </button>
           </div>
