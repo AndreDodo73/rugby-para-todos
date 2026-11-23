@@ -545,27 +545,64 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background: #1a1c1c;
 }
-.service-image img {
+.service-cycle {
+  position: absolute;
+  inset: 0;
+}
+.service-cycle img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
   object-position: center;
-  transition: transform 0.8s var(--ease-out);
+  opacity: 0;
+  transform: translateX(12%) scale(1.04);
+  transition:
+    opacity 0.85s var(--ease-out),
+    transform 0.95s var(--ease-frame, var(--ease-out));
+  z-index: 0;
+  pointer-events: none;
+}
+.service-cycle img.is-active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  z-index: 2;
+}
+.service-cycle img.is-exit {
+  opacity: 0;
+  transform: translateX(-14%) scale(1.02);
+  z-index: 1;
+}
+.service-cycle img.is-wait {
+  opacity: 0;
+  transform: translateX(12%) scale(1.04);
+  z-index: 0;
 }
 .service-image > span {
   position: absolute;
   top: 18px;
   left: 20px;
+  z-index: 3;
   padding: 5px 9px;
   background: var(--yellow);
   color: var(--ink);
   font: 700 11px "Montserrat:Bold";
 }
-.service-card:hover .service-image img,
-.service-card:focus-within .service-image img {
-  transform: scale(1.045);
+@media (prefers-reduced-motion: reduce) {
+  .service-cycle img,
+  .service-cycle img.is-active,
+  .service-cycle img.is-exit,
+  .service-cycle img.is-wait {
+    transition: none;
+    transform: none;
+  }
+  .service-cycle img:not(.is-active) {
+    opacity: 0;
+  }
 }
 .service-copy {
   flex: 1 1 auto;
