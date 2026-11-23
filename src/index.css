@@ -1690,6 +1690,11 @@ footer {
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+.footer-bottom strong {
+  font: 700 11px/inherit "Montserrat:Bold", "Montserrat", sans-serif;
+  color: var(--ink);
+  letter-spacing: 0.08em;
+}
 .footer-bottom a {
   color: inherit;
   text-decoration: none;

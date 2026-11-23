@@ -885,9 +885,11 @@ export default function App() {
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© 2026 Instituto Rugby Para Todos</span>
+          <span>
+            © 2026 Instituto <strong>Rugby Para Todos</strong>
+          </span>
           <span className="footer-credit">
-            Desenvolvido por Jabuticaba Design ·{" "}
+            Desenvolvido por <strong>Jabuticaba Design</strong> ·{" "}
             <a href="tel:+5511989308873">11 98930-8873</a>
           </span>
           <span>Paraisópolis · São Paulo · Rio de Janeiro</span>
