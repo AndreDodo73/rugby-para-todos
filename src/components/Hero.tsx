@@ -3,8 +3,10 @@ import { mediaUrl, textValue } from "../content/cmsCatalog";
 import { useCms } from "../lib/CmsContext";
 import { scrollToAnchor } from "../lib/scrollToAnchor";
 
-const HERO_VIDEO = "/media/hero-rugby.mp4";
-const HERO_POSTER = "/media/hero-rugby-poster.jpg";
+/** Active hero clip. Restore previous: swap both paths back to hero-rugby.*. */
+const HERO_VIDEO = "/media/hero-boy-tossing.mp4";
+const HERO_POSTER = "/media/hero-boy-tossing-poster.jpg";
+/** Kept in public/media for one-step restore: hero-rugby.mp4 + hero-rugby-poster.jpg */
 /** Complete the clip sooner in the scroll so the scrub feels quicker. */
 const SCROLL_SPAN_FACTOR = 0.52;
 
@@ -131,10 +133,9 @@ export function Hero({
 
   return (
     <section className="hero" ref={sectionRef} id="conteudo" aria-labelledby="hero-title">
-      {/* Still matches Make frame 0 until hero-rugby.mp4 is exported. */}
       <img
         className="hero-media"
-        src={HERO_POSTER}
+        src={poster}
         alt=""
         aria-hidden="true"
         style={videoReady ? { opacity: 0 } : undefined}

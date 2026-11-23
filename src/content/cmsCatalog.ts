@@ -345,7 +345,7 @@ export const MEDIA_FIELDS: MediaField[] = [
     key: "hero.poster",
     section: "Hero",
     label: "Imagem de capa do vídeo (poster)",
-    defaultUrl: "/media/hero-rugby-poster.jpg",
+    defaultUrl: "/media/hero-boy-tossing-poster.jpg",
     alt: "Poster do vídeo principal",
   },
   {
