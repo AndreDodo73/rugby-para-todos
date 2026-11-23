@@ -531,7 +531,7 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
   const [frequency, setFrequency] = useState<"once" | "monthly">("once");
   const [amount, setAmount] = useState<DonationAmount>("100");
   const [otherPickerOpen, setOtherPickerOpen] = useState(false);
-  const [draftDigits, setDraftDigits] = useState<string>(official.otherDonationAmounts[0]);
+  const [draftDigits, setDraftDigits] = useState("");
   const [customTouched, setCustomTouched] = useState(false);
   const otherRailRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -547,7 +547,7 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
   const showDraftError = customTouched && !draftValidation.ok;
   const draftPreview = draftDigits
     ? formatDonationAmount(draftDigits, language)
-    : formatDonationAmount("0", language);
+    : t.otherAmountEmpty;
 
   useEffect(() => {
     if (!otherPickerOpen) return;
@@ -599,8 +599,8 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
   }, [otherPickerOpen]);
 
   const openOtherPicker = () => {
-    const initial = otherSelected ? amount : official.otherDonationAmounts[0];
-    setDraftDigits(parseDonationDigits(initial));
+    // Só pré-preenche se já tinha escolhido “outro”; senão começa vazio até clicar/digitar.
+    setDraftDigits(otherSelected ? parseDonationDigits(amount) : "");
     setCustomTouched(false);
     setOtherPickerOpen(true);
   };
@@ -778,6 +778,7 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
                   inputMode="numeric"
                   autoComplete="off"
                   enterKeyHint="done"
+                  placeholder={t.otherAmountPlaceholder}
                   value={formatDonationDigits(draftDigits, language)}
                   aria-invalid={showDraftError}
                   aria-describedby={
@@ -798,7 +799,10 @@ export function SupportSection({ language }: { language: SiteLanguage }) {
                 </p>
               ) : null}
             </div>
-            <p className="donation-other-preview" aria-live="polite">
+            <p
+              className={`donation-other-preview${draftDigits ? "" : " is-empty"}`}
+              aria-live="polite"
+            >
               {draftPreview}
             </p>
             <button

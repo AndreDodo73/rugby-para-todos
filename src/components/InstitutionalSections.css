@@ -972,6 +972,11 @@
   color: var(--ink);
   letter-spacing: -0.02em;
 }
+.donation-other-preview.is-empty {
+  font: 600 15px/1.35 "Montserrat:SemiBold";
+  color: var(--muted, #3d3d3d);
+  letter-spacing: 0;
+}
 .donation-other-confirm {
   width: 100%;
   justify-content: center;
@@ -1033,6 +1038,10 @@
   font: 600 18px/1.2 "Montserrat:SemiBold";
   color: var(--ink);
   outline: none;
+}
+.donation-other-input::placeholder {
+  color: #9a9a9a;
+  font-weight: 500;
 }
 .donation-other-error {
   margin: 0;
