@@ -10,7 +10,13 @@ import {
   SupportSection,
   VideoStories,
 } from "./components/InstitutionalSections";
-import { mediaUrl, storyPersonSlug, textValue } from "./content/cmsCatalog";
+import {
+  mediaUrl,
+  sponsorLogos,
+  storyPersonSlug,
+  supporterLogos,
+  textValue,
+} from "./content/cmsCatalog";
 import {
   fundraisingProjects,
   institutional,
@@ -196,42 +202,6 @@ const copy = {
   },
 };
 
-// Make hash lists. Only files present in public/assets are rendered
-// (missing logos 404 as HTML via Vite SPA fallback and break the strip).
-const sponsorsAll = [
-  "51872.png", // Cultura / institucional
-  "d2fa6.png", // Ministério / governo
-  "680ac.png", // Lei de Incentivo
-  "463ef.png", // Montana
-  "2575f.png", // CSN (único)
-  "c264d.png", // Outback variante patrocínio
-  "2406a.png", // Yaman / outro
-];
-const supportersAll = [
-  "05b7e.png", // Einstein
-  "a8b5c.png", // Rede Esporte
-  "64b7d.png", // CSN (único)
-  "893eb.png", // Vita
-  "9108e.png", // Outback
-  "d51f0.png", // Facchini
-];
-const presentLogos = new Set([
-  "05b7e.png",
-  "2406a.png",
-  "2575f.png",
-  "463ef.png",
-  "51872.png",
-  "64b7d.png",
-  "680ac.png",
-  "893eb.png",
-  "9108e.png",
-  "a8b5c.png",
-  "c264d.png",
-  "d2fa6.png",
-  "d51f0.png",
-]);
-const sponsors = sponsorsAll.filter((logo) => presentLogos.has(logo));
-const supporters = [...new Set(supportersAll.filter((logo) => presentLogos.has(logo)))];
 const footerSeals = [
   {
     src: "seals/melhores-ongs-2024.png",
@@ -355,6 +325,24 @@ export default function App() {
   const communityImage = mediaUrl(cms.media, "community.image", `${A}/community-fullbleed.jpg`);
   const footerLogoColor = mediaUrl(cms.media, "footer.logoColor", `${A}/footer-logo-color.svg`);
   const footerLogoMono = mediaUrl(cms.media, "footer.logoMono", `${A}/footer-logo-mono.svg`);
+  const sponsors = useMemo(
+    () =>
+      sponsorLogos.map((logo) => ({
+        id: logo.id,
+        label: logo.label,
+        src: mediaUrl(cms.media, `partners.sponsor.${logo.id}`, `${A}/${logo.file}`),
+      })),
+    [cms.media],
+  );
+  const supporters = useMemo(
+    () =>
+      supporterLogos.map((logo) => ({
+        id: logo.id,
+        label: logo.label,
+        src: mediaUrl(cms.media, `partners.supporter.${logo.id}`, `${A}/${logo.file}`),
+      })),
+    [cms.media],
+  );
   const extra = institutional[language];
   const primaryNav = [
     { id: "impacto", label: t.nav[0] },
@@ -569,8 +557,8 @@ export default function App() {
         <div className="logo-marquee" data-paused={sponsorsPaused}>
           <div className="logo-track">
             {[...sponsors, ...sponsors].map((logo, i) => (
-              <div className="logo-cell" key={`${logo}-${i}`}>
-                <img src={`${A}/${logo}`} alt="" />
+              <div className="logo-cell" key={`${logo.id}-${i}`}>
+                <img src={logo.src} alt={logo.label} />
               </div>
             ))}
           </div>
@@ -791,8 +779,8 @@ export default function App() {
         <p className="eyebrow">Apoiadores institucionais</p>
         <div className="supporter-grid reveal">
           {supporters.map((logo) => (
-            <div key={logo}>
-              <img src={`${A}/${logo}`} alt="" />
+            <div key={logo.id}>
+              <img src={logo.src} alt={logo.label} />
             </div>
           ))}
         </div>

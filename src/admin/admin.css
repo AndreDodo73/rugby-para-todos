@@ -248,6 +248,34 @@
   align-items: start;
 }
 
+.admin-shop-variants {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.admin-shop-variant {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  align-content: start;
+}
+
+.admin-shop-variant img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #e8e4dc;
+}
+
+.admin-shop-variant p {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 @media (max-width: 720px) {
   .admin-shop-card {
     grid-template-columns: 1fr;

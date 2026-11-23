@@ -268,10 +268,14 @@ export function ShopSection({ language }: { language: SiteLanguage }) {
             const size = product.apparel ? sizeByProduct[product.id] ?? "M" : undefined;
             const palette = product.colors;
             const selectedColor = palette?.find((option) => option.id === colorByProduct[product.id]) ?? palette?.[0];
-            const fallbackImage = selectedColor?.image ?? product.image;
-            const image =
-              imageByProduct[product.id] ||
-              mediaUrl(cms.media, `shop.${product.id}.image`, `/assets/${fallbackImage}`);
+            const image = selectedColor
+              ? mediaUrl(
+                  cms.media,
+                  `shop.${product.id}.color.${selectedColor.id}`,
+                  `/assets/${selectedColor.image}`,
+                )
+              : imageByProduct[product.id] ||
+                mediaUrl(cms.media, `shop.${product.id}.image`, `/assets/${product.image}`);
             // Only show a price when the database has a confirmed value.
             const priceCents = priceByProduct[product.id];
             const price = priceCents == null ? undefined : formatShopPrice(priceCents, language);

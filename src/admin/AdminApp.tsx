@@ -207,7 +207,10 @@ export default function AdminApp() {
         throw new Error("Informe um valor numérico válido, ou deixe em branco.");
       }
       const current = shop.find((item) => item.id === productId);
-      const mediaKey = `shop.${productId}.image`;
+      const catalog = shopProducts.find((item) => item.id === productId);
+      const mediaKey = catalog?.colors?.[0]
+        ? `shop.${productId}.color.${catalog.colors[0].id}`
+        : `shop.${productId}.image`;
       const mediaRow = media.find((item) => item.key === mediaKey);
       await upsertShopProduct({
         id: productId,
@@ -433,11 +436,24 @@ export default function AdminApp() {
           </p>
           <div className="admin-shop-list">
             {shopProducts.map((product) => {
-              const mediaKey = `shop.${product.id}.image`;
+              const colorVariants = product.colors?.length
+                ? product.colors.map((color) => ({
+                    key: `shop.${product.id}.color.${color.id}`,
+                    label: color.label.pt,
+                    fallback: `/assets/${color.image}`,
+                  }))
+                : [
+                    {
+                      key: `shop.${product.id}.image`,
+                      label: "Padrão",
+                      fallback: `/assets/${product.image}`,
+                    },
+                  ];
+              const primary = colorVariants[0];
               const image =
                 shop.find((item) => item.id === product.id)?.image ||
-                mediaByKey[mediaKey]?.url ||
-                `/assets/${product.image}`;
+                mediaByKey[primary.key]?.url ||
+                primary.fallback;
               return (
                 <article className="admin-shop-card" key={product.id}>
                   <img src={image} alt={product.name.pt} />
@@ -466,19 +482,30 @@ export default function AdminApp() {
                       >
                         Salvar preço
                       </button>
-                      <label className="admin-file compact">
-                        Trocar foto
-                        <input
-                          type="file"
-                          accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
-                          disabled={busy}
-                          onChange={(event) => {
-                            const file = event.target.files?.[0] ?? null;
-                            void replacePhoto(mediaKey, file);
-                            event.target.value = "";
-                          }}
-                        />
-                      </label>
+                    </div>
+                    <div className="admin-shop-variants">
+                      {colorVariants.map((variant) => {
+                        const preview = mediaByKey[variant.key]?.url || variant.fallback;
+                        return (
+                          <div className="admin-shop-variant" key={variant.key}>
+                            <img src={preview} alt={`${product.name.pt} ${variant.label}`} />
+                            <p>{variant.label}</p>
+                            <label className="admin-file compact">
+                              Trocar foto
+                              <input
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+                                disabled={busy}
+                                onChange={(event) => {
+                                  const file = event.target.files?.[0] ?? null;
+                                  void replacePhoto(variant.key, file);
+                                  event.target.value = "";
+                                }}
+                              />
+                            </label>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </article>
