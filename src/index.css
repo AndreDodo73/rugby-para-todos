@@ -1250,7 +1250,7 @@ footer button {
 .motion-ready .reveal-image.is-visible img {
   clip-path: inset(0);
 }
-.motion-ready .service-card .service-image img,
+.motion-ready .service-card .service-image > img,
 .motion-ready .story-stage .story-photo img {
   clip-path: inset(14% 0);
   transform: scale(1.08);
@@ -1258,13 +1258,13 @@ footer button {
     clip-path 1.05s var(--ease-frame),
     transform 1.15s var(--ease-frame);
 }
-.motion-ready .service-card.is-visible .service-image img,
+.motion-ready .service-card.is-visible .service-image > img,
 .motion-ready .story-stage.is-visible .story-photo img {
   clip-path: inset(0);
   transform: none;
 }
-.motion-ready .service-card.is-visible:hover .service-image img,
-.motion-ready .service-card.is-visible:focus-within .service-image img,
+.motion-ready .service-card.is-visible:hover .service-image > img,
+.motion-ready .service-card.is-visible:focus-within .service-image > img,
 .motion-ready .story-stage.is-visible:hover .story-photo img {
   transform: scale(1.045);
 }
