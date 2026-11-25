@@ -234,6 +234,17 @@ footer button {
   object-fit: cover;
   object-position: center;
 }
+/* Decoder-only source for scroll-scrub. Kept out of view so iOS black
+   frames during seek never cover the painted canvas. */
+.hero-media-source {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
 .hero-gradient {
   position: absolute;
   top: 0;

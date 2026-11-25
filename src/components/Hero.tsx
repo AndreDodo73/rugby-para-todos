@@ -43,7 +43,8 @@ export function Hero({
 }) {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoReady, setVideoReady] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [frameReady, setFrameReady] = useState(false);
   const cms = useCms();
   const fallback = heroCopy[language];
   const text = {
@@ -57,14 +58,37 @@ export function Hero({
 
   useEffect(() => {
     const video = videoRef.current;
+    const canvas = canvasRef.current;
     const section = sectionRef.current;
-    if (!video || !section) return;
+    if (!video || !canvas || !section) return;
+
+    const ctx = canvas.getContext("2d", { alpha: false });
+    if (!ctx) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // iOS/Safari clears the <video> framebuffer while seeking → black flashes.
+    // Paint decoded frames onto a canvas so the last good frame stays visible.
+    const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+    const seekEpsilon = coarsePointer ? 0.05 : 0.012;
     let raf = 0;
     let desiredTime = 0;
     let seeking = false;
     let pending = false;
+    let unlocked = false;
+
+    const paint = () => {
+      if (video.readyState < 2) return false;
+      const width = video.videoWidth;
+      const height = video.videoHeight;
+      if (!width || !height) return false;
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+      }
+      ctx.drawImage(video, 0, 0, width, height);
+      setFrameReady(true);
+      return true;
+    };
 
     const seekToDesired = () => {
       if (video.readyState < 1) return;
@@ -72,7 +96,10 @@ export function Hero({
         pending = true;
         return;
       }
-      if (Math.abs(video.currentTime - desiredTime) < 0.012) return;
+      if (Math.abs(video.currentTime - desiredTime) < seekEpsilon) {
+        paint();
+        return;
+      }
       seeking = true;
       pending = false;
       try {
@@ -84,6 +111,7 @@ export function Hero({
 
     const onSeeked = () => {
       seeking = false;
+      paint();
       if (pending) seekToDesired();
     };
 
@@ -103,26 +131,41 @@ export function Hero({
       if (!raf) raf = requestAnimationFrame(update);
     };
 
-    const onMeta = () => {
-      if (Number.isFinite(video.duration) && video.duration > 0) {
-        setVideoReady(true);
-        scheduleUpdate();
+    const unlockDecoder = async () => {
+      if (unlocked) return;
+      unlocked = true;
+      video.muted = true;
+      try {
+        await video.play();
+        video.pause();
+      } catch {
+        // Autoplay may still be blocked; seeking + paint still works after data loads.
       }
+      paint();
+      scheduleUpdate();
     };
-    const onFail = () => setVideoReady(false);
+
+    const onReady = () => {
+      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+      void unlockDecoder();
+    };
+    const onFail = () => setFrameReady(false);
 
     video.pause();
-    video.addEventListener("loadedmetadata", onMeta);
+    video.addEventListener("loadeddata", onReady);
+    video.addEventListener("canplay", onReady);
     video.addEventListener("error", onFail);
     video.addEventListener("seeked", onSeeked);
     window.addEventListener("scroll", scheduleUpdate, { passive: true });
     window.addEventListener("resize", scheduleUpdate);
     reducedMotion.addEventListener("change", scheduleUpdate);
+    if (video.readyState >= 2) onReady();
     scheduleUpdate();
 
     return () => {
       cancelAnimationFrame(raf);
-      video.removeEventListener("loadedmetadata", onMeta);
+      video.removeEventListener("loadeddata", onReady);
+      video.removeEventListener("canplay", onReady);
       video.removeEventListener("error", onFail);
       video.removeEventListener("seeked", onSeeked);
       window.removeEventListener("scroll", scheduleUpdate);
@@ -138,11 +181,12 @@ export function Hero({
         src={poster}
         alt=""
         aria-hidden="true"
-        style={videoReady ? { opacity: 0 } : undefined}
+        style={frameReady ? { opacity: 0 } : undefined}
       />
+      {/* Off-DOM decoder source: Safari blacks this out mid-seek; canvas holds the frame. */}
       <video
         ref={videoRef}
-        className="hero-media"
+        className="hero-media-source"
         src={HERO_VIDEO}
         poster={poster}
         muted
@@ -150,7 +194,13 @@ export function Hero({
         preload="auto"
         disablePictureInPicture
         aria-hidden="true"
-        style={videoReady ? undefined : { opacity: 0, pointerEvents: "none" }}
+        tabIndex={-1}
+      />
+      <canvas
+        ref={canvasRef}
+        className="hero-media"
+        aria-hidden="true"
+        style={frameReady ? undefined : { opacity: 0, pointerEvents: "none" }}
       />
       <div className="hero-gradient hero-gradient-left" aria-hidden="true" />
       <div className="hero-gradient hero-gradient-right" aria-hidden="true" />
