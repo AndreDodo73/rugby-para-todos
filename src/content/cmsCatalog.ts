@@ -23,6 +23,27 @@ export type MediaField = {
   alt?: string;
 };
 
+/** Logos da faixa de patrocinadores (marquee). */
+export const sponsorLogos = [
+  { id: "cultura", file: "51872.png", label: "Cultura / institucional" },
+  { id: "ministerio", file: "d2fa6.png", label: "Ministério / governo" },
+  { id: "lei-incentivo", file: "680ac.png", label: "Lei de Incentivo" },
+  { id: "montana", file: "463ef.png", label: "Montana" },
+  { id: "csn", file: "2575f.png", label: "CSN" },
+  { id: "outback", file: "c264d.png", label: "Outback" },
+  { id: "yaman", file: "2406a.png", label: "Yaman" },
+] as const;
+
+/** Logos da grade de apoiadores institucionais. */
+export const supporterLogos = [
+  { id: "einstein", file: "05b7e.png", label: "Einstein" },
+  { id: "rede-esporte", file: "a8b5c.png", label: "Rede Esporte" },
+  { id: "csn", file: "64b7d.png", label: "CSN" },
+  { id: "vita", file: "893eb.png", label: "Vita" },
+  { id: "outback", file: "9108e.png", label: "Outback" },
+  { id: "facchini", file: "d51f0.png", label: "Facchini" },
+] as const;
+
 const copyDefaults = {
   pt: {
     donate: "Doe agora",
@@ -45,6 +66,7 @@ const copyDefaults = {
     communityCta: "Conheça o Instituto",
     sponsorTitle: "Quem acredita, transforma junto.",
     sponsorBody: "Patrocinadores e apoiadores que entram em campo com o Instituto RPT.",
+    supportersTitle: "Patrocinadores, apoiadores e parceiros Institucionais",
     footerNote: "Esporte, educação e oportunidades desde 2004.",
   },
   en: {
@@ -68,6 +90,7 @@ const copyDefaults = {
     communityCta: "Meet the Institute",
     sponsorTitle: "Those who believe, transform with us.",
     sponsorBody: "Sponsors and supporters who take the field with Instituto RPT.",
+    supportersTitle: "Sponsors, supporters and institutional partners",
     footerNote: "Sport, education and opportunity since 2004.",
   },
   fr: {
@@ -91,6 +114,7 @@ const copyDefaults = {
     communityCta: "Découvrir l'Institut",
     sponsorTitle: "Ceux qui y croient transforment avec nous.",
     sponsorBody: "Sponsors et partenaires qui entrent sur le terrain avec l'Instituto RPT.",
+    supportersTitle: "Sponsors, partenaires et partenaires institutionnels",
     footerNote: "Sport, éducation et opportunités depuis 2004.",
   },
 } as const;
@@ -244,6 +268,11 @@ export const TEXT_FIELDS: TextField[] = [
     en: copyDefaults.en.sponsorBody,
     fr: copyDefaults.fr.sponsorBody,
   }),
+  field("supporters.title", "Apoiadores", "Título da seção", {
+    pt: copyDefaults.pt.supportersTitle,
+    en: copyDefaults.en.supportersTitle,
+    fr: copyDefaults.fr.supportersTitle,
+  }, false),
   field("footer.note", "Rodapé", "Frase do rodapé", {
     pt: copyDefaults.pt.footerNote,
     en: copyDefaults.en.footerNote,
@@ -376,6 +405,20 @@ export const MEDIA_FIELDS: MediaField[] = [
     defaultUrl: "/assets/footer-logo-mono.svg",
     alt: "Monograma RPT",
   },
+  ...sponsorLogos.map((logo) => ({
+    key: `partners.sponsor.${logo.id}`,
+    section: "Parceiros — logos",
+    label: `Patrocinador — ${logo.label}`,
+    defaultUrl: `/assets/${logo.file}`,
+    alt: logo.label,
+  })),
+  ...supporterLogos.map((logo) => ({
+    key: `partners.supporter.${logo.id}`,
+    section: "Apoiadores — logos",
+    label: `Apoiador — ${logo.label}`,
+    defaultUrl: `/assets/${logo.file}`,
+    alt: logo.label,
+  })),
   ...storyPeople.map((person) => ({
     key: `story.${storySlug(person.name)}.image`,
     section: "Histórias — fotos",
@@ -397,13 +440,26 @@ export const MEDIA_FIELDS: MediaField[] = [
     defaultUrl: `/assets/${project.image}`,
     alt: project.title,
   })),
-  ...shopProducts.map((product) => ({
-    key: `shop.${product.id}.image`,
-    section: "Loja — fotos",
-    label: `Foto — ${product.name.pt}`,
-    defaultUrl: `/assets/${product.image}`,
-    alt: product.name.pt,
-  })),
+  ...shopProducts.flatMap((product) => {
+    if (product.colors?.length) {
+      return product.colors.map((color) => ({
+        key: `shop.${product.id}.color.${color.id}`,
+        section: "Loja — fotos",
+        label: `Foto — ${product.name.pt} (${color.label.pt})`,
+        defaultUrl: `/assets/${color.image}`,
+        alt: `${product.name.pt} ${color.label.pt}`,
+      }));
+    }
+    return [
+      {
+        key: `shop.${product.id}.image`,
+        section: "Loja — fotos",
+        label: `Foto — ${product.name.pt}`,
+        defaultUrl: `/assets/${product.image}`,
+        alt: product.name.pt,
+      },
+    ];
+  }),
 ];
 
 export function storyPersonSlug(name: string) {

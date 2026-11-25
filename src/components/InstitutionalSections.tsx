@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { mediaUrl, textValue } from "../content/cmsCatalog";
 import {
   apparelSizes,
@@ -13,6 +13,108 @@ import {
 } from "../content/institutional";
 import { useCms } from "../lib/CmsContext";
 import "./InstitutionalSections.css";
+
+const SERVICE_GALLERIES = [
+  [
+    "/assets/services/clinica/01.jpg",
+    "/assets/services/clinica/02.jpg",
+    "/assets/services/clinica/03.jpg",
+    "/assets/services/clinica/04.png",
+    "/assets/services/clinica/05.jpg",
+    "/assets/services/clinica/06.jpg",
+  ],
+  [
+    "/assets/services/team-building/01.jpg",
+    "/assets/services/team-building/02.png",
+    "/assets/services/team-building/03.png",
+    "/assets/services/team-building/04.png",
+    "/assets/services/team-building/05.jpg",
+    "/assets/services/team-building/06.jpg",
+  ],
+  [
+    "/assets/services/intercambio/01.jpg",
+    "/assets/services/intercambio/02.jpg",
+    "/assets/services/intercambio/03.jpg",
+    "/assets/services/intercambio/04.jpg",
+    "/assets/services/intercambio/05.jpg",
+    "/assets/services/intercambio/06.jpg",
+  ],
+] as const;
+
+function ServiceImageCycle({
+  images,
+  alt,
+  staggerMs = 0,
+}: {
+  images: readonly string[];
+  alt: string;
+  staggerMs?: number;
+}) {
+  const [index, setIndex] = useState(0);
+  const [prev, setPrev] = useState<number | null>(null);
+  const [paused, setPaused] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduceMotion(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    if (images.length < 2 || paused || reduceMotion) return;
+    let intervalId = 0;
+    const startId = window.setTimeout(() => {
+      intervalId = window.setInterval(() => {
+        setIndex((current) => {
+          setPrev(current);
+          return (current + 1) % images.length;
+        });
+      }, 4200);
+    }, staggerMs);
+    return () => {
+      window.clearTimeout(startId);
+      window.clearInterval(intervalId);
+    };
+  }, [images.length, paused, reduceMotion, staggerMs]);
+
+  useEffect(() => {
+    if (prev == null) return;
+    const id = window.setTimeout(() => setPrev(null), 900);
+    return () => window.clearTimeout(id);
+  }, [prev, index]);
+
+  return (
+    <div
+      className="service-cycle"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+          setPaused(false);
+        }
+      }}
+    >
+      {images.map((src, i) => {
+        const state =
+          i === index ? "is-active" : i === prev ? "is-exit" : "is-wait";
+        return (
+          <img
+            key={src}
+            src={src}
+            alt={i === index ? alt : ""}
+            aria-hidden={i === index ? undefined : true}
+            loading={i === 0 ? "eager" : "lazy"}
+            className={state}
+          />
+        );
+      })}
+    </div>
+  );
+}
 
 function ExtIcon() {
   // Make/Figma: seta linha limpa ↗ (sem quadrado)
@@ -268,10 +370,14 @@ export function ShopSection({ language }: { language: SiteLanguage }) {
             const size = product.apparel ? sizeByProduct[product.id] ?? "M" : undefined;
             const palette = product.colors;
             const selectedColor = palette?.find((option) => option.id === colorByProduct[product.id]) ?? palette?.[0];
-            const fallbackImage = selectedColor?.image ?? product.image;
-            const image =
-              imageByProduct[product.id] ||
-              mediaUrl(cms.media, `shop.${product.id}.image`, `/assets/${fallbackImage}`);
+            const image = selectedColor
+              ? mediaUrl(
+                  cms.media,
+                  `shop.${product.id}.color.${selectedColor.id}`,
+                  `/assets/${selectedColor.image}`,
+                )
+              : imageByProduct[product.id] ||
+                mediaUrl(cms.media, `shop.${product.id}.image`, `/assets/${product.image}`);
             // Only show a price when the database has a confirmed value.
             const priceCents = priceByProduct[product.id];
             const price = priceCents == null ? undefined : formatShopPrice(priceCents, language);
@@ -371,10 +477,10 @@ export function ServicesSection({ language }: { language: SiteLanguage }) {
         {t.serviceTitles.map((title, i) => (
           <article className="service-card reveal reveal-x" key={title}>
             <div className="service-image">
-              <img
-                src={`/assets/${["clinica-rugby.jpg", "e9a3a.png", "46562.png"][i]}`}
+              <ServiceImageCycle
+                images={SERVICE_GALLERIES[i] ?? SERVICE_GALLERIES[0]}
                 alt={title}
-                loading="lazy"
+                staggerMs={i * 900}
               />
               <span>0{i + 1}</span>
             </div>
